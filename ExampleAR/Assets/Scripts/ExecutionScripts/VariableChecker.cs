@@ -16,7 +16,8 @@ public class VariableChecker : MonoBehaviour
     {
         {"21", ValueType.INT},
         {"22", ValueType.STRING},
-        {"23", ValueType.FLOAT}
+        {"23", ValueType.FLOAT},
+        {"52", ValueType.STRING}
     };
 
     static Dictionary<string, int> levelIntValues = new Dictionary<string, int>();
@@ -27,13 +28,15 @@ public class VariableChecker : MonoBehaviour
 
     static Dictionary<string, string> levelStringValues = new Dictionary<string, string>()
     {
-        {"22", "\"Hola\""}
+        {"22", "\"Hola\""},
+        {"52", "\"Hola\""}
     };
 
     static Dictionary<string, string> levelIntNames = new Dictionary<string, string>();
     static Dictionary<string, string> levelStringNames = new Dictionary<string, string>()
     {
-        {"22", "str2"}
+        {"22", "str2"},
+        {"52", "local1"}
     };
     static Dictionary<string, string> levelFloatNames = new Dictionary<string, string>();
 

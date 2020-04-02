@@ -154,7 +154,7 @@ public class BlocksGenerator : MonoBehaviour
                 addElement(Instantiate(for_end), index + 3, offset, scope);
                 addElement(Instantiate(blankLine), index + 4, offset, scope);
 
-                declare_var.transform.GetChild(0).GetChild(5).GetChild(0).GetChild(0).GetComponent<Block>().scope = scope;
+                declare_var.transform.GetChild(0).GetChild(5).GetChild(0).GetChild(0).GetComponent<Block>().scope = scope + 1;
 
                 uicontroller.showPopUp();
                 break;

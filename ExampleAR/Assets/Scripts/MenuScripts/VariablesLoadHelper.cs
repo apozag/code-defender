@@ -21,6 +21,10 @@ public static class VariablesLoadHelper
         {
             new Variable<int>("i", 0, 2, 2)
         } },
+        {"43", new List<Variable<int>>(){
+            new Variable<int>("i", 1, 2, 2),
+            new Variable<int>("j", 0, 3, 4)
+        } },
         {"61", new List<Variable<int>>()
         {
             new Variable<int>("i", 0, 0, 1)
@@ -32,13 +36,19 @@ public static class VariablesLoadHelper
         {
             new Variable<string>("str", "\"Hola\"", 1, 3),
             new Variable<string>("str2", "\"Mundo\"", 1, 5)
-        } },
+        }},
 
         {"33", new List<Variable<string>>()
         {
             new Variable<string>("str1", "\"Code\"", 1, 2),
             new Variable<string>("str2", "\" Defender\"", 1, 3)
-        } }    };
+        }},
+        {"52", new List<Variable<string>>()
+        {
+            new Variable<string>("local1", "\"Hola\"", 1, 4),
+            new Variable<string>("local2", "\"Mundo\"", 1, 10)
+        }}
+    };
     static Dictionary<string, List<Variable<float>>> floatVariables = new Dictionary<string, List<Variable<float>>>()
     {
         {"23", new List<Variable<float>>()

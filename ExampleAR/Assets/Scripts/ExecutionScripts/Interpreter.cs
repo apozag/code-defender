@@ -158,7 +158,7 @@ public class Interpreter : MonoBehaviour
                                             recursionUsed = true;
                                         }
                                     }
-                                    if (callCount > 20)
+                                    if (callCount > 30)
                                     {
                                         showErrorMessage("¡Demasiadas llamadas recursivas!");
                                         stopExecution();
@@ -197,9 +197,9 @@ public class Interpreter : MonoBehaviour
                                             else
                                                 iterations.Add(rollBackPos.Peek(), 0);
 
-                                            //A partir de 20 iteraciones se interpreta como un bucle infinito y paramos la ejecución.
+                                            //A partir de 30 iteraciones se interpreta como un bucle infinito y paramos la ejecución.
                                             //Más iteraciones pueden provocar el crasheo de la aplicación.
-                                            if (iterations[rollBackPos.Peek()] > 20)
+                                            if (iterations[rollBackPos.Peek()] > 30)
                                             {
                                                 showErrorMessage("¡Has hecho un bucle infinito o con demasiadas iteraciones!");
                                                 stopExecution();
@@ -220,8 +220,8 @@ public class Interpreter : MonoBehaviour
                                         }
                                         if (!evaluateCondition(current.GetComponentInChildren<ConditionGap>()))
                                         {
-                                            skip(BlockType.FOR);
                                             iterations.Remove(index);
+                                            skip(BlockType.FOR);
                                         }
                                         else
                                         {
@@ -232,9 +232,9 @@ public class Interpreter : MonoBehaviour
                                             else
                                                 iterations.Add(rollBackPos.Peek(), 0);
 
-                                            //A partir de 20 iteraciones se interpreta como un bucle infinito y paramos la ejecución.
+                                            //A partir de 30 iteraciones se interpreta como un bucle infinito y paramos la ejecución.
                                             //Más iteraciones pueden provocar el crasheo de la aplicación.
-                                            if (iterations[rollBackPos.Peek()] > 20)
+                                            if (iterations[rollBackPos.Peek()] > 30)
                                             {
                                                 showErrorMessage("¡Has hecho un bucle infinito o con demasiadas iteraciones!");
                                                 stopExecution();

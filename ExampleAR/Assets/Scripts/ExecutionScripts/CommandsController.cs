@@ -5,8 +5,7 @@ public enum Command
 {
     TURN_RIGHT,
     TURN_LEFT,
-    STEP,
-    JUMP
+    STEP
 }
 
 public class CommandsController : MonoBehaviour
@@ -53,12 +52,6 @@ public class CommandsController : MonoBehaviour
                     case Command.STEP:
                         player.step(1);
                         break;
-                    case Command.JUMP:
-                        player.jump();
-                        break;
-                    default:
-                        Debug.LogError("Command not implemented");
-                        break;
                 }
             }
             else
@@ -68,7 +61,7 @@ public class CommandsController : MonoBehaviour
                 string topic = PlayerPrefs.GetString("TOPIC");
                 string level = PlayerPrefs.GetString("LEVEL");
 
-                if (!topic.Equals("") && !level.Equals(""))
+                if (!topic.Equals("99") && !level.Equals("99"))
                 {
                     if (gc.isGoalComplete())
                         FindObjectOfType<UIController>().win();

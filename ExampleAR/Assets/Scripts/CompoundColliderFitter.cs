@@ -9,23 +9,22 @@ public class CompoundColliderFitter : MonoBehaviour
 
     BoxCollider2D col;
 
+    RectTransform rt;
+
     // Start is called before the first frame update
     void Start()
     {
         images = GetComponentsInChildren<Image>();
         col = GetComponent<BoxCollider2D>();
-        col.size += new Vector2(0, images[0].rectTransform.rect.height);
+        rt = GetComponent<RectTransform>();
+        col.size = new Vector2(rt.sizeDelta.x, rt.sizeDelta.y);
+        
+        col.offset = new Vector2(col.size.x / 2, 0);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(col.size.x < 10)
-        {
-            foreach(Image i in images)
-            {
-                col.size += new Vector2(i.rectTransform.rect.width, 0);
-            }
-        }
+        
     }
 }

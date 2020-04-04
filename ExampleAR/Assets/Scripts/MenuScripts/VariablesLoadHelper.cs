@@ -25,6 +25,9 @@ public static class VariablesLoadHelper
             new Variable<int>("i", 1, 2, 2),
             new Variable<int>("j", 0, 3, 4)
         } },
+        {"53", new List<Variable<int>>(){
+            new Variable<int>("contador", 0, 0, 2)
+        } },
         {"61", new List<Variable<int>>()
         {
             new Variable<int>("i", 0, 0, 1)

@@ -287,20 +287,20 @@ CompositeCollider2D:
   m_ColliderPaths:
   - m_Collider: {fileID: 69615878811075946}
     m_ColliderPaths:
-    - - X: 3527999971
-        Y: -163333328
-      - X: 3527999971
-        Y: 163333328
-      - X: 914666752
-        Y: 163333299
-      - X: 914666781
-        Y: -163333328
+    - - X: 3023999971
+        Y: -140000000
+      - X: 3023999971
+        Y: 140000000
+      - X: 783999936
+        Y: 139999971
+      - X: 783999965
+        Y: -140000000
   m_CompositePaths:
     m_Paths:
-    - - {x: 352.80002, y: -16.333332}
-      - {x: 352.80002, y: 16.333332}
-      - {x: 91.466675, y: 16.333326}
-      - {x: 91.46668, y: -16.333332}
+    - - {x: 302.4, y: -14}
+      - {x: 302.4, y: 14}
+      - {x: 78.399994, y: 13.999993}
+      - {x: 78.4, y: -14}
   m_VertexDistance: 0.0005
   m_OffsetDistance: 0.000005
 --- !u!1 &377689074935269588
@@ -716,7 +716,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 231.67857, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 58}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8644469057315228110
@@ -906,7 +906,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 52.67857, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 46.4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2295417045317870444
@@ -2063,7 +2063,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 52.67857, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 46}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1890325512474654680
@@ -3917,7 +3917,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 35.357143, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 45.999973}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &721868763861515286
@@ -4603,20 +4603,20 @@ CompositeCollider2D:
   m_ColliderPaths:
   - m_Collider: {fileID: 7170360923231920910}
     m_ColliderPaths:
-    - - X: 3527999971
-        Y: -163333328
-      - X: 3527999971
-        Y: 163333328
-      - X: 914666752
-        Y: 163333299
-      - X: 914666781
-        Y: -163333328
+    - - X: 3023999971
+        Y: -140000000
+      - X: 3023999971
+        Y: 140000000
+      - X: 783999936
+        Y: 139999971
+      - X: 783999965
+        Y: -140000000
   m_CompositePaths:
     m_Paths:
-    - - {x: 352.80002, y: -16.333332}
-      - {x: 352.80002, y: 16.333332}
-      - {x: 91.466675, y: 16.333326}
-      - {x: 91.46668, y: -16.333332}
+    - - {x: 302.4, y: -14}
+      - {x: 302.4, y: 14}
+      - {x: 78.399994, y: 13.999993}
+      - {x: 78.4, y: -14}
   m_VertexDistance: 0.0005
   m_OffsetDistance: 0.000005
 --- !u!1 &3266817984161672845
@@ -4654,7 +4654,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 52.67857, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 46.4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5595776454911363639
@@ -4748,7 +4748,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 381.57144, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 58}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6298988262805043589
@@ -4928,20 +4928,20 @@ CompositeCollider2D:
   m_ColliderPaths:
   - m_Collider: {fileID: 3871615558550938041}
     m_ColliderPaths:
-    - - X: 3527999971
-        Y: -163333328
-      - X: 3527999971
-        Y: 163333328
-      - X: 914666752
-        Y: 163333299
-      - X: 914666781
-        Y: -163333328
+    - - X: 3023999971
+        Y: -140000000
+      - X: 3023999971
+        Y: 140000000
+      - X: 783999936
+        Y: 139999971
+      - X: 783999965
+        Y: -140000000
   m_CompositePaths:
     m_Paths:
-    - - {x: 352.80002, y: -16.333332}
-      - {x: 352.80002, y: 16.333332}
-      - {x: 91.466675, y: 16.333326}
-      - {x: 91.46668, y: -16.333332}
+    - - {x: 302.4, y: -14}
+      - {x: 302.4, y: 14}
+      - {x: 78.399994, y: 13.999993}
+      - {x: 78.4, y: -14}
   m_VertexDistance: 0.0005
   m_OffsetDistance: 0.000005
 --- !u!1 &3407961802332877855
@@ -6279,7 +6279,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 48.214287, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &333103981425258533
@@ -6456,7 +6456,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 48.214287, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 45.999973}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5257852704595395085
@@ -8491,20 +8491,20 @@ CompositeCollider2D:
   m_ColliderPaths:
   - m_Collider: {fileID: 6678729455114456596}
     m_ColliderPaths:
-    - - X: 3527999971
-        Y: -163333328
-      - X: 3527999971
-        Y: 163333328
-      - X: 914666752
-        Y: 163333299
-      - X: 914666781
-        Y: -163333328
+    - - X: 3023999971
+        Y: -140000000
+      - X: 3023999971
+        Y: 140000000
+      - X: 783999936
+        Y: 139999971
+      - X: 783999965
+        Y: -140000000
   m_CompositePaths:
     m_Paths:
-    - - {x: 352.80002, y: -16.333332}
-      - {x: 352.80002, y: 16.333332}
-      - {x: 91.466675, y: 16.333326}
-      - {x: 91.46668, y: -16.333332}
+    - - {x: 302.4, y: -14}
+      - {x: 302.4, y: 14}
+      - {x: 78.399994, y: 13.999993}
+      - {x: 78.4, y: -14}
   m_VertexDistance: 0.0005
   m_OffsetDistance: 0.000005
 --- !u!1 &5799774078466751263
@@ -10034,7 +10034,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 52.67857, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 46}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8488737840484054915
@@ -10563,7 +10563,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 368.7143, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 58}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8281509261072415585
@@ -10680,7 +10680,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 35.357143, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &540753821910203449
@@ -12014,7 +12014,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 231.67857, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 58}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3771937163021328538
@@ -13792,82 +13792,82 @@ PrefabInstance:
     - target: {fileID: 66178868682734166, guid: 0e4bfb69211fdfb42b6dad39fef1e8ea,
         type: 3}
       propertyPath: m_ColliderPaths.Array.data[0].m_ColliderPaths.Array.data[0].Array.data[0].X
-      value: 3070666467
+      value: 2631999971
       objectReference: {fileID: 0}
     - target: {fileID: 66178868682734166, guid: 0e4bfb69211fdfb42b6dad39fef1e8ea,
         type: 3}
       propertyPath: m_ColliderPaths.Array.data[0].m_ColliderPaths.Array.data[0].Array.data[0].Y
-      value: -163333328
+      value: -140000000
       objectReference: {fileID: 0}
     - target: {fileID: 66178868682734166, guid: 0e4bfb69211fdfb42b6dad39fef1e8ea,
         type: 3}
       propertyPath: m_ColliderPaths.Array.data[0].m_ColliderPaths.Array.data[0].Array.data[1].X
-      value: 3070666467
+      value: 2631999971
       objectReference: {fileID: 0}
     - target: {fileID: 66178868682734166, guid: 0e4bfb69211fdfb42b6dad39fef1e8ea,
         type: 3}
       propertyPath: m_ColliderPaths.Array.data[0].m_ColliderPaths.Array.data[0].Array.data[1].Y
-      value: 163333328
+      value: 140000000
       objectReference: {fileID: 0}
     - target: {fileID: 66178868682734166, guid: 0e4bfb69211fdfb42b6dad39fef1e8ea,
         type: 3}
       propertyPath: m_ColliderPaths.Array.data[0].m_ColliderPaths.Array.data[0].Array.data[2].X
-      value: 457333376
+      value: 392000128
       objectReference: {fileID: 0}
     - target: {fileID: 66178868682734166, guid: 0e4bfb69211fdfb42b6dad39fef1e8ea,
         type: 3}
       propertyPath: m_ColliderPaths.Array.data[0].m_ColliderPaths.Array.data[0].Array.data[2].Y
-      value: 163333299
+      value: 139999971
       objectReference: {fileID: 0}
     - target: {fileID: 66178868682734166, guid: 0e4bfb69211fdfb42b6dad39fef1e8ea,
         type: 3}
       propertyPath: m_ColliderPaths.Array.data[0].m_ColliderPaths.Array.data[0].Array.data[3].X
-      value: 457333405
+      value: 392000157
       objectReference: {fileID: 0}
     - target: {fileID: 66178868682734166, guid: 0e4bfb69211fdfb42b6dad39fef1e8ea,
         type: 3}
       propertyPath: m_ColliderPaths.Array.data[0].m_ColliderPaths.Array.data[0].Array.data[3].Y
-      value: -163333328
+      value: -140000000
       objectReference: {fileID: 0}
     - target: {fileID: 66178868682734166, guid: 0e4bfb69211fdfb42b6dad39fef1e8ea,
         type: 3}
       propertyPath: m_CompositePaths.m_Paths.Array.data[0].Array.data[0].x
-      value: 307.06665
+      value: 263.2
       objectReference: {fileID: 0}
     - target: {fileID: 66178868682734166, guid: 0e4bfb69211fdfb42b6dad39fef1e8ea,
         type: 3}
       propertyPath: m_CompositePaths.m_Paths.Array.data[0].Array.data[0].y
-      value: -16.333332
+      value: -14
       objectReference: {fileID: 0}
     - target: {fileID: 66178868682734166, guid: 0e4bfb69211fdfb42b6dad39fef1e8ea,
         type: 3}
       propertyPath: m_CompositePaths.m_Paths.Array.data[0].Array.data[1].x
-      value: 307.06665
+      value: 263.2
       objectReference: {fileID: 0}
     - target: {fileID: 66178868682734166, guid: 0e4bfb69211fdfb42b6dad39fef1e8ea,
         type: 3}
       propertyPath: m_CompositePaths.m_Paths.Array.data[0].Array.data[1].y
-      value: 16.333332
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 66178868682734166, guid: 0e4bfb69211fdfb42b6dad39fef1e8ea,
         type: 3}
       propertyPath: m_CompositePaths.m_Paths.Array.data[0].Array.data[2].x
-      value: 45.733337
+      value: 39.200012
       objectReference: {fileID: 0}
     - target: {fileID: 66178868682734166, guid: 0e4bfb69211fdfb42b6dad39fef1e8ea,
         type: 3}
       propertyPath: m_CompositePaths.m_Paths.Array.data[0].Array.data[2].y
-      value: 16.333326
+      value: 13.999993
       objectReference: {fileID: 0}
     - target: {fileID: 66178868682734166, guid: 0e4bfb69211fdfb42b6dad39fef1e8ea,
         type: 3}
       propertyPath: m_CompositePaths.m_Paths.Array.data[0].Array.data[3].x
-      value: 45.733345
+      value: 39.20002
       objectReference: {fileID: 0}
     - target: {fileID: 66178868682734166, guid: 0e4bfb69211fdfb42b6dad39fef1e8ea,
         type: 3}
       propertyPath: m_CompositePaths.m_Paths.Array.data[0].Array.data[3].y
-      value: -16.333332
+      value: -14
       objectReference: {fileID: 0}
     - target: {fileID: 224994666156117454, guid: 0e4bfb69211fdfb42b6dad39fef1e8ea,
         type: 3}

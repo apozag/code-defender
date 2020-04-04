@@ -15,12 +15,16 @@ public class ColliderFitter : MonoBehaviour
     {
         col = GetComponent<BoxCollider2D>();
         img = GetComponent<Image>();
+        col.size = img.rectTransform.rect.size;
+        col.offset = new Vector2(img.rectTransform.rect.size.x / 2, col.offset.y);
     }
 
     // Update is called once per frame
     void Update()
     {
-        col.size = img.rectTransform.rect.size;
-
+        if(col.size.x < 10)
+        {
+            col.size = img.rectTransform.rect.size;
+        }
     }
 }

@@ -1459,7 +1459,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "Llama a la funci\xF3n llamada \"aux\". Esto har\xE1 que se ejecute todo
-    el c\xF3digo que tenga dentro."
+    el c\xF3digo que tenga dentro.\nPuedes encontrarlo en B\xE1sicos"
 --- !u!1 &1836008310550048695
 GameObject:
   m_ObjectHideFlags: 0
@@ -10708,11 +10708,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8897553806940210288, guid: fe6187bd007493047b16fb22a2b809d3,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8787531177197981524, guid: fe6187bd007493047b16fb22a2b809d3,
         type: 3}
       propertyPath: m_AnchorMin.x
@@ -10741,6 +10736,11 @@ PrefabInstance:
     - target: {fileID: 8787531177197981524, guid: fe6187bd007493047b16fb22a2b809d3,
         type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8897553806940210288, guid: fe6187bd007493047b16fb22a2b809d3,
+        type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

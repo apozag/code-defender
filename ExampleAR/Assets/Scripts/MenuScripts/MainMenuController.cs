@@ -31,7 +31,7 @@ public class MainMenuController : MonoBehaviour
         }
         else
         {
-            SceneManager.LoadScene(4);
+            SceneManager.LoadScene(1);
         }
 
 

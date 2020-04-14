@@ -5,13 +5,15 @@ public enum Command
 {
     TURN_RIGHT,
     TURN_LEFT,
-    STEP
+    STEP,
+    TALK,
 }
 
 public class CommandsController : MonoBehaviour
 {
 
     Queue<Command> commands;
+    Queue<string> messages;
 
     public PlayerMovement player;
 
@@ -24,6 +26,7 @@ public class CommandsController : MonoBehaviour
     void Start()
     {
         commands = new Queue<Command>();
+        messages = new Queue<string>();
         gc = GetComponent<GoalChecker>();
     }
 
@@ -52,6 +55,9 @@ public class CommandsController : MonoBehaviour
                     case Command.STEP:
                         player.step(1);
                         break;
+                    case Command.TALK:
+                        player.say(messages.Dequeue());
+                        break;
                 }
             }
             else
@@ -76,6 +82,10 @@ public class CommandsController : MonoBehaviour
     public void addCommand(Command c)
     {
         commands.Enqueue(c);
+    }
+    public void addMessage(string msg)
+    {
+        messages.Enqueue(msg);
     }
 
     public bool isRunning()

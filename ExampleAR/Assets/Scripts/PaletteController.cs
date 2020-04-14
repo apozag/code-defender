@@ -19,6 +19,7 @@ public class PaletteController : MonoBehaviour {
     public GameObject int_variable_template;
     public GameObject string_variable_template;
     public GameObject float_variable_template;
+    public GameObject int_array_template;
 
     CodePanelController cpc;
 
@@ -78,6 +79,7 @@ public class PaletteController : MonoBehaviour {
                 List<Variable<int>> varsInt = cpc.getIntVariables();
                 List<Variable<string>> varsString = cpc.getStringVariables();
                 List<Variable<float>> varsFloat = cpc.getFloatVariables();
+                List<Array<int>> arraysInt = cpc.getIntArrays();
 
                 for(int i = 0; i < varsInt.Count; i++)
                 {
@@ -104,6 +106,14 @@ public class PaletteController : MonoBehaviour {
                     newvar.transform.SetParent(vlg.transform);
                     newvar.transform.localScale = new Vector2(1, 1);
 
+                }
+
+                for(int i = 0; i < arraysInt.Count; i++)
+                {
+                    GameObject newvar = Instantiate(int_array_template);
+                    newvar.GetComponentInChildren<Text>().text = arraysInt[i].name;
+                    newvar.transform.SetParent(vlg.transform);
+                    newvar.transform.localScale = new Vector2(1, 1);
                 }
 
                 foreach (GameObject go in variables)

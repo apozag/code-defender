@@ -7,61 +7,61 @@ public static class VariablesLoadHelper
     {
         {"31", new List<Variable<int>>()
         {
-            new Variable<int>("foo", 1, 1, 2)
+            new Variable<int>("foo", 1, 1, null)
         } },
         {"32", new List<Variable<int>>()
         {
-            new Variable<int>("foo", 2, 1, 2)
+            new Variable<int>("foo", 2, 1, null)
         } },
         {"41", new List<Variable<int>>()
         {
-            new Variable<int>("i", 0, 1, 2)
+            new Variable<int>("i", 0, 1, null)
         } },
         {"42", new List<Variable<int>>()
         {
-            new Variable<int>("i", 0, 2, 2)
+            new Variable<int>("i", 0, 2, null)
         } },
         {"43", new List<Variable<int>>(){
-            new Variable<int>("i", 1, 2, 2),
-            new Variable<int>("j", 0, 3, 4)
+            new Variable<int>("i", 1, 2, null),
+            new Variable<int>("j", 0, 3, null)
         } },
         {"53", new List<Variable<int>>(){
-            new Variable<int>("contador", 0, 0, 2)
+            new Variable<int>("contador", 0, 0, null)
         } },
         {"61", new List<Variable<int>>()
         {
-            new Variable<int>("i", 0, 0, 1)
+            new Variable<int>("i", 0, 0, null)
         } }
     };
     static Dictionary<string, List<Variable<string>>> stringVariables = new Dictionary<string, List<Variable<string>>>()
     {
         {"22", new List<Variable<string>>()
         {
-            new Variable<string>("str", "\"Hola\"", 1, 3),
-            new Variable<string>("str2", "\"Mundo\"", 1, 5)
+            new Variable<string>("str", "\"Hola\"", 1, null),
+            new Variable<string>("str2", "\"Mundo\"", 1, null)
         }},
 
         {"33", new List<Variable<string>>()
         {
-            new Variable<string>("str1", "\"Code\"", 1, 2),
-            new Variable<string>("str2", "\" Defender\"", 1, 3)
+            new Variable<string>("str1", "\"Code\"", 1, null),
+            new Variable<string>("str2", "\" Defender\"", 1, null)
         }},
         {"52", new List<Variable<string>>()
         {
-            new Variable<string>("local1", "\"Hola\"", 1, 4),
-            new Variable<string>("local2", "\"Mundo\"", 1, 10)
+            new Variable<string>("local1", "\"Hola\"", 1, null),
+            new Variable<string>("local2", "\"Mundo\"", 1, null)
         }}
     };
     static Dictionary<string, List<Variable<float>>> floatVariables = new Dictionary<string, List<Variable<float>>>()
     {
         {"23", new List<Variable<float>>()
         {
-            new Variable<float>("num1", 5.0f, 1, 3),
-            new Variable<float>("num2", 7.0f, 1, 5)
+            new Variable<float>("num1", 5.0f, 1, null),
+            new Variable<float>("num2", 7.0f, 1, null)
         } },
         {"32", new List<Variable<float>>()
         {
-            new Variable<float>("var", 1.5f, 1, 3)
+            new Variable<float>("var", 1.5f, 1, null)
         } }
     };
 

@@ -7,14 +7,17 @@ using UnityEngine.UI;
 public class UIController : MonoBehaviour
 {
 
+    VariableChecker variableChecker;
+    MessageChecker messageChecker;
+
     public static Dictionary<string, int> numLevels = new Dictionary<string, int>() {
-        {"1", 3},
-        {"2", 3},
-        {"3", 3},
-        {"4", 2},
-        {"5", 1},
-        {"6", 1},
-        {"7", 1}
+        {"1", 6},
+        {"2", 6},
+        {"3", 6},
+        {"4", 6},
+        {"5", 6},
+        {"6", 6},
+        {"7", 6}
     };
 
     BlocksGenerator bg;
@@ -38,6 +41,8 @@ public class UIController : MonoBehaviour
     {
         bg = FindObjectOfType<BlocksGenerator>();
         interpreter = FindObjectOfType<Interpreter>();
+        variableChecker = GetComponent<VariableChecker>();
+        messageChecker = GetComponent<MessageChecker>();
         popup.SetActive(false);
         winPopUp.SetActive(false);
         tutorialPanel.SetActive(false);
@@ -142,10 +147,10 @@ public class UIController : MonoBehaviour
 
     public void win()
     {
-        VariableChecker vc = GetComponent<VariableChecker>();
-        if (( vc != null && !vc.isGoalComplete()) || PlayerPrefs.GetString("TOPIC").Equals("99"))
-            loose();
-        else if(interpreter.isRecursiveLevel() && !interpreter.usedRecursion())
+        if ((variableChecker != null && !variableChecker.isGoalComplete()) ||
+            PlayerPrefs.GetString("TOPIC").Equals("99") ||
+            (interpreter.isRecursiveLevel() && !interpreter.usedRecursion()) ||
+            (messageChecker != null && !messageChecker.isGoalComplete()))
         {
             loose();
         }

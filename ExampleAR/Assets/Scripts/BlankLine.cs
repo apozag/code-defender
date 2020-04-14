@@ -12,22 +12,25 @@ public class BlankLine : MonoBehaviour {
     Draggable candidate;
 
     static List<int> allowedTypes = new List<int>(){
-        (int)BlockType.CLASS,
+        (int) BlockType.CLASS,
         (int) BlockType.FUNCTION,
         (int) BlockType.FUNCTION_CALL,
         (int) BlockType.MAIN_FUNCTION,
         (int) BlockType.STEP,
         (int) BlockType.TURN_LEFT,
         (int) BlockType.TURN_RIGHT,
+        (int) BlockType.SAY,
         (int) BlockType.WHILE,
         (int) BlockType.FOR,
+        (int) BlockType.DO_WHILE,
         (int) BlockType.IF,
         (int) BlockType.ELSE_IF,
         (int) BlockType.ELSE,
         (int) BlockType.ASSIGNMENT,
         (int) BlockType.DECLARE_INT,
         (int) BlockType.DECLARE_STRING,
-        (int) BlockType.DECLARE_FLOAT
+        (int) BlockType.DECLARE_FLOAT,
+        (int) BlockType.DECLARE_INT_ARRAY
     };
 
     // Use this for initialization

@@ -45,7 +45,13 @@ public enum BlockType
     MULT,
     DIV, 
 
-    FUNCTION_CALL
+    FUNCTION_CALL,
+
+    DO_WHILE,
+    DECLARE_INT_ARRAY,
+    INT_ARRAY_VAR, 
+
+    SAY
 }
 
 public class Block : MonoBehaviour {
@@ -89,4 +95,5 @@ public class Block : MonoBehaviour {
     {
         return offset;
     }
+
 }

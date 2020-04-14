@@ -18,9 +18,10 @@ public class VariableGap : MonoBehaviour
     //Condition currentCondition;
 
     protected static List<int> allowedTypes = new List<int>() {
-        (int)BlockType.INT_VAR,
+        (int) BlockType.INT_VAR,
         (int) BlockType.STRING_VAR,
-        (int) BlockType.FLOAT_VAR
+        (int) BlockType.FLOAT_VAR,
+        (int) BlockType.INT_ARRAY_VAR
     };
 
     public bool empty = true;
@@ -108,8 +109,12 @@ public class VariableGap : MonoBehaviour
     public void reset()
     {
         BlocksGenerator.disableFitters(this.gameObject);
+        Block content = GetComponentInChildren<Block>();
 
-        Destroy(GetComponentInChildren<Block>().gameObject);
+        if (content != null)
+        {
+            Destroy(content.gameObject);
+        }
 
         //Canvas.ForceUpdateCanvases();
 

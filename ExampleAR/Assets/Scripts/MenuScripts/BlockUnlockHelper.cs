@@ -8,12 +8,16 @@ public static class BlockUnlockHelper
             {11, new BlockType[]{
                 BlockType.CLASS,
                 BlockType.MAIN_FUNCTION,
-                BlockType.STEP
+                BlockType.STEP,
             } },
 
             {12, new BlockType[]{
                 BlockType.TURN_LEFT,
                 BlockType.TURN_RIGHT
+            } },
+
+            {14, new BlockType[]{
+                BlockType.SAY
             } },
 
             {21, new BlockType[]{
@@ -23,7 +27,7 @@ public static class BlockUnlockHelper
 
             {22, new BlockType[]{
                 BlockType.DECLARE_STRING,
-                BlockType.DECLARE_FLOAT,
+                BlockType.DECLARE_FLOAT
             } },
 
             {23, new BlockType[]{
@@ -40,9 +44,7 @@ public static class BlockUnlockHelper
                 BlockType.GREATER_EQUAL_THAN,
                 BlockType.LESS_THAN,
                 BlockType.LESS_EQUAL_THAN,
-                BlockType.NOT_EQUAL,
-                BlockType.TRUE,
-                BlockType.FALSE
+                BlockType.NOT_EQUAL
             } },
 
             {32, new BlockType[]{
@@ -63,6 +65,11 @@ public static class BlockUnlockHelper
                 BlockType.FOR
             } },
 
+            {44, new BlockType[]{
+                BlockType.DO_WHILE,
+                BlockType.DECLARE_INT_ARRAY
+            } },
+
             {51, new BlockType[]{
                 BlockType.FUNCTION_CALL
             } },
@@ -80,10 +87,12 @@ public static class BlockUnlockHelper
         {BlockType.STEP, 3},
         {BlockType.TURN_LEFT, 3},
         {BlockType.TURN_RIGHT, 3},
+        {BlockType.SAY, 3},
         {BlockType.DECLARE_INT, 2},
         {BlockType.ASSIGNMENT, 2},
         {BlockType.DECLARE_STRING, 2},
         {BlockType.DECLARE_FLOAT, 2},
+        {BlockType.DECLARE_INT_ARRAY, 2},
         {BlockType.SUM, 5},
         {BlockType.SUBS, 5},
         {BlockType.MULT, 5},
@@ -103,6 +112,7 @@ public static class BlockUnlockHelper
         {BlockType.FALSE, 4},
         {BlockType.WHILE, 1},
         {BlockType.FOR, 1},
+        {BlockType.DO_WHILE, 1},
         {BlockType.FUNCTION_CALL, 0},
         {BlockType.FUNCTION, 0}
 
@@ -111,14 +121,16 @@ public static class BlockUnlockHelper
     {
         {BlockType.CLASS,               Resources.Load<GameObject>("Prefabs/Draggables/Basic/class_d")},
         {BlockType.MAIN_FUNCTION,       Resources.Load<GameObject>("Prefabs/Draggables/Basic/mainmethod_d")},
-        {BlockType.FUNCTION_CALL,            Resources.Load<GameObject>("Prefabs/Draggables/Basic/functioncall_d")},
+        {BlockType.FUNCTION_CALL,       Resources.Load<GameObject>("Prefabs/Draggables/Basic/functioncall_d")},
         {BlockType.STEP,                Resources.Load<GameObject>("Prefabs/Draggables/Movement/step_d")},
         {BlockType.TURN_LEFT,           Resources.Load<GameObject>("Prefabs/Draggables/Movement/turnleft_d")},
         {BlockType.TURN_RIGHT,          Resources.Load<GameObject>("Prefabs/Draggables/Movement/turnright_d")},
+        {BlockType.SAY,                 Resources.Load<GameObject>("Prefabs/Draggables/Movement/say_d")},
         {BlockType.ASSIGNMENT,          Resources.Load<GameObject>("Prefabs/Draggables/Variables/assignment_d")},
         {BlockType.DECLARE_INT,         Resources.Load<GameObject>("Prefabs/Draggables/Variables/declareint_d")},
         {BlockType.DECLARE_STRING,      Resources.Load<GameObject>("Prefabs/Draggables/Variables/declarestring_d")},
         {BlockType.DECLARE_FLOAT,       Resources.Load<GameObject>("Prefabs/Draggables/Variables/declarefloat_d")},
+        {BlockType.DECLARE_INT_ARRAY,   Resources.Load<GameObject>("Prefabs/Draggables/Variables/declareintarray_d")},
         {BlockType.SUM,                 Resources.Load<GameObject>("Prefabs/Draggables/Operations/sum_d")},
         {BlockType.SUBS,                Resources.Load<GameObject>("Prefabs/Draggables/Operations/sub_d")},
         {BlockType.MULT,                Resources.Load<GameObject>("Prefabs/Draggables/Operations/mult_d")},
@@ -134,10 +146,9 @@ public static class BlockUnlockHelper
         {BlockType.LESS_THAN,           Resources.Load<GameObject>("Prefabs/Draggables/Condition/lessthan_d")},
         {BlockType.AND,                 Resources.Load<GameObject>("Prefabs/Draggables/Condition/and_d")},
         {BlockType.OR,                  Resources.Load<GameObject>("Prefabs/Draggables/Condition/or_d")},
-        {BlockType.TRUE,                Resources.Load<GameObject>("Prefabs/Draggables/Condition/true_d")},
-        {BlockType.FALSE,               Resources.Load<GameObject>("Prefabs/Draggables/Condition/false_d")},
         {BlockType.WHILE,               Resources.Load<GameObject>("Prefabs/Draggables/Loops/while_d")},
         {BlockType.FOR,                 Resources.Load<GameObject>("Prefabs/Draggables/Loops/for_d")},
+        {BlockType.DO_WHILE,            Resources.Load<GameObject>("Prefabs/Draggables/Loops/dowhile_d")},
         {BlockType.FUNCTION,            Resources.Load<GameObject>("Prefabs/Draggables/Basic/aux_method_d")}
     };
 

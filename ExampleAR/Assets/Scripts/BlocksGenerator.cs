@@ -28,6 +28,8 @@ public class BlocksGenerator : MonoBehaviour
     public GameObject while_end;
     public GameObject for_head;
     public GameObject for_end;
+    public GameObject do_while_head;
+    public GameObject do_while_end;
 
     public GameObject if_head;
     public GameObject if_end;
@@ -39,10 +41,12 @@ public class BlocksGenerator : MonoBehaviour
     public GameObject declare_int;
     public GameObject declare_string;
     public GameObject declare_float;
+    public GameObject declare_int_array;
 
     public GameObject turnleft;
     public GameObject turnright;
     public GameObject step;
+    public GameObject say;
 
 
     //Coonditions
@@ -63,6 +67,7 @@ public class BlocksGenerator : MonoBehaviour
     public GameObject variable_block_template_int;
     public GameObject variable_block_template_string;
     public GameObject variable_block_template_float;
+    public GameObject array_block_template_int;
 
     //variable assignment
     public GameObject assignment;
@@ -159,6 +164,14 @@ public class BlocksGenerator : MonoBehaviour
                 uicontroller.showPopUp();
                 break;
 
+            case BlockType.DO_WHILE:
+                addElement(Instantiate(blankLine), index, offset, scope);
+                addElement(Instantiate(do_while_head), index + 1, offset, scope);
+                addElement(Instantiate(blankLine), index + 2, offset + cpc.offset, scope);
+                addElement(Instantiate(do_while_end), index + 3, offset, scope);
+                addElement(Instantiate(blankLine), index + 4, offset, scope);
+                break;
+
             case BlockType.IF:
 
                 addElement(Instantiate(blankLine), index, offset, scope);
@@ -233,6 +246,17 @@ public class BlocksGenerator : MonoBehaviour
                 uicontroller.showPopUp();
 
                 break;
+            case BlockType.DECLARE_INT_ARRAY:
+
+                declare_var = Instantiate(declare_int_array);
+
+                addElement(Instantiate(blankLine), index, offset, scope);
+                addElement(declare_var, index + 1, offset, scope);
+                addElement(Instantiate(blankLine), index + 2, offset, scope);
+
+                uicontroller.showPopUp();
+
+                break;
 
             case BlockType.TURN_LEFT:
 
@@ -257,7 +281,13 @@ public class BlocksGenerator : MonoBehaviour
                 addElement(Instantiate(blankLine), index + 2, offset, scope);
 
                 break;
+            case BlockType.SAY:
 
+                addElement(Instantiate(blankLine), index, offset, scope);
+                addElement(Instantiate(say), index + 1, offset, scope);
+                addElement(Instantiate(blankLine), index + 2, offset, scope);
+
+                break;
             default:
                 Debug.LogError("Block type not defined!");
                 break;
@@ -318,17 +348,24 @@ public class BlocksGenerator : MonoBehaviour
         enableFitters(gap.gameObject);
     }
 
-    public void insertVariable(VariableGap gap, Block block, string name, ValueType type)
+    public void insertVariable(VariableGap gap, BlockType btype, string name, ValueType vtype)
     {
       
         disableFitters(gap.gameObject);
 
         GameObject go = new GameObject();
 
-        switch (type)
+        switch (vtype)
         {
             case ValueType.INT:
-                go = Instantiate(variable_block_template_int);
+                if (btype == BlockType.INT_ARRAY_VAR)
+                {
+                    go = Instantiate(array_block_template_int);
+                }
+                else
+                {
+                    go = Instantiate(variable_block_template_int);
+                }
                 break;
             case ValueType.STRING:
                 go = Instantiate(variable_block_template_string);
@@ -337,6 +374,14 @@ public class BlocksGenerator : MonoBehaviour
                 go = Instantiate(variable_block_template_float);
                 break;
         }
+
+        GameObject block = gap.gameObject;
+
+        while (block.GetComponent<Block>() == null)
+        {
+            block = block.transform.parent.gameObject;
+        }
+        go.GetComponent<Block>().scope = block.GetComponent<Block>().scope;
         go.GetComponentInChildren<Text>().text = name;
         go.transform.SetParent(gap.transform);
         go.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
@@ -407,23 +452,27 @@ public class BlocksGenerator : MonoBehaviour
             txt.text = text;
             enableFitters(declare_var.transform.GetChild(0).GetChild(5).GetComponentInChildren<ValueGap>().GetComponentInChildren<Block>().GetComponentInChildren<Text>().gameObject);
         }
-               
+
 
 
         //finally we tell the code controller to add the variable to its dictionary
-        switch (declare_var.GetComponent<Block>().type)
+        Block b = declare_var.GetComponent<Block>();
+        switch (b.type)
         {
             case BlockType.FOR:
-                cpc.addIntVar(new Variable<int>(text, 0, new_scope + 1, declare_var.transform.GetSiblingIndex()));
+                cpc.addIntVar(new Variable<int>(text, 0, new_scope + 1, b));
                 break;
             case BlockType.DECLARE_INT:
-                cpc.addIntVar(new Variable<int>(text, 0, new_scope, declare_var.transform.GetSiblingIndex()));
+                cpc.addIntVar(new Variable<int>(text, 0, new_scope, b));
                 break;
             case BlockType.DECLARE_STRING:
-                cpc.addStringVar(new Variable<string>(text, "", new_scope, declare_var.transform.GetSiblingIndex()));
+                cpc.addStringVar(new Variable<string>(text, "", new_scope, b));
                 break;
             case BlockType.DECLARE_FLOAT:
-                cpc.addFloatVar(new Variable<float>(text, 0.0f, new_scope, declare_var.transform.GetSiblingIndex()));
+                cpc.addFloatVar(new Variable<float>(text, 0.0f, new_scope, b));
+                break;
+            case BlockType.DECLARE_INT_ARRAY:
+                cpc.addIntArray(new Array<int>(text, 0, new_scope, b));
                 break;
         }
     }

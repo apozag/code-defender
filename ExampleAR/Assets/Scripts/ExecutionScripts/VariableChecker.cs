@@ -32,6 +32,15 @@ public class VariableChecker : MonoBehaviour
         {"52", "\"Hola\""}
     };
 
+    static Dictionary<string, List<int>> levelIntArrayValues = new Dictionary<string, List<int>>()
+    {
+    };
+
+    static Dictionary<string, int> levelIntArraySizes = new Dictionary<string, int>()
+    {
+        {"45", 5 }
+    };
+
     static Dictionary<string, string> levelIntNames = new Dictionary<string, string>();
     static Dictionary<string, string> levelStringNames = new Dictionary<string, string>()
     {
@@ -39,6 +48,7 @@ public class VariableChecker : MonoBehaviour
         {"52", "local1"}
     };
     static Dictionary<string, string> levelFloatNames = new Dictionary<string, string>();
+    static Dictionary<string, string> levelIntArrayNames = new Dictionary<string, string>();
 
     // Start is called before the first frame update
     void Start()
@@ -55,65 +65,115 @@ public class VariableChecker : MonoBehaviour
     public bool isGoalComplete()
     {
         string topicLevel = PlayerPrefs.GetString("TOPIC", "") + PlayerPrefs.GetString("LEVEL", "");
-        if (levelTypes.ContainsKey(topicLevel) && !topicLevel.Equals("") && !topicLevel.Equals("9999"))
+        if (!topicLevel.Equals("") && !topicLevel.Equals("9999"))
         {
-            switch (levelTypes[topicLevel])
+            if (levelTypes.ContainsKey(topicLevel))
             {
-                case ValueType.INT:
-                    foreach (Variable<int> var in cpc.getIntVariables())
-                    {
-                        if (!levelIntValues.ContainsKey(topicLevel))
-                            return true;
-                        else if(var.value == levelIntValues[topicLevel])
+                switch (levelTypes[topicLevel])
+                {
+                    case ValueType.INT:
+                        foreach (Variable<int> var in cpc.getIntVariables())
                         {
-                            if (!levelIntNames.ContainsKey(topicLevel))
+                            if (!levelIntValues.ContainsKey(topicLevel))
                                 return true;
-                            else
+                            else if (var.value == levelIntValues[topicLevel])
                             {
-                                if (levelIntNames[topicLevel] == var.name)
-                                    return true;   
-                            }
-                        }
-                    }
-                    return false;
-                case ValueType.STRING:
-                    foreach (Variable<string> var in cpc.getStringVariables())
-                    {
-                        if (!levelStringValues.ContainsKey(topicLevel))
-                            return true;
-                        else if (var.value == levelStringValues[topicLevel])
-                        {
-                            if (!levelStringNames.ContainsKey(topicLevel))
-                                return true;
-                            else
-                            {
-                                if (levelStringNames[topicLevel] == var.name)
+                                if (!levelIntNames.ContainsKey(topicLevel))
                                     return true;
+                                else
+                                {
+                                    if (levelIntNames[topicLevel] == var.name)
+                                        return true;
+                                }
                             }
                         }
-                    }
-                    return false;
-                case ValueType.FLOAT:
-                    foreach (Variable<float> var in cpc.getFloatVariables())
-                    {
-                        if (!levelFloatValues.ContainsKey(topicLevel))
-                            return true;
-                        else if (var.value == levelFloatValues[topicLevel])
+                        return false;
+                    case ValueType.STRING:
+                        foreach (Variable<string> var in cpc.getStringVariables())
                         {
-                            if (!levelFloatNames.ContainsKey(topicLevel))
+                            if (!levelStringValues.ContainsKey(topicLevel))
                                 return true;
-                            else
+                            else if (var.value == levelStringValues[topicLevel])
                             {
-                                if (levelFloatNames[topicLevel] == var.name)
+                                if (!levelStringNames.ContainsKey(topicLevel))
                                     return true;
+                                else
+                                {
+                                    if (levelStringNames[topicLevel] == var.name)
+                                        return true;
+                                }
                             }
                         }
-                    }
-                    return false;
-                default:
-                    ToastMessage.showToastOnUiThread("Ups! se ha producido un error.");
-                    return false;
+                        return false;
+                    case ValueType.FLOAT:
+                        foreach (Variable<float> var in cpc.getFloatVariables())
+                        {
+                            if (!levelFloatValues.ContainsKey(topicLevel))
+                                return true;
+                            else if (var.value == levelFloatValues[topicLevel])
+                            {
+                                if (!levelFloatNames.ContainsKey(topicLevel))
+                                    return true;
+                                else
+                                {
+                                    if (levelFloatNames[topicLevel] == var.name)
+                                        return true;
+                                }
+                            }
+                        }
+                        return false;
+                    default:
+                        ToastMessage.showToastOnUiThread("Ups! se ha producido un error.");
+                        return false;
+                }
             }
+
+            //Tema arrays
+            bool complete = false;
+            if (levelIntArraySizes.ContainsKey(topicLevel))
+            {
+                foreach(Array<int> array in cpc.getIntArrays())
+                {
+                    if (array.size == levelIntArraySizes[topicLevel])
+                    {
+                        complete = true;
+                        break;
+                    }
+                }
+            }
+            if (levelIntArrayNames.ContainsKey(topicLevel))
+            {
+                foreach (Array<int> array in cpc.getIntArrays())
+                {
+                    if (array.name == levelIntArrayNames[topicLevel])
+                    {
+                        complete = true;
+                        break;
+                    }
+                    complete = false;
+                }
+            }
+            if (levelIntArrayValues.ContainsKey(topicLevel)){
+                foreach (Array<int> array in cpc.getIntArrays())
+                {
+                    bool temp = true;
+                    for (int i = 0; i < array.values.Count; i++)
+                    {
+                        if(array.values[i] != levelIntArrayValues[topicLevel][i])
+                        {
+                            temp = false;
+                            break;
+                        }
+                    }
+                    if (temp)
+                    {
+                        complete = true;
+                        break;
+                    }
+                    complete = false;
+                }
+            }
+            return  complete;
         }
         else return true;
     }

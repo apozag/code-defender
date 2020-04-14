@@ -15,6 +15,8 @@ public class Interpreter : MonoBehaviour
 
     public UIController uiController;
 
+    public MessageChecker messageChecker;
+
     bool isExecuting = false;
 
     bool entryPointFound = false;
@@ -42,6 +44,7 @@ public class Interpreter : MonoBehaviour
         uiController = FindObjectOfType<UIController>();
         vlg = GameObject.FindGameObjectWithTag("Content");
         cpc = FindObjectOfType<CodePanelController>();
+        messageChecker = FindObjectOfType<MessageChecker>();
 
         conditionalLocks = new Stack<bool>();
 
@@ -102,6 +105,12 @@ public class Interpreter : MonoBehaviour
                                     break;
                                 case BlockType.TURN_RIGHT:
                                     cc.addCommand(Command.TURN_RIGHT);
+                                    break;
+                                case BlockType.SAY:
+                                    cc.addCommand(Command.TALK);
+                                    string message = evaluateValueString(current.transform.GetComponentInChildren<VariableGap>(), false);
+                                    cc.addMessage(message);
+                                    messageChecker.currentMessages.Add(message);
                                     break;
                                 case BlockType.IF:
                                     if (current.isHead())
@@ -259,22 +268,65 @@ public class Interpreter : MonoBehaviour
                                         }
                                     }
                                     break;
-                                case BlockType.ASSIGNMENT:
-                                    string nameA = current.GetComponentInChildren<VariableGap>().GetComponentInChildren<Text>().text;
-                                    switch (cpc.getVariableType(nameA))
+                                case BlockType.DO_WHILE:
+                                    if (current.isHead())
                                     {
-                                        case ValueType.INT:
-                                            int valueA = evaluateValueInt(current.GetComponentsInChildren<VariableGap>()[1]);
-                                            cpc.editIntVar(nameA, valueA);
-                                            break;
-                                        case ValueType.STRING:
-                                            string valueAS = evaluateValueString(current.GetComponentsInChildren<VariableGap>()[1], true);
-                                            cpc.editStringVar(nameA, valueAS);
-                                            break;
-                                        case ValueType.FLOAT:
-                                            float valueAF = evaluateValueFloat(current.GetComponentsInChildren<VariableGap>()[1]);
-                                            cpc.editFloatVar(nameA, valueAF);
-                                            break;
+                                        rollBackPos.Push(index);
+
+                                        if (iterations.ContainsKey(rollBackPos.Peek()))
+                                            iterations[rollBackPos.Peek()]++;
+                                        else
+                                            iterations.Add(rollBackPos.Peek(), 0);
+
+                                        //A partir de 30 iteraciones se interpreta como un bucle infinito y paramos la ejecución.
+                                        //Más iteraciones pueden provocar el crasheo de la aplicación.
+                                        if (iterations[rollBackPos.Peek()] > 30)
+                                        {
+                                            showErrorMessage("¡Has hecho un bucle infinito o con demasiadas iteraciones!");
+                                            stopExecution();
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (evaluateCondition(current.GetComponentInChildren<ConditionGap>()))
+                                        {
+                                            index = rollBackPos.Pop() - 1;
+                                        }
+                                    }
+                                    break;
+                                case BlockType.ASSIGNMENT:
+                                    VariableGap gap = current.GetComponentInChildren<VariableGap>();
+                                    Block block = gap.GetComponent<Block>();
+                                    if (block != null && block.type == BlockType.INT_ARRAY_VAR)
+                                    {
+                                        int pos = evaluateValueInt(block.GetComponent<ValueGap>());
+                                        string name = block.GetComponentInChildren<Text>().text;
+                                        if (!cpc.checkIntArrayPosition(name, pos))
+                                        {
+                                            showErrorMessage("¡El indice es más grande que el tamaño del array!");
+                                            showErrorMarker(gap.GetComponent<Image>());
+                                            stopExecution();
+                                        }
+                                        cpc.editIntArray(name, pos, evaluateValueInt(current.GetComponentsInChildren<VariableGap>()[1]));
+                                    }
+                                    else
+                                    {
+                                        string nameA = gap.GetComponentInChildren<Text>().text;
+                                        switch (cpc.getVariableType(nameA))
+                                        {
+                                            case ValueType.INT:
+                                                int valueA = evaluateValueInt(current.GetComponentsInChildren<VariableGap>()[1]);
+                                                cpc.editIntVar(nameA, valueA);
+                                                break;
+                                            case ValueType.STRING:
+                                                string valueAS = evaluateValueString(current.GetComponentsInChildren<VariableGap>()[1], true);
+                                                cpc.editStringVar(nameA, valueAS);
+                                                break;
+                                            case ValueType.FLOAT:
+                                                float valueAF = evaluateValueFloat(current.GetComponentsInChildren<VariableGap>()[1]);
+                                                cpc.editFloatVar(nameA, valueAF);
+                                                break;
+                                        }
                                     }
 
                                     break;
@@ -309,6 +361,11 @@ public class Interpreter : MonoBehaviour
                                 string nameF = current.transform.GetChild(0).GetChild(1).GetChild(0).GetChild(0).GetComponent<Text>().text;
                                 float valueF = evaluateValueFloat(current.GetComponentInChildren<ValueGap>());
                                 cpc.editFloatVar(nameF, valueF);
+                                break;
+                            case BlockType.DECLARE_INT_ARRAY:
+                                string nameIA = current.transform.GetChild(0).GetChild(1).GetChild(0).GetChild(0).GetComponent<Text>().text;
+                                int size = evaluateValueInt(current.GetComponentInChildren<ValueGap>());
+                                cpc.setIntArraySize(nameIA, size);
                                 break;
                         }
 
@@ -532,6 +589,16 @@ public class Interpreter : MonoBehaviour
             {
                 case BlockType.INT_VAR:
                     return cpc.getIntValue(val.GetComponentInChildren<Text>().text);
+                case BlockType.INT_ARRAY_VAR:
+                    int pos = evaluateValueInt(val.GetComponent<VariableGap>());
+                    string name = val.GetComponentInChildren<Text>().text;
+                    if (!cpc.checkIntArrayPosition(name, pos))
+                    {
+                        showErrorMessage("¡El indice es más grande que el tamaño del array!");
+                        showErrorMarker(gap.GetComponent<Image>());
+                        stopExecution();
+                    }
+                    return cpc.getIntArrayValue(name, pos);
                 case BlockType.SUM:
                     return evaluateValueInt(gaps[0]) + evaluateValueInt(gaps[1]);
                 case BlockType.SUBS:
@@ -593,14 +660,33 @@ public class Interpreter : MonoBehaviour
                     if (strict)
                     {
                         showErrorMessage("El tipo de dato int no es compatible con string.");
+                        showErrorMarker(gap.GetComponent<Image>());
                         stopExecution();
                         return "";
                     }
                     return cpc.getIntValue(val.GetComponentInChildren<Text>().text).ToString();
+                case BlockType.INT_ARRAY_VAR:
+                    if (strict)
+                    {
+                        showErrorMessage("El tipo de dato int no es compatible con string.");
+                        showErrorMarker(gap.GetComponent<Image>());
+                        stopExecution();
+                        return "";
+                    }
+                    int pos = evaluateValueInt(val.GetComponent<VariableGap>());
+                    string name = val.GetComponentInChildren<Text>().text;
+                    if (!cpc.checkIntArrayPosition(name, pos))
+                    {
+                        showErrorMessage("¡El indice es más grande que el tamaño del array!");
+                        showErrorMarker(gap.GetComponent<Image>());
+                        stopExecution();
+                    }
+                    return cpc.getIntArrayValue(name, pos).ToString();
                 case BlockType.FLOAT_VAR:
                     if (strict)
                     {
                         showErrorMessage("El tipo de dato float no es compatible con string.");
+                        showErrorMarker(gap.GetComponent<Image>());
                         stopExecution();
                         return "";
                     }
@@ -636,6 +722,7 @@ public class Interpreter : MonoBehaviour
         }
         else
         {
+
             InputField ip = gap.GetComponentInChildren<InputField>();
             string str = "";
             if (ip != null)
@@ -675,6 +762,16 @@ public class Interpreter : MonoBehaviour
                     return cpc.getFloatValue(val.GetComponentInChildren<Text>().text);
                 case BlockType.INT_VAR:
                     return cpc.getIntValue(val.GetComponentInChildren<Text>().text);
+                case BlockType.INT_ARRAY_VAR:
+                    int pos = evaluateValueInt(val.GetComponent<VariableGap>());
+                    string name = val.GetComponentInChildren<Text>().text;
+                    if (!cpc.checkIntArrayPosition(name, pos))
+                    {
+                        showErrorMessage("¡El indice es más grande que el tamaño del array!");
+                        showErrorMarker(gap.GetComponent<Image>());
+                        stopExecution();
+                    }
+                    return cpc.getIntArrayValue(name, pos);
                 case BlockType.SUM:
                     return evaluateValueFloat(gaps[0]) + evaluateValueFloat(gaps[1]);
                 case BlockType.SUBS:

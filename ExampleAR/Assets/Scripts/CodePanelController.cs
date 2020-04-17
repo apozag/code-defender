@@ -20,7 +20,14 @@ public class Variable<T>
 
     public int getDeclaredLine()
     {
-        return outerBlock.transform.GetSiblingIndex();
+        if (outerBlock != null)
+        {
+            return outerBlock.transform.GetSiblingIndex();
+        }
+        else
+        {
+            return 0;
+        }
     }
 
 }
@@ -45,7 +52,14 @@ public class Array<T>
 
     public int getDeclaredLine()
     {
-        return outerBlock.transform.GetSiblingIndex();
+        if (outerBlock != null)
+        {
+            return outerBlock.transform.GetSiblingIndex();
+        }
+        else
+        {
+            return 0;
+        }
     }
 }
 
@@ -623,6 +637,27 @@ public class CodePanelController : MonoBehaviour
             int_arrays[name].values.Add(0);
         }
     }
+
+    public void setVariableScope(string name, Block outer)
+    {
+        switch (getVariableType(name)) {
+            case ValueType.INT:
+                int_variables[name].outerBlock = outer;
+                break;
+            case ValueType.STRING:
+                string_variables[name].outerBlock = outer;
+                break;
+            case ValueType.FLOAT:
+                float_variables[name].outerBlock = outer;
+                break;
+        }
+    }
+
+    public void setArrayScope(string name, Block outer)
+    {
+        int_arrays[name].outerBlock = outer;
+    }
+
 
     public List<Variable<int>> getIntVariables()
     {

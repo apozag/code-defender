@@ -4,16 +4,21 @@ using UnityEngine;
 
 public class BubbleRotation : MonoBehaviour
 {
-    Camera camera;
+    //Camera camera;
     // Start is called before the first frame update
     void Start()
     {
-        camera = FindObjectOfType<Camera>();
+        //camera = FindObjectOfType<Camera>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        transform.LookAt(camera.transform);
+        transform.LookAt(Camera.main.transform);
+        //transform.Rotate(new Vector3(0, 180, 0), Space.Self);
+    }
+    private void OnEnable()
+    {
+        transform.LookAt(Camera.main.transform);
     }
 }

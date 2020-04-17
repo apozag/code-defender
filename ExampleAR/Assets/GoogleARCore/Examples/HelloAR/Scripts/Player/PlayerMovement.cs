@@ -18,6 +18,8 @@ public class PlayerMovement : MonoBehaviour
     GameObject floor;
     GameObject bubble;
 
+    ElementsManager elemManager;
+
     Vector3 v = new Vector3(0, 0, 0);
 
     Vector3 moved = new Vector3(0, 0, 0);
@@ -47,6 +49,8 @@ public class PlayerMovement : MonoBehaviour
         floor = GameObject.FindGameObjectWithTag("Floor");
         bubble = GetComponentInChildren<BubbleRotation>().gameObject;
         bubble.SetActive(false);
+
+        elemManager = FindObjectOfType<ElementsManager>();
 
         string topicLevel = PlayerPrefs.GetString("TOPIC") + PlayerPrefs.GetString("LEVEL");
 
@@ -93,6 +97,11 @@ public class PlayerMovement : MonoBehaviour
                         currentTime += Time.deltaTime;
                     }
                     break;
+            }
+
+            if (!isRunning)
+            {
+                elemManager.updateTurn();
             }
             
         }

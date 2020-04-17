@@ -17,13 +17,15 @@ public class VariableChecker : MonoBehaviour
         {"21", ValueType.INT},
         {"22", ValueType.STRING},
         {"23", ValueType.FLOAT},
+        {"24", ValueType.FLOAT},
         {"52", ValueType.STRING}
     };
 
     static Dictionary<string, int> levelIntValues = new Dictionary<string, int>();
     static Dictionary<string, float> levelFloatValues = new Dictionary<string, float>()
     {
-        {"23", 12.0f }
+        {"23", 12.0f },
+        {"24", 57.74334f }
     };
 
     static Dictionary<string, string> levelStringValues = new Dictionary<string, string>()

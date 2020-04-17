@@ -25,7 +25,7 @@ public class LevelLoader : MonoBehaviour
         Canvas prefab;
 
        if (!topic.Equals("99") && !level.Equals("99"))
-            prefab = Resources.Load<Canvas>("level_" + topic + "_" + level);
+            prefab = Resources.Load<Canvas>("Levels/level_" + topic + "_" + level);
         else
             prefab = Resources.Load<Canvas>("training");
 
@@ -34,6 +34,8 @@ public class LevelLoader : MonoBehaviour
             Canvas levelInstance = Instantiate(prefab);
             levelInstance.transform.SetSiblingIndex(1);
         }
+
+        Localization.change();
     }
 
     public void info()

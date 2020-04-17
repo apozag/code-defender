@@ -26,6 +26,63 @@ public class CommandsController : MonoBehaviour
     void Start()
     {
         commands = new Queue<Command>();
+        commands.Enqueue(Command.STEP);
+        commands.Enqueue(Command.STEP);
+        commands.Enqueue(Command.STEP);
+        commands.Enqueue(Command.TURN_LEFT);
+        commands.Enqueue(Command.STEP);
+        commands.Enqueue(Command.STEP);
+        commands.Enqueue(Command.STEP);
+        commands.Enqueue(Command.STEP);
+        commands.Enqueue(Command.TURN_LEFT);
+        commands.Enqueue(Command.STEP);
+        commands.Enqueue(Command.STEP);
+        commands.Enqueue(Command.STEP);
+        commands.Enqueue(Command.STEP);
+        commands.Enqueue(Command.STEP);
+        commands.Enqueue(Command.STEP);
+        commands.Enqueue(Command.STEP);
+        commands.Enqueue(Command.STEP);
+        commands.Enqueue(Command.TURN_LEFT);
+        commands.Enqueue(Command.STEP);
+        commands.Enqueue(Command.STEP);
+        commands.Enqueue(Command.STEP);
+        commands.Enqueue(Command.STEP);
+        commands.Enqueue(Command.TURN_LEFT);
+        commands.Enqueue(Command.STEP);
+        commands.Enqueue(Command.STEP);
+        commands.Enqueue(Command.STEP);
+        commands.Enqueue(Command.STEP);
+        commands.Enqueue(Command.STEP);
+        commands.Enqueue(Command.STEP);
+        commands.Enqueue(Command.STEP);
+        commands.Enqueue(Command.STEP);
+        commands.Enqueue(Command.TURN_LEFT);
+        commands.Enqueue(Command.STEP);
+        commands.Enqueue(Command.STEP);
+        commands.Enqueue(Command.STEP);
+        commands.Enqueue(Command.STEP);
+        commands.Enqueue(Command.TURN_LEFT);
+        commands.Enqueue(Command.STEP);
+        commands.Enqueue(Command.STEP);
+        commands.Enqueue(Command.STEP);
+        commands.Enqueue(Command.STEP);
+        commands.Enqueue(Command.STEP);
+        commands.Enqueue(Command.STEP);
+        commands.Enqueue(Command.STEP);
+        commands.Enqueue(Command.STEP);
+        commands.Enqueue(Command.TURN_LEFT);
+        commands.Enqueue(Command.STEP);
+        commands.Enqueue(Command.STEP);
+        commands.Enqueue(Command.STEP);
+        commands.Enqueue(Command.STEP);
+        commands.Enqueue(Command.TURN_LEFT);
+        commands.Enqueue(Command.STEP);
+        commands.Enqueue(Command.STEP);
+        commands.Enqueue(Command.STEP);
+        commands.Enqueue(Command.STEP);
+        commands.Enqueue(Command.STEP);
+        isExecuting = true;
         messages = new Queue<string>();
         gc = GetComponent<GoalChecker>();
     }
@@ -69,10 +126,10 @@ public class CommandsController : MonoBehaviour
 
                 if (!topic.Equals("99") && !level.Equals("99"))
                 {
-                    if (gc.isGoalComplete())
-                        FindObjectOfType<UIController>().win();
-                    else
-                        FindObjectOfType<UIController>().loose();
+                    if (gc.isGoalComplete()) { }
+                    //FindObjectOfType<UIController>().win();
+                    else { }
+                        //FindObjectOfType<UIController>().loose();
                 }
             }
         }

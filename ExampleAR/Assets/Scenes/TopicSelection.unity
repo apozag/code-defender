@@ -717,7 +717,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Movimiento
+  m_Text: 1_TOPIC1
 --- !u!222 &493849863
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -794,7 +794,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Recursividad
+  m_Text: 1_TOPIC6
 --- !u!222 &679884998
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -871,7 +871,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Condicionales
+  m_Text: 1_TOPIC3
 --- !u!222 &731852883
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -948,7 +948,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Funciones
+  m_Text: 1_TOPIC5
 --- !u!222 &737617637
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1579,7 +1579,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Atr\xE1s"
+  m_Text: 1_BACK
 --- !u!222 &1384286402
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1656,7 +1656,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Bucles
+  m_Text: 1_TOPIC4
 --- !u!222 &1599515039
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1794,6 +1794,75 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1617772407}
   m_CullTransparentMesh: 0
+--- !u!1001 &1767621600
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 7183420889396582499, guid: 7f7aac786abad2c4688492b1518b10db,
+        type: 3}
+      propertyPath: m_Name
+      value: Localization
+      objectReference: {fileID: 0}
+    - target: {fileID: 7492788154785669583, guid: 7f7aac786abad2c4688492b1518b10db,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7492788154785669583, guid: 7f7aac786abad2c4688492b1518b10db,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.2043224
+      objectReference: {fileID: 0}
+    - target: {fileID: 7492788154785669583, guid: 7f7aac786abad2c4688492b1518b10db,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7492788154785669583, guid: 7f7aac786abad2c4688492b1518b10db,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7492788154785669583, guid: 7f7aac786abad2c4688492b1518b10db,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7492788154785669583, guid: 7f7aac786abad2c4688492b1518b10db,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7492788154785669583, guid: 7f7aac786abad2c4688492b1518b10db,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7492788154785669583, guid: 7f7aac786abad2c4688492b1518b10db,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7492788154785669583, guid: 7f7aac786abad2c4688492b1518b10db,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7492788154785669583, guid: 7f7aac786abad2c4688492b1518b10db,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7492788154785669583, guid: 7f7aac786abad2c4688492b1518b10db,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 7f7aac786abad2c4688492b1518b10db, type: 3}
 --- !u!1 &1914171532
 GameObject:
   m_ObjectHideFlags: 0
@@ -1911,7 +1980,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.23287794, y: 0.8}
   m_AnchorMax: {x: 0.9, y: 0.95}
-  m_AnchoredPosition: {x: 1.1000004, y: 0.000015258789}
+  m_AnchoredPosition: {x: 1.1000061, y: 0.000015258789}
   m_SizeDelta: {x: -2.2000008, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2050130909
@@ -1945,7 +2014,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Selecciona el tema
+  m_Text: 1_TITLE
 --- !u!222 &2050130910
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2151,7 +2220,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Variables
+  m_Text: 1_TOPIC2
 --- !u!222 &2138761237
 CanvasRenderer:
   m_ObjectHideFlags: 0

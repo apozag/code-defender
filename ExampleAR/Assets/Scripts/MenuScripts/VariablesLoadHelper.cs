@@ -59,6 +59,11 @@ public static class VariablesLoadHelper
             new Variable<float>("num1", 5.0f, 1, null),
             new Variable<float>("num2", 7.0f, 1, null)
         } },
+        {"24", new List<Variable<float>>(){
+            new Variable<float>("primer_tiempo", 60.43f, 1, null),
+            new Variable<float>("segundo_tiempo", 68.79f, 1, null),
+            new Variable<float>("tercer_tiempo", 44.01f, 1, null),
+        } },
         {"32", new List<Variable<float>>()
         {
             new Variable<float>("var", 1.5f, 1, null)

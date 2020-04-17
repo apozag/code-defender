@@ -10,6 +10,8 @@ public class MessageChecker : MonoBehaviour
     static Dictionary<string, List<string>> levelMessages = new Dictionary<string, List<string>>()
     {
         {"14", new List<string>() },
+        {"15", new List<string>(){"paso", "paso", "paso", "paso" } },
+        {"24", new List<string>(){"57.74334"} }
     };
 
     // Start is called before the first frame update

@@ -2,13 +2,12 @@
 
 public class GoalChecker : MonoBehaviour
 {
-    Enemy[] enemies;
-    Goal goal;
+    ElementsManager elemManager;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        elemManager = FindObjectOfType<ElementsManager>();
     }
 
     // Update is called once per frame
@@ -17,28 +16,24 @@ public class GoalChecker : MonoBehaviour
 
     }
 
-    public void findElements()
-    {
-        enemies = FindObjectsOfType<Enemy>();
-        goal = FindObjectOfType<Goal>();
-    }
+   
 
     public bool isGoalComplete()
     {
         bool complete = true;
 
-        if (enemies != null)
+        if (elemManager.enemies != null)
         {
-            foreach (Enemy e in enemies)
+            foreach (Enemy e in elemManager.enemies)
             {
                 if (!e.isDead())
                     complete = false;
             }
         }
 
-        if (goal != null)
+        if (elemManager.goal != null)
         {
-            if (!goal.isPlayerOn())
+            if (!elemManager.goal.isPlayerOn())
                 complete = false;
         }
 
@@ -49,12 +44,12 @@ public class GoalChecker : MonoBehaviour
 
     public void resetElements()
     {
-        if (goal != null)
-            goal.reset();
+        if (elemManager.goal != null)
+            elemManager.goal.reset();
 
-        if (enemies != null)
+        if (elemManager.enemies != null)
         {
-            foreach (Enemy e in enemies)
+            foreach (Enemy e in elemManager.enemies)
                 e.reset();
         }
 

@@ -108,7 +108,7 @@ public class Interpreter : MonoBehaviour
                                     break;
                                 case BlockType.SAY:
                                     cc.addCommand(Command.TALK);
-                                    string message = evaluateValueString(current.transform.GetComponentInChildren<VariableGap>(), false);
+                                    string message = evaluateValueString(current.GetComponentInChildren<VariableGap>(), false);
                                     cc.addMessage(message);
                                     messageChecker.currentMessages.Add(message);
                                     break;
@@ -351,21 +351,25 @@ public class Interpreter : MonoBehaviour
                                 string nameI = current.transform.GetChild(0).GetChild(1).GetChild(0).GetChild(0).GetComponent<Text>().text;
                                 int valueI = evaluateValueInt(current.GetComponentInChildren<ValueGap>());
                                 cpc.editIntVar(nameI, valueI);
+                                cpc.setVariableScope(nameI, current);
                                 break;
                             case BlockType.DECLARE_STRING:
                                 string nameS = current.transform.GetChild(0).GetChild(1).GetChild(0).GetChild(0).GetComponent<Text>().text;
                                 string valueS = evaluateValueString(current.GetComponentInChildren<ValueGap>(), true);
                                 cpc.editStringVar(nameS, valueS);
+                                cpc.setVariableScope(nameS, current);
                                 break;
                             case BlockType.DECLARE_FLOAT:
                                 string nameF = current.transform.GetChild(0).GetChild(1).GetChild(0).GetChild(0).GetComponent<Text>().text;
                                 float valueF = evaluateValueFloat(current.GetComponentInChildren<ValueGap>());
                                 cpc.editFloatVar(nameF, valueF);
+                                cpc.setVariableScope(nameF, current);
                                 break;
                             case BlockType.DECLARE_INT_ARRAY:
                                 string nameIA = current.transform.GetChild(0).GetChild(1).GetChild(0).GetChild(0).GetComponent<Text>().text;
                                 int size = evaluateValueInt(current.GetComponentInChildren<ValueGap>());
                                 cpc.setIntArraySize(nameIA, size);
+                                cpc.setArrayScope(name, current);
                                 break;
                         }
 

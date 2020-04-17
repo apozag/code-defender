@@ -16,13 +16,13 @@ public class SceneElementsGenerator : MonoBehaviour
          
         if (!topic.Equals("99") && !level.Equals("99"))
         {
-            elements = Resources.Load<GameObject>("Elements_" + topic + "_" + level);
+            elements = Resources.Load<GameObject>("Elements/Elements_" + topic + "_" + level);
             if (elements != null)
             {
                 GameObject obj = Instantiate(elements, floor.transform.position, floor.transform.rotation);
                 obj.transform.forward = floor.transform.forward;
                 obj.transform.SetParent(transform.parent);
-                GetComponent<GoalChecker>().findElements();
+                GetComponent<ElementsManager>().findElements();
                 foreach(Enemy e in elements.GetComponentsInChildren<Enemy>())
                 {
                     e.transform.position += new Vector3(0, 0, -0.1f);

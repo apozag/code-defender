@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class LevelLoader : MonoBehaviour
 {
@@ -27,7 +28,7 @@ public class LevelLoader : MonoBehaviour
        if (!topic.Equals("99") && !level.Equals("99"))
             prefab = Resources.Load<Canvas>("Levels/level_" + topic + "_" + level);
         else
-            prefab = Resources.Load<Canvas>("training");
+            prefab = Resources.Load<Canvas>("Levels/training");
 
         if (prefab != null)
         {
@@ -35,7 +36,7 @@ public class LevelLoader : MonoBehaviour
             levelInstance.transform.SetSiblingIndex(1);
         }
 
-        Localization.change();
+        Localization.translate(FindObjectsOfType<Text>());
     }
 
     public void info()

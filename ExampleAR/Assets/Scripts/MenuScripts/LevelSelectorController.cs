@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class LevelSelectorController : MonoBehaviour
@@ -12,6 +13,7 @@ public class LevelSelectorController : MonoBehaviour
     void Start()
     {
         LoadingPanel.SetActive(false);
+        Localization.translate(FindObjectsOfType<Text>());
     }
 
     // Update is called once per frame

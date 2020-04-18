@@ -15,23 +15,27 @@ public class MonologueDisplayer : MonoBehaviour
 
     bool charLock = true;
 
-    List<string> paragraphs = new List<string>()
-    {
-        "¡Saludos humano! Mi nombre es Bytey. Soy nada menos que el antivirus de tu móvil. ",
-        "Y no cualquier antivirus ¡Uno que habla! ¿Que te parece?",
-        "Ya tendremos tiempo de conocernos más a fondo. No te lo tomes a mal, pero hay una emergencia que tengo que resolver cuanto antes con tu ayuda.",
-        "Se trata de un virus informático que se ha colado en tu dispositivo y podría ser dañino si no lo eliminamos.",
-        "Sé que yo soy el antivirus y es mi trabajo... pero... resulta que mis desarrolladores me han dejado a medio acabar.",
-        "Ahí es donde entras tú, me vas a ayudar a hacer mi trabajo programando en el lenguaje de programación Java.",
-        "¡No me mires así! ¡No es para tanto! Yo te ayudaré a aprender poco a poco.",
-        "Para que puedas ver lo que pasa dentro de tu móvil, encenderé la cámara y proyectaré en REALIDAD AUMENTADA mis alrededores.",
-        "No te preocupes, yo tampoco sabía lo que era la realidad aumentada hasta hace poco. Te va a gustar.",
-        "¡Vamos a ello!"
-    };
+
+    List<string> paragraphs; 
 
     // Start is called before the first frame update
     void Start()
     {
+        string lang = PlayerPrefs.GetString("LANGUAGE");
+
+        paragraphs = new List<string>(); ;
+        paragraphs.Add(Localization.getString("MON_1", lang));
+        paragraphs.Add(Localization.getString("MON_2", lang));
+        paragraphs.Add(Localization.getString("MON_3", lang));
+        paragraphs.Add(Localization.getString("MON_4", lang));
+        paragraphs.Add(Localization.getString("MON_5", lang));
+        paragraphs.Add(Localization.getString("MON_6", lang));
+        paragraphs.Add(Localization.getString("MON_7", lang));
+        paragraphs.Add(Localization.getString("MON_8", lang));
+        paragraphs.Add(Localization.getString("MON_9", lang));
+        paragraphs.Add(Localization.getString("MON_10", lang));
+
+
         text = GetComponentInChildren<Text>();
 
         index = 0;

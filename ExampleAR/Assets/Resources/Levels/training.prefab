@@ -430,7 +430,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Continuar
+  m_Text: 3_WIN_CONTINUE
 --- !u!1 &2178432373586417722
 GameObject:
   m_ObjectHideFlags: 0
@@ -861,7 +861,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\xA1Nivel superado!"
+  m_Text: 3_WIN
 --- !u!1 &5718753749538184853
 GameObject:
   m_ObjectHideFlags: 0
@@ -1078,6 +1078,7 @@ GameObject:
   - component: {fileID: 3816128502823241740}
   - component: {fileID: 17503864357472194}
   - component: {fileID: 1851529091586329972}
+  - component: {fileID: 738677803724713463}
   m_Layer: 5
   m_Name: InfoPanel
   m_TagString: Untagged
@@ -1141,6 +1142,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &738677803724713463
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6086626965579777687}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6799c6161a45eec41980bbdf3f67cf4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6784630805930897857
 GameObject:
   m_ObjectHideFlags: 0
@@ -1754,7 +1767,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.7, y: 0.7, z: 1}
   m_Children:
-  - {fileID: 7254203246786841312}
+  - {fileID: 7472005794177104520}
   m_Father: {fileID: 7254203246584574616}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2466,8 +2479,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7254203246431078425}
   m_HandleRect: {fileID: 7254203246431078430}
   m_Direction: 0
-  m_Value: 0.0000001574709
-  m_Size: 0.7345608
+  m_Value: 0.00000043580908
+  m_Size: 0.6964775
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2780,6 +2793,7 @@ MonoBehaviour:
   turnleft: {fileID: 1566661266146134, guid: 248468017f3871a42bc0ba60ee1ebfd5, type: 3}
   turnright: {fileID: 1923864976813614, guid: 3c01c51e438090f44aa2d5786a438b95, type: 3}
   step: {fileID: 1937007049627716, guid: d626f3b6a54e9af4b9f3f41a2fc3b3b3, type: 3}
+  say: {fileID: 0}
   true_cond: {fileID: 1368708174818116, guid: 592aab513f7cecc44a113d10b64bc03e, type: 3}
   false_cond: {fileID: 1705488822433064, guid: 9b3fcc4aec79817479594fc9a1b93dca, type: 3}
   equals: {fileID: 1120997053740188, guid: bd7e577a95be69d449d86911f69fde8a, type: 3}
@@ -2930,7 +2944,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Escribe un nombre para la nueva variable:'
+  m_Text: 3_ENTER_VARNAME
 --- !u!1 &7254203247128612043
 GameObject:
   m_ObjectHideFlags: 0
@@ -5919,7 +5933,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Reintentar
+  m_Text: 3_WIN_RETRY
 --- !u!1001 &7254203246786841320
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6044,86 +6058,86 @@ PrefabInstance:
     - target: {fileID: 66178868682734166, guid: 0e4bfb69211fdfb42b6dad39fef1e8ea,
         type: 3}
       propertyPath: m_ColliderPaths.Array.data[0].m_ColliderPaths.Array.data[0].Array.data[0].X
-      value: 2613333219
+      value: 2776666851
       objectReference: {fileID: 0}
     - target: {fileID: 66178868682734166, guid: 0e4bfb69211fdfb42b6dad39fef1e8ea,
         type: 3}
       propertyPath: m_ColliderPaths.Array.data[0].m_ColliderPaths.Array.data[0].Array.data[0].Y
-      value: -163333328
+      value: -173541664
       objectReference: {fileID: 0}
     - target: {fileID: 66178868682734166, guid: 0e4bfb69211fdfb42b6dad39fef1e8ea,
         type: 3}
       propertyPath: m_ColliderPaths.Array.data[0].m_ColliderPaths.Array.data[0].Array.data[1].X
-      value: 2613333219
+      value: 2776666851
       objectReference: {fileID: 0}
     - target: {fileID: 66178868682734166, guid: 0e4bfb69211fdfb42b6dad39fef1e8ea,
         type: 3}
       propertyPath: m_ColliderPaths.Array.data[0].m_ColliderPaths.Array.data[0].Array.data[1].Y
-      value: 163333328
+      value: 173541664
       objectReference: {fileID: 0}
     - target: {fileID: 66178868682734166, guid: 0e4bfb69211fdfb42b6dad39fef1e8ea,
         type: 3}
       propertyPath: m_ColliderPaths.Array.data[0].m_ColliderPaths.Array.data[0].Array.data[2].X
-      value: 0
+      value: 152
       objectReference: {fileID: 0}
     - target: {fileID: 66178868682734166, guid: 0e4bfb69211fdfb42b6dad39fef1e8ea,
         type: 3}
       propertyPath: m_ColliderPaths.Array.data[0].m_ColliderPaths.Array.data[0].Array.data[2].Y
-      value: 163333299
+      value: 173541635
       objectReference: {fileID: 0}
     - target: {fileID: 66178868682734166, guid: 0e4bfb69211fdfb42b6dad39fef1e8ea,
         type: 3}
       propertyPath: m_ColliderPaths.Array.data[0].m_ColliderPaths.Array.data[0].Array.data[3].X
-      value: 29
+      value: 181
       objectReference: {fileID: 0}
     - target: {fileID: 66178868682734166, guid: 0e4bfb69211fdfb42b6dad39fef1e8ea,
         type: 3}
       propertyPath: m_ColliderPaths.Array.data[0].m_ColliderPaths.Array.data[0].Array.data[3].Y
-      value: -163333328
+      value: -173541664
       objectReference: {fileID: 0}
     - target: {fileID: 66178868682734166, guid: 0e4bfb69211fdfb42b6dad39fef1e8ea,
         type: 3}
       propertyPath: m_CompositePaths.m_Paths.Array.data[0].Array.data[0].x
-      value: 261.3333
+      value: 277.6667
       objectReference: {fileID: 0}
     - target: {fileID: 66178868682734166, guid: 0e4bfb69211fdfb42b6dad39fef1e8ea,
         type: 3}
       propertyPath: m_CompositePaths.m_Paths.Array.data[0].Array.data[0].y
-      value: -16.333332
+      value: -17.354166
       objectReference: {fileID: 0}
     - target: {fileID: 66178868682734166, guid: 0e4bfb69211fdfb42b6dad39fef1e8ea,
         type: 3}
       propertyPath: m_CompositePaths.m_Paths.Array.data[0].Array.data[1].x
-      value: 261.3333
+      value: 277.6667
       objectReference: {fileID: 0}
     - target: {fileID: 66178868682734166, guid: 0e4bfb69211fdfb42b6dad39fef1e8ea,
         type: 3}
       propertyPath: m_CompositePaths.m_Paths.Array.data[0].Array.data[1].y
-      value: 16.333332
+      value: 17.354166
       objectReference: {fileID: 0}
     - target: {fileID: 66178868682734166, guid: 0e4bfb69211fdfb42b6dad39fef1e8ea,
         type: 3}
       propertyPath: m_CompositePaths.m_Paths.Array.data[0].Array.data[2].x
-      value: 0
+      value: 0.0000152
       objectReference: {fileID: 0}
     - target: {fileID: 66178868682734166, guid: 0e4bfb69211fdfb42b6dad39fef1e8ea,
         type: 3}
       propertyPath: m_CompositePaths.m_Paths.Array.data[0].Array.data[2].y
-      value: 16.333326
+      value: 17.35416
       objectReference: {fileID: 0}
     - target: {fileID: 66178868682734166, guid: 0e4bfb69211fdfb42b6dad39fef1e8ea,
         type: 3}
       propertyPath: m_CompositePaths.m_Paths.Array.data[0].Array.data[3].x
-      value: 0.0000058
+      value: 0.000021
       objectReference: {fileID: 0}
     - target: {fileID: 66178868682734166, guid: 0e4bfb69211fdfb42b6dad39fef1e8ea,
         type: 3}
       propertyPath: m_CompositePaths.m_Paths.Array.data[0].Array.data[3].y
-      value: -16.333332
+      value: -17.354166
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0e4bfb69211fdfb42b6dad39fef1e8ea, type: 3}
---- !u!224 &7254203246786841312 stripped
+--- !u!224 &7472005794177104520 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 224615679920255072, guid: 0e4bfb69211fdfb42b6dad39fef1e8ea,
     type: 3}

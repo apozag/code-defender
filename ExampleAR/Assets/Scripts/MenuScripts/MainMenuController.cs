@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class MainMenuController : MonoBehaviour
@@ -8,7 +9,7 @@ public class MainMenuController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        PlayerPrefs.SetString("LANGUAGE", "ESP");
+        Localization.translate(FindObjectsOfType<Text>());
     }
 
     // Update is called once per frame
@@ -46,7 +47,7 @@ public class MainMenuController : MonoBehaviour
 
     public void settings()
     {
-        //SceneManager.LoadScene(3);
+        SceneManager.LoadScene(5);
     }
 
 }

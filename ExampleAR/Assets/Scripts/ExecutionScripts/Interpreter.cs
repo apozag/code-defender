@@ -38,6 +38,8 @@ public class Interpreter : MonoBehaviour
 
     int index = 0;
 
+    string lang;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -50,6 +52,8 @@ public class Interpreter : MonoBehaviour
 
         //Sólo podemos usar la recursión en el tema de la recursividad o modo entrenamiento
         canDoRecursion = (PlayerPrefs.GetString("TOPIC") == "6" || PlayerPrefs.GetString("TOPIC") == "99") ;
+
+        lang = PlayerPrefs.GetString("LANGUAGE");
     }
 
     // Update is called once per frame
@@ -64,12 +68,12 @@ public class Interpreter : MonoBehaviour
     {
         if (cc == null || !cc.gameObject.activeSelf)
         {
-            showErrorMessage("Espera a que aparezca el escenario para ejecutar el código.");
+            showErrorMessage(Localization.getString("TST_WAIT_APPEAR", lang));
             isExecuting = false;
         }
         else if (cc.isRunning())
         {
-            showErrorMessage("Debes esperar o parar la ejecución para volver a intentarlo.");
+            showErrorMessage(Localization.getString("TST_WAIT_END", lang));
             isExecuting = false;
         }
         else
@@ -159,7 +163,7 @@ public class Interpreter : MonoBehaviour
                                     {
                                         if (!canDoRecursion)
                                         {
-                                            showErrorMessage("¡Has llamado a \"aux\" dentro de la misma función!\nEsto se puede hacer, pero mejor lo dejamos para el siguiente tema");
+                                            showErrorMessage(Localization.getString("TST_NO_RECURSION", lang));
                                             stopExecution();
                                         }
                                         else
@@ -169,7 +173,7 @@ public class Interpreter : MonoBehaviour
                                     }
                                     if (callCount > 30)
                                     {
-                                        showErrorMessage("¡Demasiadas llamadas recursivas!");
+                                        showErrorMessage(Localization.getString("TST_TOO_MANY_CALLS", lang));
                                         stopExecution();
                                     }
                                     callCount++;
@@ -245,7 +249,7 @@ public class Interpreter : MonoBehaviour
                                             //Más iteraciones pueden provocar el crasheo de la aplicación.
                                             if (iterations[rollBackPos.Peek()] > 30)
                                             {
-                                                showErrorMessage("¡Has hecho un bucle infinito o con demasiadas iteraciones!");
+                                                showErrorMessage(Localization.getString("TST_INFINITE_LOOP", lang));
                                                 stopExecution();
                                             }
                                         }
@@ -263,7 +267,7 @@ public class Interpreter : MonoBehaviour
                                         }
                                         else
                                         {
-                                            showErrorMessage("rollBackPos vacio ");
+                                            showErrorMessage("Internal Error: plese report this error to adripoza23@gmail.com");
                                             stopExecution();
                                         }
                                     }
@@ -282,7 +286,7 @@ public class Interpreter : MonoBehaviour
                                         //Más iteraciones pueden provocar el crasheo de la aplicación.
                                         if (iterations[rollBackPos.Peek()] > 30)
                                         {
-                                            showErrorMessage("¡Has hecho un bucle infinito o con demasiadas iteraciones!");
+                                            showErrorMessage(Localization.getString("TST_INFINITE_LOOP", lang));
                                             stopExecution();
                                         }
                                     }
@@ -303,7 +307,7 @@ public class Interpreter : MonoBehaviour
                                         string name = block.GetComponentInChildren<Text>().text;
                                         if (!cpc.checkIntArrayPosition(name, pos))
                                         {
-                                            showErrorMessage("¡El indice es más grande que el tamaño del array!");
+                                            showErrorMessage(Localization.getString("TST_ARRAY_INDEX_OUT", lang));
                                             showErrorMarker(gap.GetComponent<Image>());
                                             stopExecution();
                                         }
@@ -379,7 +383,7 @@ public class Interpreter : MonoBehaviour
                 else
                 {
                     stopExecution();
-                    showErrorMessage("No se encontró punto de entrada (función main).");
+                    showErrorMessage(Localization.getString("TST_ENTRYPOINT_NOT_FOUND", lang));
                 }
             }
         }
@@ -397,7 +401,7 @@ public class Interpreter : MonoBehaviour
 
         if (cond == null)
         {
-            showErrorMessage("El hueco de condición no puede estar vacío.");
+            showErrorMessage(Localization.getString("TST_GAP_EMPTY", lang));
             showErrorMarker(gap.GetComponent<Image>());
             stopExecution();
             return false;
@@ -427,7 +431,7 @@ public class Interpreter : MonoBehaviour
                 else
                 {
                     //Error: entrada incorrecta.
-                    showErrorMessage("entrada incorrecta en Igual Que");
+                    showErrorMessage(Localization.getString("TST_INCORRECT_DATA", lang));
                     showErrorMarker(gaps[0].GetComponent<Image>());
                     return false;
                 }
@@ -448,7 +452,7 @@ public class Interpreter : MonoBehaviour
                 else
                 {
                     //Error: entrada incorrecta.
-                    showErrorMessage("entrada incorrecta en '!='");
+                    showErrorMessage(Localization.getString("TST_INCORRECT_DATA", lang));
                     showErrorMarker(gaps[0].GetComponent<Image>());
                     stopExecution();
                     return false;
@@ -459,7 +463,7 @@ public class Interpreter : MonoBehaviour
                 if (IsStringValue(str))
                 {
                     //Error: no se pueden comparar string con '>'
-                    showErrorMessage("No se pueden comparar string con '>'");
+                    showErrorMessage(Localization.getString("TST_STRING_COMPARED_WITH", lang) + ">");
                     showErrorMarker(gaps[0].GetComponent<Image>());
                     stopExecution();
                     return false;
@@ -477,7 +481,7 @@ public class Interpreter : MonoBehaviour
                 else
                 {
                     //Error: entrada incorrecta.
-                    showErrorMessage("entrada incorrecta en '>'");
+                    showErrorMessage(Localization.getString("TST_INCORRECT_DATA", lang));
                     showErrorMarker(gaps[0].GetComponent<Image>());
                     stopExecution();
                     return false;
@@ -488,7 +492,7 @@ public class Interpreter : MonoBehaviour
                 if (IsStringValue(str))
                 {
                     //Error: No se pueden comparar string con '<'
-                    showErrorMessage("No se pueden comparar string con '<'");
+                    showErrorMessage(Localization.getString("TST_STRING_COMPARED_WITH", lang) + "<");
                     showErrorMarker(gaps[0].GetComponent<Image>());
                     stopExecution();
                     return false;
@@ -504,7 +508,7 @@ public class Interpreter : MonoBehaviour
                 else
                 {
                     //Error: entrada incorrecta.
-                    showErrorMessage("entrada incorrecta en '<'");
+                    showErrorMessage(Localization.getString("TST_INCORRECT_DATA", lang));
                     showErrorMarker(gaps[0].GetComponent<Image>());
                     stopExecution();
                     return false;
@@ -514,7 +518,7 @@ public class Interpreter : MonoBehaviour
                 if (IsStringValue(str))
                 {
                     //Error: No se pueden comparar string con '>='
-                    showErrorMessage("No se pueden comparar string con '>='");
+                    showErrorMessage(Localization.getString("TST_STRING_COMPARED_WITH", lang) + ">=");
                     showErrorMarker(gaps[0].GetComponent<Image>());
                     stopExecution();
                     return false;
@@ -530,7 +534,7 @@ public class Interpreter : MonoBehaviour
                 else
                 {
                     //Error: entrada incorrecta.
-                    showErrorMessage("Entrada incorrecta en '>='");
+                    showErrorMessage(Localization.getString("TST_INCORRECT_DATA", lang));
                     stopExecution();
                     return false;
                 }
@@ -538,7 +542,7 @@ public class Interpreter : MonoBehaviour
                 if (IsStringValue(str))
                 {
                     //Error: No se pueden comparar string con '>='
-                    showErrorMessage("No se pueden comparar string con '<='");
+                    showErrorMessage(Localization.getString("TST_STRING_COMPARED_WITH", lang) + "<=");
                     showErrorMarker(gaps[0].GetComponent<Image>());
                     stopExecution();
                     return false;
@@ -554,7 +558,7 @@ public class Interpreter : MonoBehaviour
                 else
                 {
                     //Error: entrada incorrecta.
-                    showErrorMessage("Entrada en formato incorrecto en '<='");
+                    showErrorMessage(Localization.getString("TST_INCORRECT_DATA", lang));
                     showErrorMarker(gaps[0].GetComponent<Image>());
                     stopExecution();
                     return false;
@@ -575,7 +579,7 @@ public class Interpreter : MonoBehaviour
                 return false;
             default:
                 //Error: Bloque no reconocido como condición.
-                showErrorMessage("Bloque no reconocido como condicion.");
+                showErrorMessage("Internal Error: please report this error to adripoza23@gmail.com");
                 stopExecution();
                 return false;
 
@@ -598,7 +602,7 @@ public class Interpreter : MonoBehaviour
                     string name = val.GetComponentInChildren<Text>().text;
                     if (!cpc.checkIntArrayPosition(name, pos))
                     {
-                        showErrorMessage("¡El indice es más grande que el tamaño del array!");
+                        showErrorMessage(Localization.getString("TST_ARRAY_INDEX_OUT", lang));
                         showErrorMarker(gap.GetComponent<Image>());
                         stopExecution();
                     }
@@ -613,7 +617,7 @@ public class Interpreter : MonoBehaviour
                     return evaluateValueInt(gaps[0]) / evaluateValueInt(gaps[1]);
                 default:
                     //Error: Tipo de dato no compatible con int
-                    showErrorMessage("Tipo de dato no compatible con int.");
+                    showErrorMessage(Localization.getString("TST_NOT_COMPATIBLE_INT", lang));
                     showErrorMarker(gap.GetComponentInChildren<Image>());
                     stopExecution();
                     return 0;
@@ -633,7 +637,7 @@ public class Interpreter : MonoBehaviour
                 if (!IsDigitsOnly(str))
                 {
                     //Error: este valor no es compatible con int
-                    showErrorMessage("Valor no compatible con int");
+                    showErrorMessage(Localization.getString("TST_NOT_COMPATIBLE_INT", lang));
                     showErrorMarker(gap.GetComponent<Image>());
                     stopExecution();
                     return 0;
@@ -643,7 +647,7 @@ public class Interpreter : MonoBehaviour
             }
             else
             {
-                showErrorMessage("No puede haber huecos vacíos.");
+                showErrorMessage(Localization.getString("TST_GAP_EMPTY", lang));
                 showErrorMarker(gap.GetComponent<Image>());
                 stopExecution();
                 return 0;
@@ -663,7 +667,7 @@ public class Interpreter : MonoBehaviour
                 case BlockType.INT_VAR:
                     if (strict)
                     {
-                        showErrorMessage("El tipo de dato int no es compatible con string.");
+                        showErrorMessage(Localization.getString("TST_NOT_COMPATIBLE_STRING", lang));
                         showErrorMarker(gap.GetComponent<Image>());
                         stopExecution();
                         return "";
@@ -672,7 +676,7 @@ public class Interpreter : MonoBehaviour
                 case BlockType.INT_ARRAY_VAR:
                     if (strict)
                     {
-                        showErrorMessage("El tipo de dato int no es compatible con string.");
+                        showErrorMessage(Localization.getString("TST_NOT_COMPATIBLE_STRING", lang));
                         showErrorMarker(gap.GetComponent<Image>());
                         stopExecution();
                         return "";
@@ -681,7 +685,7 @@ public class Interpreter : MonoBehaviour
                     string name = val.GetComponentInChildren<Text>().text;
                     if (!cpc.checkIntArrayPosition(name, pos))
                     {
-                        showErrorMessage("¡El indice es más grande que el tamaño del array!");
+                        showErrorMessage(Localization.getString("TST_NOT_COMPATIBLE_STRING", lang));
                         showErrorMarker(gap.GetComponent<Image>());
                         stopExecution();
                     }
@@ -689,7 +693,7 @@ public class Interpreter : MonoBehaviour
                 case BlockType.FLOAT_VAR:
                     if (strict)
                     {
-                        showErrorMessage("El tipo de dato float no es compatible con string.");
+                        showErrorMessage(Localization.getString("TST_NOT_COMPATIBLE_STRING", lang));
                         showErrorMarker(gap.GetComponent<Image>());
                         stopExecution();
                         return "";
@@ -703,22 +707,22 @@ public class Interpreter : MonoBehaviour
                     return stringConcatenate(evaluateValueString(gaps[0], true), evaluateValueString(gaps[1], true));
                 case BlockType.SUBS:
                     //Error: no se pueden restar dos string
-                    showErrorMessage("No se pueden restar dos string");
+                    showErrorMessage(Localization.getString("TST_STRING_NOT_SUM", lang));
                     stopExecution();
                     return "";
                 case BlockType.MULT:
                     //Error: no se multiplicar dos string
-                    showErrorMessage("No se pueden multiplicar dos string");
+                    showErrorMessage(Localization.getString("TST_STRING NOT_MULT", lang));
                     stopExecution();
                     return "";
                 case BlockType.DIV:
                     //Error: no se pueden dividir dos string
-                    showErrorMessage("No se pueden dividir dos string");
+                    showErrorMessage(Localization.getString("TST_STRING_NOT_DIV", lang));
                     stopExecution();
                     return "";
                 default:
                     //Error: Tipo de dato no compatible con string
-                    showErrorMessage("Tipo de dato no compatible con string.");
+                    showErrorMessage(Localization.getString("TST_NOT_COMPATIBLE_STRING", lang));
                     showErrorMarker(gap.GetComponentInChildren<Image>());
                     stopExecution();
                     return "";
@@ -739,14 +743,14 @@ public class Interpreter : MonoBehaviour
                 if (strict && !IsStringValue(str))
                 {
                     //Error: Un valor de string debe ir entre comillas
-                    showErrorMessage("Un valor de string debe ir entre comillas");
+                    showErrorMessage(Localization.getString("TST_STRING_QUOTE", lang));
                     showErrorMarker(gap.GetComponentInChildren<Image>());
                     stopExecution();
                 }
             }
             else
             {
-                showErrorMessage("No puede haber huecos vacíos.");
+                showErrorMessage(Localization.getString("TST_GAP_EMPTY", lang));
                 showErrorMarker(gap.GetComponent<Image>());
                 stopExecution();
             }
@@ -771,7 +775,7 @@ public class Interpreter : MonoBehaviour
                     string name = val.GetComponentInChildren<Text>().text;
                     if (!cpc.checkIntArrayPosition(name, pos))
                     {
-                        showErrorMessage("¡El indice es más grande que el tamaño del array!");
+                        showErrorMessage(Localization.getString("TST_ARRAY_INDEX_OUT", lang));
                         showErrorMarker(gap.GetComponent<Image>());
                         stopExecution();
                     }
@@ -802,7 +806,7 @@ public class Interpreter : MonoBehaviour
                 str = gap.GetComponentInChildren<Text>().text;
             else
             {
-                showErrorMessage("Error inesperado");
+                showErrorMessage("Internal Error: please report this error to adripoza23@gmail.com");
                 showErrorMarker(gap.GetComponent<Image>());
             }
 
@@ -811,14 +815,14 @@ public class Interpreter : MonoBehaviour
                 if (!IsFloatValue(str))
                 {
                     //Error: Valor no compatible con float
-                    showErrorMessage("Valor no compatible con float");
+                    showErrorMessage(Localization.getString("TST_NOT_COMPATIBLE_FLOAT", lang));
                     showErrorMarker(gap.GetComponent<Image>());
                     stopExecution();
                 }
             }
             else
             {
-                showErrorMessage("No puede haber huecos vacíos.");
+                showErrorMessage(Localization.getString("TST_GAP_EMPTY", lang));
                 showErrorMarker(gap.GetComponent<Image>());
                 stopExecution();
                 return 0;

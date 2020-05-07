@@ -1,8 +1,30 @@
 ﻿using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public static class BlockUnlockHelper
 {
+
+    static Dictionary<int, BlockType[]> lockedBlocks = new Dictionary<int, BlockType[]>()
+    {
+        {35, new BlockType[]
+        {
+            BlockType.SAY 
+        } },
+        {64, new BlockType[]
+        {
+            BlockType.FUNCTION,
+            BlockType.FUNCTION_CALL
+        } },
+        { 65, new BlockType[]
+        {
+            BlockType.FUNCTION,
+            BlockType.FUNCTION_CALL,
+            BlockType.FUNCTION_ARG,
+            BlockType.FUNCTION_ARG_CALL,
+        } }
+    };
+
     static Dictionary<int, BlockType[]> unlockedBlocks = new Dictionary<int, BlockType[]>()
         {
             {11, new BlockType[]{
@@ -57,6 +79,10 @@ public static class BlockUnlockHelper
                 BlockType.OR
             } },
 
+             {37, new BlockType[]{
+                BlockType.RANDOM,
+            } },
+
             {41, new BlockType[]{
                 BlockType.WHILE
             } },
@@ -72,6 +98,16 @@ public static class BlockUnlockHelper
 
             {51, new BlockType[]{
                 BlockType.FUNCTION_CALL
+            } },
+
+            {55, new BlockType[]{
+                BlockType.FUNCTION_ARG_CALL,
+                BlockType.FUNCTION_ARG
+            } },
+            {65, new BlockType[]{
+                BlockType.FUNCTION_RETURN,
+                BlockType.FUNCTION_RETURN_CALL,
+                BlockType.RETURN
             } },
 
             {99, new BlockType[]
@@ -97,6 +133,7 @@ public static class BlockUnlockHelper
         {BlockType.SUBS, 5},
         {BlockType.MULT, 5},
         {BlockType.DIV, 5},
+        {BlockType.RANDOM, 5},
         {BlockType.IF, 6},
         {BlockType.ELSE_IF, 6},
         {BlockType.ELSE, 6},
@@ -114,7 +151,12 @@ public static class BlockUnlockHelper
         {BlockType.FOR, 1},
         {BlockType.DO_WHILE, 1},
         {BlockType.FUNCTION_CALL, 0},
-        {BlockType.FUNCTION, 0}
+        {BlockType.FUNCTION_ARG_CALL, 0},
+        {BlockType.FUNCTION_RETURN_CALL, 0},
+        {BlockType.FUNCTION, 0},
+        {BlockType.FUNCTION_ARG, 0},
+        {BlockType.FUNCTION_RETURN, 0},
+        {BlockType.RETURN, 0}
 
     };
     static Dictionary<BlockType, GameObject> draggablePrefabs = new Dictionary<BlockType, GameObject>()
@@ -122,6 +164,8 @@ public static class BlockUnlockHelper
         {BlockType.CLASS,               Resources.Load<GameObject>("Prefabs/Draggables/Basic/class_d")},
         {BlockType.MAIN_FUNCTION,       Resources.Load<GameObject>("Prefabs/Draggables/Basic/mainmethod_d")},
         {BlockType.FUNCTION_CALL,       Resources.Load<GameObject>("Prefabs/Draggables/Basic/functioncall_d")},
+        {BlockType.FUNCTION_ARG_CALL,   Resources.Load<GameObject>("Prefabs/Draggables/Basic/functionargcall_d")},
+        {BlockType.FUNCTION_RETURN_CALL,Resources.Load<GameObject>("Prefabs/Draggables/Basic/functionreturncall_d")},
         {BlockType.STEP,                Resources.Load<GameObject>("Prefabs/Draggables/Movement/step_d")},
         {BlockType.TURN_LEFT,           Resources.Load<GameObject>("Prefabs/Draggables/Movement/turnleft_d")},
         {BlockType.TURN_RIGHT,          Resources.Load<GameObject>("Prefabs/Draggables/Movement/turnright_d")},
@@ -135,6 +179,7 @@ public static class BlockUnlockHelper
         {BlockType.SUBS,                Resources.Load<GameObject>("Prefabs/Draggables/Operations/sub_d")},
         {BlockType.MULT,                Resources.Load<GameObject>("Prefabs/Draggables/Operations/mult_d")},
         {BlockType.DIV,                 Resources.Load<GameObject>("Prefabs/Draggables/Operations/div_d")},
+        {BlockType.RANDOM,              Resources.Load<GameObject>("Prefabs/Draggables/Operations/rand_d")},
         {BlockType.IF,                  Resources.Load<GameObject>("Prefabs/Draggables/Branch/if_d")},
         {BlockType.ELSE_IF,             Resources.Load<GameObject>("Prefabs/Draggables/Branch/elseif_d")},
         {BlockType.ELSE,                Resources.Load<GameObject>("Prefabs/Draggables/Branch/else_d")},
@@ -149,7 +194,10 @@ public static class BlockUnlockHelper
         {BlockType.WHILE,               Resources.Load<GameObject>("Prefabs/Draggables/Loops/while_d")},
         {BlockType.FOR,                 Resources.Load<GameObject>("Prefabs/Draggables/Loops/for_d")},
         {BlockType.DO_WHILE,            Resources.Load<GameObject>("Prefabs/Draggables/Loops/dowhile_d")},
-        {BlockType.FUNCTION,            Resources.Load<GameObject>("Prefabs/Draggables/Basic/aux_method_d")}
+        {BlockType.FUNCTION,            Resources.Load<GameObject>("Prefabs/Draggables/Basic/auxmethod_d")},
+        {BlockType.FUNCTION_ARG,        Resources.Load<GameObject>("Prefabs/Draggables/Basic/auxmethodarg_d")},
+        {BlockType.FUNCTION_RETURN,     Resources.Load<GameObject>("Prefabs/Draggables/Basic/auxmethodreturn_d")},
+        {BlockType.RETURN,              Resources.Load<GameObject>("Prefabs/Draggables/Basic/return_d")}
     };
 
     public static List<BlockType> getUnlockedBlocks(string topic, string level)
@@ -173,7 +221,10 @@ public static class BlockUnlockHelper
             {
                 foreach (BlockType t in entry.Value)
                 {
-                    types.Add(t);
+                    if (!(lockedBlocks.ContainsKey(key) && Array.Exists(lockedBlocks[key], element => element == t)))
+                    {
+                        types.Add(t);
+                    }
                 }
             }
             else

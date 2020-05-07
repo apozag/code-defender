@@ -51,7 +51,23 @@ public enum BlockType
     DECLARE_INT_ARRAY,
     INT_ARRAY_VAR, 
 
-    SAY
+    SAY,
+    STEP_NUM,
+
+    RANDOM,
+
+    DECLARE_STATIC_INT,
+    DECLARE_STATIC_STRING,
+    DECLARE_STATIC_FLOAT,
+    DECLARE_STATIC_INT_ARRAY,
+
+    FUNCTION_ARG,
+    FUNCTION_ARG_CALL,
+
+    FUNCTION_RETURN,
+    FUNCTION_RETURN_CALL,
+    RETURN
+
 }
 
 public class Block : MonoBehaviour {

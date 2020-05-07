@@ -21,7 +21,11 @@ public class VariableChecker : MonoBehaviour
         {"52", ValueType.STRING}
     };
 
-    static Dictionary<string, int> levelIntValues = new Dictionary<string, int>();
+    static Dictionary<string, List<int>> levelIntValues = new Dictionary<string, List<int>>()
+    {
+        { "310", new List<int>(){0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10} }
+    };
+
     static Dictionary<string, float> levelFloatValues = new Dictionary<string, float>()
     {
         {"23", 12.0f },
@@ -36,21 +40,29 @@ public class VariableChecker : MonoBehaviour
 
     static Dictionary<string, List<int>> levelIntArrayValues = new Dictionary<string, List<int>>()
     {
+        {"46", new List<int>(){1, 2, 3, 4, 5, 6, 7, 8, 9, 10} },
+        {"47", new List<int>(){2, 4, 6, 8, 10, 12, 14, 16, 18, 20} },
+        {"48", new List<int>(){ 5, 6, 4, 7, 3, 8, 2, 9, 1, 0 } },
     };
 
     static Dictionary<string, int> levelIntArraySizes = new Dictionary<string, int>()
     {
-        {"45", 5 }
+        {"45", 5 },
+        {"46", 10 }
     };
 
-    static Dictionary<string, string> levelIntNames = new Dictionary<string, string>();
+    static Dictionary<string, string> levelIntNames = new Dictionary<string, string>() {
+        { "310", "number"}
+    };
     static Dictionary<string, string> levelStringNames = new Dictionary<string, string>()
     {
-        {"22", "str2"},
-        {"52", "local1"}
+        {"22", "word_2"},
+        {"52", "local_1"}
     };
     static Dictionary<string, string> levelFloatNames = new Dictionary<string, string>();
-    static Dictionary<string, string> levelIntArrayNames = new Dictionary<string, string>();
+    static Dictionary<string, string> levelIntArrayNames = new Dictionary<string, string>() {
+        {"48", "copy" }
+    };
 
     // Start is called before the first frame update
     void Start()
@@ -78,7 +90,7 @@ public class VariableChecker : MonoBehaviour
                         {
                             if (!levelIntValues.ContainsKey(topicLevel))
                                 return true;
-                            else if (var.value == levelIntValues[topicLevel])
+                            else if (levelIntValues[topicLevel].Contains(var.value))
                             {
                                 if (!levelIntNames.ContainsKey(topicLevel))
                                     return true;
@@ -131,51 +143,51 @@ public class VariableChecker : MonoBehaviour
             }
 
             //Tema arrays
-            bool complete = false;
-            if (levelIntArraySizes.ContainsKey(topicLevel))
+            bool size, name, values;
+            size = !levelIntArraySizes.ContainsKey(topicLevel);
+            name = !levelIntArrayNames.ContainsKey(topicLevel);
+            values = !levelIntArrayValues.ContainsKey(topicLevel);
+
+            bool sizeUpdated, nameUpdated, valuesUpdated;
+            sizeUpdated = size;
+            nameUpdated = name;
+            valuesUpdated = values;
+
+            foreach (Array<int> array in cpc.getIntArrays())
             {
-                foreach(Array<int> array in cpc.getIntArrays())
+                if (!size && array.size == levelIntArraySizes[topicLevel])
                 {
-                    if (array.size == levelIntArraySizes[topicLevel])
-                    {
-                        complete = true;
-                        break;
-                    }
+                    sizeUpdated = true;
                 }
-            }
-            if (levelIntArrayNames.ContainsKey(topicLevel))
-            {
-                foreach (Array<int> array in cpc.getIntArrays())
+                if (!name && array.name == levelIntArrayNames[topicLevel])
                 {
-                    if (array.name == levelIntArrayNames[topicLevel])
-                    {
-                        complete = true;
-                        break;
-                    }
-                    complete = false;
+                    nameUpdated = true;
                 }
-            }
-            if (levelIntArrayValues.ContainsKey(topicLevel)){
-                foreach (Array<int> array in cpc.getIntArrays())
+                if (!values)
                 {
-                    bool temp = true;
-                    for (int i = 0; i < array.values.Count; i++)
+                    bool aux = true;
+                    for (int i = 0; i < levelIntArrayValues[topicLevel].Count; i++)
                     {
-                        if(array.values[i] != levelIntArrayValues[topicLevel][i])
+                        if (levelIntArrayValues[topicLevel][i] != array.values[i])
                         {
-                            temp = false;
+                            aux = false;
                             break;
                         }
                     }
-                    if (temp)
-                    {
-                        complete = true;
-                        break;
-                    }
-                    complete = false;
+                    if (aux)
+                        valuesUpdated = true;
+                }
+
+                if(sizeUpdated && nameUpdated && valuesUpdated)
+                {
+                    size = sizeUpdated;
+                    name = nameUpdated;
+                    values = valuesUpdated;
+                    break;
                 }
             }
-            return  complete;
+
+            return size && name && values;
         }
         else return true;
     }

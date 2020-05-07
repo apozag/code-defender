@@ -27,7 +27,21 @@ public class GoalChecker : MonoBehaviour
             foreach (Enemy e in elemManager.enemies)
             {
                 if (!e.isDead())
+                {
                     complete = false;
+                    break;
+                }
+            }
+        }
+        if(elemManager.worms != null)
+        {
+            foreach(Worm worm in elemManager.worms)
+            {
+                if (!worm.isDead())
+                {
+                    complete = false;
+                    break;
+                }
             }
         }
 
@@ -37,7 +51,7 @@ public class GoalChecker : MonoBehaviour
                 complete = false;
         }
 
-        //resetElements();
+        resetElements();
 
         return complete;
     }
@@ -51,6 +65,11 @@ public class GoalChecker : MonoBehaviour
         {
             foreach (Enemy e in elemManager.enemies)
                 e.reset();
+        }
+
+        if(elemManager.worms != null)
+        {
+            elemManager.resetWorms();
         }
 
     }

@@ -14,12 +14,17 @@ public class BlankLine : MonoBehaviour {
     static List<int> allowedTypes = new List<int>(){
         (int) BlockType.CLASS,
         (int) BlockType.FUNCTION,
+        (int) BlockType.FUNCTION_ARG,
+        (int) BlockType.FUNCTION_RETURN,
+        (int) BlockType.FUNCTION_ARG_CALL,
+        //(int) BlockType.FUNCTION_RETURN_CALL,
         (int) BlockType.FUNCTION_CALL,
         (int) BlockType.MAIN_FUNCTION,
         (int) BlockType.STEP,
         (int) BlockType.TURN_LEFT,
         (int) BlockType.TURN_RIGHT,
         (int) BlockType.SAY,
+        (int) BlockType.STEP_NUM,
         (int) BlockType.WHILE,
         (int) BlockType.FOR,
         (int) BlockType.DO_WHILE,
@@ -30,7 +35,8 @@ public class BlankLine : MonoBehaviour {
         (int) BlockType.DECLARE_INT,
         (int) BlockType.DECLARE_STRING,
         (int) BlockType.DECLARE_FLOAT,
-        (int) BlockType.DECLARE_INT_ARRAY
+        (int) BlockType.DECLARE_INT_ARRAY,
+        (int) BlockType.RETURN
     };
 
     // Use this for initialization

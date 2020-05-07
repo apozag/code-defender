@@ -10,15 +10,7 @@ public class UIController : MonoBehaviour
     VariableChecker variableChecker;
     MessageChecker messageChecker;
 
-    public static Dictionary<string, int> numLevels = new Dictionary<string, int>() {
-        {"1", 6},
-        {"2", 6},
-        {"3", 6},
-        {"4", 6},
-        {"5", 6},
-        {"6", 6},
-        {"7", 6}
-    };
+    
 
     BlocksGenerator bg;
 
@@ -36,6 +28,8 @@ public class UIController : MonoBehaviour
     int infoPanelIndex = -1;
     int tutorialPanelIndex = -1;
 
+    string lang;
+
     // Use this for initialization
     void Start()
     {
@@ -43,8 +37,15 @@ public class UIController : MonoBehaviour
         interpreter = FindObjectOfType<Interpreter>();
         variableChecker = GetComponent<VariableChecker>();
         messageChecker = GetComponent<MessageChecker>();
+        lang = PlayerPrefs.GetString("LANGUAGE");
+
+        popup.SetActive(true);
+        winPopUp.SetActive(true);
+        Localization.translate(popup.GetComponentsInChildren<Text>());
+        Localization.translate(winPopUp.GetComponentsInChildren<Text>());
         popup.SetActive(false);
         winPopUp.SetActive(false);
+
         tutorialPanel.SetActive(false);
         showInfo();
     }
@@ -123,6 +124,9 @@ public class UIController : MonoBehaviour
             infoPanelIndex = -1;
             showTutorial(-1);
         }
+
+        //Localization.translate(infoPanel.GetComponentsInChildren<Text>());
+
     }
     public void showTutorial(int index)
     {
@@ -142,6 +146,7 @@ public class UIController : MonoBehaviour
 
     public void execute()
     {
+        
         interpreter.execute();
     }
 
@@ -150,6 +155,7 @@ public class UIController : MonoBehaviour
         if ((variableChecker != null && !variableChecker.isGoalComplete()) ||
             PlayerPrefs.GetString("TOPIC").Equals("99") ||
             (interpreter.isRecursiveLevel() && !interpreter.usedRecursion()) ||
+            !interpreter.functionCallsCheck() ||
             (messageChecker != null && !messageChecker.isGoalComplete()))
         {
             loose();
@@ -157,6 +163,7 @@ public class UIController : MonoBehaviour
         else
         {
             winPopUp.SetActive(true);
+
             int topic = int.Parse(PlayerPrefs.GetString("TOPIC"));
             if (PlayerPrefs.GetInt("NEXTTOPIC", 1) <= topic)
             {
@@ -164,7 +171,7 @@ public class UIController : MonoBehaviour
                 int nextLevel = PlayerPrefs.GetInt("NEXTLEVEL", 1);
                 int max = Mathf.Max(level + 1, nextLevel);
                 PlayerPrefs.SetInt("NEXTLEVEL", max);
-                if (level >= numLevels[PlayerPrefs.GetString("TOPIC")])
+                if (level >= NumLevels.numLevels[PlayerPrefs.GetString("TOPIC")])
                 {
                     PlayerPrefs.SetInt("NEXTTOPIC", topic + 1);
                     PlayerPrefs.SetInt("NEXTLEVEL", 1);
@@ -177,6 +184,8 @@ public class UIController : MonoBehaviour
     {
         FindObjectOfType<PlayerMovement>().reset();
         FindObjectOfType<GoalChecker>().resetElements();
+        if(messageChecker != null)
+            messageChecker.reset();
         ToastMessage.showToastOnUiThread("Vuelve a intentarlo.");
     }
     public void goToLevelSelector()

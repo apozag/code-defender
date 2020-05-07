@@ -8,12 +8,16 @@ public class OptionsController : MonoBehaviour
 {
 
     [SerializeField] Text languageBtn;
+    [SerializeField] GameObject popup;
+    [SerializeField] Sprite SpanishIcon;
+    [SerializeField] Sprite EnglishIcon;
+    [SerializeField] Image languageIcon;
 
     // Start is called before the first frame update
     void Start()
     {
         Localization.translate(FindObjectsOfType<Text>());
-        setLangBtnText();   
+        setLanguageIcon();
     }
 
     // Update is called once per frame
@@ -27,26 +31,43 @@ public class OptionsController : MonoBehaviour
         if(PlayerPrefs.GetString("LANGUAGE") == "ENG")
         {
             PlayerPrefs.SetString("LANGUAGE", "ESP");
-
         }
         else
         {
             PlayerPrefs.SetString("LANGUAGE", "ENG");
         }
-        setLangBtnText();
         Localization.translate(FindObjectsOfType<Text>());
+        setLanguageIcon();
     }
 
-    void setLangBtnText()
+    void setLanguageIcon()
     {
-        if (PlayerPrefs.GetString("LANGUAGE") == "ENG")
+        if (PlayerPrefs.GetString("LANGUAGE") == "ESP")
         {
-            languageBtn.text = "Cambiar a Español";
+            languageIcon.sprite = EnglishIcon;
         }
         else
         {
-            languageBtn.text = "Switch to English";
+            languageIcon.sprite = SpanishIcon;
         }
+    }
+
+    public void openPopup()
+    {
+        popup.SetActive(true);
+        Localization.translate(popup.GetComponentsInChildren<Text>());
+    }
+
+    public void closePopup()
+    {
+        popup.SetActive(false);
+    }
+
+    public void restart()
+    {
+        popup.SetActive(false);
+        PlayerPrefs.SetInt("NEXTTOPIC", 1);
+        PlayerPrefs.SetInt("NEXTLEVEL", 1);
     }
 
     public void goBack()

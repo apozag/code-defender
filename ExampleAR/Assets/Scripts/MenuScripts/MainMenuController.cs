@@ -9,6 +9,11 @@ public class MainMenuController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (!PlayerPrefs.HasKey("LANGUAGE"))
+        {
+            PlayerPrefs.SetString("LANGUAGE", "ESP");
+        }
+
         Localization.translate(FindObjectsOfType<Text>());
     }
 

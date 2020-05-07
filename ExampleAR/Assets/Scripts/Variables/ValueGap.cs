@@ -11,6 +11,8 @@ public class ValueGap : VariableGap {
         allowedTypes.Add((int)BlockType.SUBS);
         allowedTypes.Add((int)BlockType.MULT);
         allowedTypes.Add((int)BlockType.DIV);
+        allowedTypes.Add((int)BlockType.RANDOM);
+        allowedTypes.Add((int)BlockType.FUNCTION_RETURN_CALL);
 	}
 
 }

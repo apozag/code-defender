@@ -12,8 +12,9 @@ public class LevelSelectorController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        LoadingPanel.SetActive(false);
+        LoadingPanel.SetActive(true);
         Localization.translate(FindObjectsOfType<Text>());
+        LoadingPanel.SetActive(false);
     }
 
     // Update is called once per frame

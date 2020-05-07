@@ -17,7 +17,7 @@ public class LevelUnlocker : MonoBehaviour
 
         //for (int i = 0; i < transform.childCount; i++)
         //{
-        //    if (i >= UIController.numLevels[topicString])
+        //    if (i >= NumLevels.numLevels[topicString])
         //        transform.GetChild(i).gameObject.SetActive(false);
         //    else if (topicInt == nextTopic && i + 1 > nextLevel)
         //    {

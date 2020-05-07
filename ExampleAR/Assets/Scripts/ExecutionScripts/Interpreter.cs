@@ -30,15 +30,22 @@ public class Interpreter : MonoBehaviour
 
     //functions
     Stack<int> callIndices = new Stack<int>();
+    Stack<int> returnValues = new Stack<int>();
     int callCount = 0;
     bool canDoRecursion;
     bool recursionUsed = false;
+    bool functionCalled = false;
+    bool mustCallFunction;
+
+    //arguments
+    Stack<int> arguments = new Stack<int>();
 
     Block current;
 
     int index = 0;
 
     string lang;
+    string topicLevel;
 
     // Start is called before the first frame update
     void Start()
@@ -46,14 +53,20 @@ public class Interpreter : MonoBehaviour
         uiController = FindObjectOfType<UIController>();
         vlg = GameObject.FindGameObjectWithTag("Content");
         cpc = FindObjectOfType<CodePanelController>();
-        messageChecker = FindObjectOfType<MessageChecker>();
-
+        messageChecker = uiController.GetComponent<MessageChecker>();
+        
         conditionalLocks = new Stack<bool>();
 
+        string topic = PlayerPrefs.GetString("TOPIC");
+        string level = PlayerPrefs.GetString("LEVEL");
         //Sólo podemos usar la recursión en el tema de la recursividad o modo entrenamiento
-        canDoRecursion = (PlayerPrefs.GetString("TOPIC") == "6" || PlayerPrefs.GetString("TOPIC") == "99") ;
+        canDoRecursion = (topic.Equals("6") || topic.Equals("99")) && !level.Equals("5") ;
+
+        //Debemos usar la recursión en algunos niveles
+        mustCallFunction = (topic.Equals("5") && int.Parse(level) >= 6 && int.Parse(level) <= 10) || topic.Equals("6");
 
         lang = PlayerPrefs.GetString("LANGUAGE");
+        topicLevel = PlayerPrefs.GetString("TOPIC") + PlayerPrefs.GetString("LEVEL");        
     }
 
     // Update is called once per frame
@@ -78,15 +91,18 @@ public class Interpreter : MonoBehaviour
         }
         else
         {
-            isExecuting = true;
-
-            index = 0;
-            entryPointFound = false;
-            rollBackPos.Clear();
-            iterations.Clear();
-            conditionalLocks.Clear();
-            callIndices.Clear();
-            callCount = 0;
+            if (callCount == 0) {
+                isExecuting = true;
+                index = 0;
+                entryPointFound = false;
+                rollBackPos.Clear();
+                iterations.Clear();
+                conditionalLocks.Clear();
+                callIndices.Clear();
+                arguments.Clear();
+                CDRandom.reset();
+                callCount = 0;
+            }
 
             while (isExecuting)
             {
@@ -112,9 +128,25 @@ public class Interpreter : MonoBehaviour
                                     break;
                                 case BlockType.SAY:
                                     cc.addCommand(Command.TALK);
-                                    string message = evaluateValueString(current.GetComponentInChildren<VariableGap>(), false);
+                                    string message = evaluateValueString(current.GetComponentInChildren<VariableGap>(), false, true);
                                     cc.addMessage(message);
-                                    messageChecker.currentMessages.Add(message);
+                                    if(messageChecker != null)
+                                        messageChecker.currentMessages.Add(message);
+                                    break;
+                                case BlockType.STEP_NUM:
+                                    int number = evaluateValueInt(current.GetComponentInChildren<VariableGap>());
+                                    if (number >= 0)
+                                    {
+                                        for (int i = 0; i < number; i++)
+                                        {
+                                            cc.addCommand(Command.STEP);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        showErrorMessage(Localization.getString("TST_NEGATIVE_VALUE", lang));
+                                        stopExecution();
+                                    }
                                     break;
                                 case BlockType.IF:
                                     if (current.isHead())
@@ -178,7 +210,81 @@ public class Interpreter : MonoBehaviour
                                     }
                                     callCount++;
                                     callIndices.Push(index);
-                                    searchFunction();
+                                    searchFunction(BlockType.FUNCTION);
+                                    break;
+
+                                case BlockType.FUNCTION_ARG_CALL:
+                                    if (callCount > 0)
+                                    {
+                                        if (!canDoRecursion)
+                                        {
+                                            showErrorMessage(Localization.getString("TST_NO_RECURSION", lang));
+                                            stopExecution();
+                                        }
+                                        else
+                                        {
+                                            recursionUsed = true;
+                                        }
+                                    }
+                                    if (callCount > 30)
+                                    {
+                                        showErrorMessage(Localization.getString("TST_TOO_MANY_CALLS", lang));
+                                        stopExecution();
+                                    }
+
+                                    functionCalled = true;
+
+                                    arguments.Push(evaluateValueInt(current.GetComponentInChildren<VariableGap>()));
+                                    cpc.editIntVar("param", arguments.Peek());
+
+                                    callCount++;
+                                    callIndices.Push(index);
+                                    searchFunction(BlockType.FUNCTION_ARG);
+                                    break;
+
+                                case BlockType.RETURN:
+
+                                    arguments.Pop();
+                                    if (arguments.Count > 0)
+                                        cpc.editIntVar("param", arguments.Peek());
+                                    callCount--;
+
+                                    index = callIndices.Pop();
+                                    returnValues.Push(evaluateValueInt(current.GetComponentInChildren<VariableGap>()));
+                                    return;
+
+                                case BlockType.FUNCTION_RETURN:
+                                    if (current.isHead())
+                                    {
+                                        skip(BlockType.FUNCTION_RETURN);
+                                    }
+                                    else
+                                    {
+                                        showErrorMessage(Localization.getString("TST_NO_RETURN", lang));
+                                        stopExecution();
+                                    }
+                                    break;
+
+                                case BlockType.FUNCTION_RETURN_CALL:
+                                    if (callCount > 0)
+                                    {
+                                        if (!canDoRecursion)
+                                        {
+                                            showErrorMessage(Localization.getString("TST_NO_RECURSION", lang));
+                                            stopExecution();
+                                        }
+                                        else
+                                        {
+                                            recursionUsed = true;
+                                        }
+                                    }
+                                    if (callCount > 30)
+                                    {
+                                        showErrorMessage(Localization.getString("TST_TOO_MANY_CALLS", lang));
+                                        stopExecution();
+                                    }
+                                    callCount++;
+                                    executeReturnFunc(evaluateValueInt(current.GetComponentInChildren<VariableGap>()));
                                     break;
 
                                 case BlockType.FUNCTION:
@@ -192,6 +298,22 @@ public class Interpreter : MonoBehaviour
                                         callCount--;
                                     }
                                     break;
+
+                                case BlockType.FUNCTION_ARG:
+                                    if (current.isHead())
+                                    {
+                                        skip(BlockType.FUNCTION_ARG);
+                                    }
+                                    else
+                                    {
+                                        index = callIndices.Pop();
+                                        arguments.Pop();
+                                        if(arguments.Count > 0)
+                                            cpc.editIntVar("param", arguments.Peek());
+                                        callCount--;
+                                    }
+                                    break;
+
 
                                 case BlockType.WHILE:
                                     if (current.isHead())
@@ -300,18 +422,20 @@ public class Interpreter : MonoBehaviour
                                     break;
                                 case BlockType.ASSIGNMENT:
                                     VariableGap gap = current.GetComponentInChildren<VariableGap>();
-                                    Block block = gap.GetComponent<Block>();
+                                    Block block = gap.GetComponentInChildren<Block>();
                                     if (block != null && block.type == BlockType.INT_ARRAY_VAR)
                                     {
-                                        int pos = evaluateValueInt(block.GetComponent<ValueGap>());
+                                        int pos = evaluateValueInt(block.GetComponentInChildren<VariableGap>());
                                         string name = block.GetComponentInChildren<Text>().text;
                                         if (!cpc.checkIntArrayPosition(name, pos))
                                         {
                                             showErrorMessage(Localization.getString("TST_ARRAY_INDEX_OUT", lang));
-                                            showErrorMarker(gap.GetComponent<Image>());
                                             stopExecution();
                                         }
-                                        cpc.editIntArray(name, pos, evaluateValueInt(current.GetComponentsInChildren<VariableGap>()[1]));
+                                        else
+                                        {
+                                            cpc.editIntArray(name, pos, evaluateValueInt(current.transform.GetChild(0).GetChild(2).GetComponentInChildren<VariableGap>()));
+                                        }
                                     }
                                     else
                                     {
@@ -323,7 +447,7 @@ public class Interpreter : MonoBehaviour
                                                 cpc.editIntVar(nameA, valueA);
                                                 break;
                                             case ValueType.STRING:
-                                                string valueAS = evaluateValueString(current.GetComponentsInChildren<VariableGap>()[1], true);
+                                                string valueAS = evaluateValueString(current.GetComponentsInChildren<VariableGap>()[1], true, false);
                                                 cpc.editStringVar(nameA, valueAS);
                                                 break;
                                             case ValueType.FLOAT:
@@ -339,6 +463,7 @@ public class Interpreter : MonoBehaviour
                                     //No hay errores. Comienza la secuencia de movimientos
                                     uiController.scrollDown();
                                     //showErrorMessage("¡Hurra!¡No hay errores en el código!");
+                                    callCount = 0;
                                     cc.start();
                                     break;
                             }
@@ -351,29 +476,33 @@ public class Interpreter : MonoBehaviour
 
                         switch (current.type)
                         {
+                            case BlockType.DECLARE_STATIC_INT:
                             case BlockType.DECLARE_INT:
                                 string nameI = current.transform.GetChild(0).GetChild(1).GetChild(0).GetChild(0).GetComponent<Text>().text;
                                 int valueI = evaluateValueInt(current.GetComponentInChildren<ValueGap>());
                                 cpc.editIntVar(nameI, valueI);
                                 cpc.setVariableScope(nameI, current);
                                 break;
+                            case BlockType.DECLARE_STATIC_STRING:
                             case BlockType.DECLARE_STRING:
                                 string nameS = current.transform.GetChild(0).GetChild(1).GetChild(0).GetChild(0).GetComponent<Text>().text;
-                                string valueS = evaluateValueString(current.GetComponentInChildren<ValueGap>(), true);
+                                string valueS = evaluateValueString(current.GetComponentInChildren<ValueGap>(), true, false);
                                 cpc.editStringVar(nameS, valueS);
                                 cpc.setVariableScope(nameS, current);
                                 break;
+                            case BlockType.DECLARE_STATIC_FLOAT:
                             case BlockType.DECLARE_FLOAT:
                                 string nameF = current.transform.GetChild(0).GetChild(1).GetChild(0).GetChild(0).GetComponent<Text>().text;
                                 float valueF = evaluateValueFloat(current.GetComponentInChildren<ValueGap>());
                                 cpc.editFloatVar(nameF, valueF);
                                 cpc.setVariableScope(nameF, current);
                                 break;
+                            case BlockType.DECLARE_STATIC_INT_ARRAY:
                             case BlockType.DECLARE_INT_ARRAY:
                                 string nameIA = current.transform.GetChild(0).GetChild(1).GetChild(0).GetChild(0).GetComponent<Text>().text;
                                 int size = evaluateValueInt(current.GetComponentInChildren<ValueGap>());
                                 cpc.setIntArraySize(nameIA, size);
-                                cpc.setArrayScope(name, current);
+                                cpc.setArrayScope(nameIA, current);
                                 break;
                         }
 
@@ -393,6 +522,7 @@ public class Interpreter : MonoBehaviour
     {
         cc.stop();
         isExecuting = false;
+        callCount = 0;
     }
 
     public bool evaluateCondition(ConditionGap gap)
@@ -410,7 +540,7 @@ public class Interpreter : MonoBehaviour
         List<VariableGap> gaps = getGaps(cond.gameObject);
         string str = "";
         if (gaps.Count > 0)
-            str = evaluateValueString(gaps[0], false);
+            str = evaluateValueString(gaps[0], false, false);
 
         switch (cond.type)
         {
@@ -418,15 +548,11 @@ public class Interpreter : MonoBehaviour
 
                 if (IsStringValue(str))
                 {
-                    return str.Equals(evaluateValueString(gaps[1], true));
+                    return str.Equals(evaluateValueString(gaps[1], true, false));
                 }
-                else if (IsDigitsOnly(str))
+                else if (IsDigitsOnly(str) || IsFloatValue(str))
                 {
                     return evaluateValueInt(gaps[0]) == evaluateValueInt(gaps[1]);
-                }
-                else if (IsFloatValue(str))
-                {
-                    return evaluateValueFloat(gaps[0]) == evaluateValueFloat(gaps[1]);
                 }
                 else
                 {
@@ -439,15 +565,11 @@ public class Interpreter : MonoBehaviour
 
                 if (IsStringValue(str))
                 {
-                    return str != evaluateValueString(gaps[1], true);
+                    return !str.Equals(evaluateValueString(gaps[1], true, false));
                 }
-                else if (IsDigitsOnly(str))
+                else if (IsDigitsOnly(str) || IsFloatValue(str))
                 {
                     return evaluateValueInt(gaps[0]) != evaluateValueInt(gaps[1]);
-                }
-                else if (IsFloatValue(str))
-                {
-                    return evaluateValueFloat(gaps[0]) != evaluateValueFloat(gaps[1]);
                 }
                 else
                 {
@@ -468,15 +590,9 @@ public class Interpreter : MonoBehaviour
                     stopExecution();
                     return false;
                 }
-                else if (IsDigitsOnly(str))
+                else if (IsDigitsOnly(str) || IsFloatValue(str))
                 {
                     return evaluateValueInt(gaps[0]) > evaluateValueInt(gaps[1]);
-                }
-                else if (IsFloatValue(str))
-                {
-                    float a = evaluateValueFloat(gaps[0]);
-                    float b = evaluateValueFloat(gaps[1]);
-                    return a > b;
                 }
                 else
                 {
@@ -497,13 +613,9 @@ public class Interpreter : MonoBehaviour
                     stopExecution();
                     return false;
                 }
-                else if (IsDigitsOnly(str))
+                else if (IsDigitsOnly(str) || IsFloatValue(str))
                 {
                     return evaluateValueInt(gaps[0]) < evaluateValueInt(gaps[1]);
-                }
-                else if (IsFloatValue(str))
-                {
-                    return evaluateValueFloat(gaps[0]) < evaluateValueFloat(gaps[1]);
                 }
                 else
                 {
@@ -523,13 +635,9 @@ public class Interpreter : MonoBehaviour
                     stopExecution();
                     return false;
                 }
-                else if (IsDigitsOnly(str))
+                else if (IsDigitsOnly(str) || IsFloatValue(str))
                 {
                     return evaluateValueInt(gaps[0]) >= evaluateValueInt(gaps[1]);
-                }
-                else if (IsFloatValue(str))
-                {
-                    return evaluateValueFloat(gaps[0]) >= evaluateValueFloat(gaps[1]);
                 }
                 else
                 {
@@ -547,13 +655,9 @@ public class Interpreter : MonoBehaviour
                     stopExecution();
                     return false;
                 }
-                else if (IsDigitsOnly(str))
+                else if (IsDigitsOnly(str) || IsFloatValue(str))
                 {
                     return evaluateValueInt(gaps[0]) <= evaluateValueInt(gaps[1]);
-                }
-                else if (IsFloatValue(str))
-                {
-                    return evaluateValueFloat(gaps[0]) <= evaluateValueFloat(gaps[1]);
                 }
                 else
                 {
@@ -598,7 +702,7 @@ public class Interpreter : MonoBehaviour
                 case BlockType.INT_VAR:
                     return cpc.getIntValue(val.GetComponentInChildren<Text>().text);
                 case BlockType.INT_ARRAY_VAR:
-                    int pos = evaluateValueInt(val.GetComponent<VariableGap>());
+                    int pos = evaluateValueInt(val.GetComponentInChildren<VariableGap>());
                     string name = val.GetComponentInChildren<Text>().text;
                     if (!cpc.checkIntArrayPosition(name, pos))
                     {
@@ -615,6 +719,10 @@ public class Interpreter : MonoBehaviour
                     return evaluateValueInt(gaps[0]) * evaluateValueInt(gaps[1]);
                 case BlockType.DIV:
                     return evaluateValueInt(gaps[0]) / evaluateValueInt(gaps[1]);
+                case BlockType.RANDOM:
+                    return CDRandom.range(topicLevel, evaluateValueInt(gaps[0]), evaluateValueInt(gaps[1]));
+                case BlockType.FUNCTION_RETURN_CALL:
+                    return executeReturnFunc(evaluateValueInt(gaps[0]));
                 default:
                     //Error: Tipo de dato no compatible con int
                     showErrorMessage(Localization.getString("TST_NOT_COMPATIBLE_INT", lang));
@@ -655,7 +763,7 @@ public class Interpreter : MonoBehaviour
         }
     }
 
-    public string evaluateValueString(VariableGap gap, bool strict)
+    public string evaluateValueString(VariableGap gap, bool strict, bool stringify)
     {
         Block val = gap.GetComponentInChildren<Block>();
         if (val != null)
@@ -664,6 +772,7 @@ public class Interpreter : MonoBehaviour
             {
                 case BlockType.STRING_VAR:
                     return cpc.getStringValue(val.GetComponentInChildren<Text>().text);
+
                 case BlockType.INT_VAR:
                     if (strict)
                     {
@@ -671,8 +780,13 @@ public class Interpreter : MonoBehaviour
                         showErrorMarker(gap.GetComponent<Image>());
                         stopExecution();
                         return "";
+                    }else if (stringify)
+                    {
+                        return "\"" + cpc.getIntValue(val.GetComponentInChildren<Text>().text).ToString() + "\"";
+
                     }
                     return cpc.getIntValue(val.GetComponentInChildren<Text>().text).ToString();
+
                 case BlockType.INT_ARRAY_VAR:
                     if (strict)
                     {
@@ -681,15 +795,21 @@ public class Interpreter : MonoBehaviour
                         stopExecution();
                         return "";
                     }
-                    int pos = evaluateValueInt(val.GetComponent<VariableGap>());
+                    int pos = evaluateValueInt(val.GetComponentInChildren<VariableGap>());
                     string name = val.GetComponentInChildren<Text>().text;
                     if (!cpc.checkIntArrayPosition(name, pos))
                     {
-                        showErrorMessage(Localization.getString("TST_NOT_COMPATIBLE_STRING", lang));
+                        showErrorMessage(Localization.getString("TST_ARRAY_INDEX_OUT", lang));
                         showErrorMarker(gap.GetComponent<Image>());
                         stopExecution();
                     }
+
+                    if (stringify)
+                    {
+                        return "\"" + cpc.getIntArrayValue(name, pos).ToString() + "\"";
+                    }
                     return cpc.getIntArrayValue(name, pos).ToString();
+
                 case BlockType.FLOAT_VAR:
                     if (strict)
                     {
@@ -701,18 +821,18 @@ public class Interpreter : MonoBehaviour
                     string str = cpc.getFloatValue(val.GetComponentInChildren<Text>().text).ToString();
                     if (!str.Contains(",") && !str.Contains("."))
                         str += ".0";
-                    return str;
+                    return "\"" + str + "\"";
                 case BlockType.SUM:
                     List<VariableGap> gaps = getGaps(val.gameObject);
-                    return stringConcatenate(evaluateValueString(gaps[0], true), evaluateValueString(gaps[1], true));
+                    return stringConcatenate(evaluateValueString(gaps[0], true, false), evaluateValueString(gaps[1], false, true));
                 case BlockType.SUBS:
                     //Error: no se pueden restar dos string
                     showErrorMessage(Localization.getString("TST_STRING_NOT_SUM", lang));
                     stopExecution();
                     return "";
                 case BlockType.MULT:
-                    //Error: no se multiplicar dos string
-                    showErrorMessage(Localization.getString("TST_STRING NOT_MULT", lang));
+                    //Error: no se pueden multiplicar dos string
+                    showErrorMessage(Localization.getString("TST_STRING_NOT_MULT", lang));
                     stopExecution();
                     return "";
                 case BlockType.DIV:
@@ -720,6 +840,23 @@ public class Interpreter : MonoBehaviour
                     showErrorMessage(Localization.getString("TST_STRING_NOT_DIV", lang));
                     stopExecution();
                     return "";
+                case BlockType.RANDOM:
+                    showErrorMessage(Localization.getString("TST_NOT_COMPATIBLE_STRING", lang));
+                    stopExecution();
+                    return "";
+                case BlockType.FUNCTION_RETURN_CALL:
+                    if (strict)
+                    {
+                        showErrorMessage(Localization.getString("TST_NOT_COMPATIBLE_STRING", lang));
+                        stopExecution();
+                        return "";
+                    }
+                    string res = executeReturnFunc(evaluateValueInt(val.GetComponentInChildren<VariableGap>())).ToString();
+                    if (stringify)
+                    {
+                        res = "\"" + res + "\"";
+                    }
+                    return res;
                 default:
                     //Error: Tipo de dato no compatible con string
                     showErrorMessage(Localization.getString("TST_NOT_COMPATIBLE_STRING", lang));
@@ -740,12 +877,17 @@ public class Interpreter : MonoBehaviour
 
             if (!str.Equals(""))
             {
-                if (strict && !IsStringValue(str))
+                if (strict)
                 {
-                    //Error: Un valor de string debe ir entre comillas
-                    showErrorMessage(Localization.getString("TST_STRING_QUOTE", lang));
-                    showErrorMarker(gap.GetComponentInChildren<Image>());
-                    stopExecution();
+                    if (!IsStringValue(str)){
+                        //Error: Un valor de string debe ir entre comillas
+                        showErrorMessage(Localization.getString("TST_STRING_QUOTE", lang));
+                        showErrorMarker(gap.GetComponentInChildren<Image>());
+                        stopExecution();
+                    }
+                }else if (stringify)
+                {
+                    str = "\"" + str + "\"";
                 }
             }
             else
@@ -788,6 +930,10 @@ public class Interpreter : MonoBehaviour
                     return evaluateValueFloat(gaps[0]) * evaluateValueFloat(gaps[1]);
                 case BlockType.DIV:
                     return evaluateValueFloat(gaps[0]) / evaluateValueFloat(gaps[1]);
+                case BlockType.RANDOM:
+                    return CDRandom.range(topicLevel, evaluateValueInt(gaps[0]), evaluateValueInt(gaps[1]));
+                case BlockType.FUNCTION_RETURN_CALL:
+                    return executeReturnFunc(evaluateValueInt(gaps[0]));
                 default:
                     //Error: Tipo de dato no compatible con float
                     showErrorMessage("Tipo de dato no compatible con float.");
@@ -838,6 +984,19 @@ public class Interpreter : MonoBehaviour
         }
     }
 
+    int executeReturnFunc(int value)
+    {
+        callCount++;
+        callIndices.Push(index);
+        searchFunction(BlockType.FUNCTION_RETURN);
+        index++;
+        functionCalled = true;
+        arguments.Push(value);
+        cpc.editIntVar("param", arguments.Peek());
+        execute();
+        return returnValues.Pop();
+    }
+
     public void skip(BlockType type)
     {
         int stackCount = 0;
@@ -866,13 +1025,14 @@ public class Interpreter : MonoBehaviour
 
         }
     }
-    void searchFunction()
+    void searchFunction(BlockType type)
     {
         index = 0;
+        
         foreach(Transform child in vlg.transform)
         {
             Block b = child.GetComponent<Block>();
-            if(b != null && b.isHead() && b.type == BlockType.FUNCTION)
+            if(b != null && b.isHead() && b.type == type)
             {
                 break;
             }
@@ -883,6 +1043,7 @@ public class Interpreter : MonoBehaviour
 
     static bool IsDigitsOnly(string str)
     {
+        str = str.TrimStart('-');
         foreach (char c in str)
         {
             if (c < '0' || c > '9')
@@ -965,6 +1126,11 @@ public class Interpreter : MonoBehaviour
     public bool usedRecursion()
     {
         return recursionUsed;
+    }
+
+    public bool functionCallsCheck()
+    {
+        return !mustCallFunction || functionCalled;
     }
 
 }

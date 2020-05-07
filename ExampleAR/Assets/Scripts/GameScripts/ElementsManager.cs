@@ -31,19 +31,46 @@ public class ElementsManager : MonoBehaviour
 
     public void updateTurn()
     {
-        foreach(Worm worm in worms)
+        for(int i = 0; i < worms.Count; i++)
         {
-            if (worm != null)
+            if (worms[i] != null)
             {
-                worm.updateTurn();
+                worms[i].updateTurn();
             }
-            
+        }
+    }
+
+    public void resetWorms()
+    {
+        List<Worm> toRemove = new List<Worm>();
+        List<int> resetIndexes = new List<int>();
+    
+        for(int i = 0; i < worms.Count; i++)
+        {
+            if (worms[i].original)
+            {
+                resetIndexes.Add(i);
+            }
+            else
+            {
+                toRemove.Add(worms[i]);
+            }
         }
 
-        foreach(Worm worm in FindObjectsOfType<Worm>())
+        foreach(int i in resetIndexes)
         {
-            if (!worms.Contains(worm))
-                worms.Add(worm);
+            worms[i].reset();
         }
+
+        foreach(Worm worm in toRemove)
+        {
+            worms.Remove(worm);
+            Destroy(worm.gameObject);
+        }
+    }
+    
+    public void addWorm(Worm worm)
+    {
+        worms.Add(worm);
     }
 }

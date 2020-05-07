@@ -22,7 +22,17 @@ public class BlocksGenerator : MonoBehaviour
     public GameObject function_head;
     public GameObject function_end;
 
+    public GameObject function_arg_end;
+    public GameObject function_arg_head;
+
+    public GameObject function_return_head;
+    public GameObject returnBlock;
+    public GameObject function_return_end;
+
     public GameObject function_call;
+    public GameObject function_arg_call;
+    public GameObject function_return_call;
+    public GameObject function_return_call_in;
 
     public GameObject while_head;
     public GameObject while_end;
@@ -42,6 +52,11 @@ public class BlocksGenerator : MonoBehaviour
     public GameObject declare_string;
     public GameObject declare_float;
     public GameObject declare_int_array;
+
+    public GameObject declare_static_int;
+    public GameObject declare_static_string;
+    public GameObject declare_static_float;
+    public GameObject declare_static_int_array;
 
     public GameObject turnleft;
     public GameObject turnright;
@@ -77,6 +92,7 @@ public class BlocksGenerator : MonoBehaviour
     public GameObject subtraction;
     public GameObject multiplication;
     public GameObject division;
+    public GameObject random;
 
     //variable declaration
     GameObject declare_var;
@@ -111,7 +127,6 @@ public class BlocksGenerator : MonoBehaviour
                 addElement(Instantiate(class_end), index + 2, offset, scope);
                 addElement(Instantiate(blankLine), index + 3, offset, scope);
                 
-
                 break;
 
             case BlockType.MAIN_FUNCTION:
@@ -134,10 +149,54 @@ public class BlocksGenerator : MonoBehaviour
                     
                 break;
 
-            case
-            BlockType.FUNCTION_CALL:
+            case BlockType.FUNCTION_ARG:
+
+
+                GameObject head = Instantiate(function_arg_head);
+                addElement(Instantiate(blankLine), index, offset, scope);
+                addElement(head, index + 1, offset, scope);
+                addElement(Instantiate(blankLine), index + 2, offset + cpc.offset, scope);
+                addElement(Instantiate(function_arg_end), index + 3, offset, scope);
+                addElement(Instantiate(blankLine), index + 4, offset, scope);
+                cpc.addIntVar(new Variable<int>("param", 0, 1, head.GetComponent<Block>()));
+
+                break;
+
+            case BlockType.FUNCTION_RETURN:
+
+
+                GameObject headR = Instantiate(function_return_head);
+                addElement(Instantiate(blankLine), index, offset, scope);
+                addElement(headR, index + 1, offset, scope);
+                addElement(Instantiate(blankLine), index + 2, offset + cpc.offset, scope);
+                addElement(Instantiate(returnBlock), index + 3, offset + cpc.offset, scope);
+                addElement(Instantiate(blankLine), index + 4, offset + cpc.offset, scope);
+                addElement(Instantiate(function_return_end), index + 5, offset, scope + 1);
+                addElement(Instantiate(blankLine), index + 6, offset, scope);
+                cpc.addIntVar(new Variable<int>("param", 0, 1, headR.GetComponent<Block>()));
+
+                break;
+            case BlockType.RETURN:
+                addElement(Instantiate(blankLine), index, offset, scope);
+                addElement(Instantiate(returnBlock), index + 1, offset, scope);
+                addElement(Instantiate(blankLine), index+ 2, offset, scope);
+                break;
+
+            case BlockType.FUNCTION_CALL:
                 addElement(Instantiate(blankLine), index, offset, scope);
                 addElement(Instantiate(function_call), index + 1, offset, scope);
+                addElement(Instantiate(blankLine), index + 2, offset, scope);
+                break;
+
+            case BlockType.FUNCTION_ARG_CALL:
+                addElement(Instantiate(blankLine), index, offset, scope);
+                addElement(Instantiate(function_arg_call), index + 1, offset, scope);
+                addElement(Instantiate(blankLine), index + 2, offset, scope);
+                break;
+
+            case BlockType.FUNCTION_RETURN_CALL:
+                addElement(Instantiate(blankLine), index, offset, scope);
+                addElement(Instantiate(function_return_call), index + 1, offset, scope);
                 addElement(Instantiate(blankLine), index + 2, offset, scope);
                 break;
 
@@ -165,6 +224,7 @@ public class BlocksGenerator : MonoBehaviour
                 break;
 
             case BlockType.DO_WHILE:
+
                 addElement(Instantiate(blankLine), index, offset, scope);
                 addElement(Instantiate(do_while_head), index + 1, offset, scope);
                 addElement(Instantiate(blankLine), index + 2, offset + cpc.offset, scope);
@@ -213,8 +273,6 @@ public class BlocksGenerator : MonoBehaviour
                 addElement(Instantiate(blankLine), index, offset, scope);
                 addElement(declare_var, index + 1, offset, scope);
                 addElement(Instantiate(blankLine), index + 2, offset, scope);
-
-                
                 
                 uicontroller.showPopUp();
 
@@ -226,9 +284,7 @@ public class BlocksGenerator : MonoBehaviour
                 addElement(Instantiate(blankLine), index, offset, scope);
                 addElement(declare_var, index + 1, offset, scope);
                 addElement(Instantiate(blankLine), index + 2, offset, scope);
-
-
-
+                
                 uicontroller.showPopUp();
 
                 break;
@@ -240,15 +296,62 @@ public class BlocksGenerator : MonoBehaviour
                 addElement(Instantiate(blankLine), index, offset, scope);
                 addElement(declare_var, index + 1, offset, scope);
                 addElement(Instantiate(blankLine), index + 2, offset, scope);
+                
+                uicontroller.showPopUp();
 
+                break;
 
+            case BlockType.DECLARE_INT_ARRAY:
+
+                declare_var = Instantiate(declare_int_array);
+
+                addElement(Instantiate(blankLine), index, offset, scope);
+                addElement(declare_var, index + 1, offset, scope);
+                addElement(Instantiate(blankLine), index + 2, offset, scope);
 
                 uicontroller.showPopUp();
 
                 break;
-            case BlockType.DECLARE_INT_ARRAY:
 
-                declare_var = Instantiate(declare_int_array);
+            case BlockType.DECLARE_STATIC_INT:
+
+                declare_var = Instantiate(declare_static_int);
+
+                addElement(Instantiate(blankLine), index, offset, scope);
+                addElement(declare_var, index + 1, offset, scope);
+                addElement(Instantiate(blankLine), index + 2, offset, scope);
+
+                uicontroller.showPopUp();
+
+                break;
+
+            case BlockType.DECLARE_STATIC_STRING:
+
+                declare_var = Instantiate(declare_static_string);
+
+                addElement(Instantiate(blankLine), index, offset, scope);
+                addElement(declare_var, index + 1, offset, scope);
+                addElement(Instantiate(blankLine), index + 2, offset, scope);
+
+                uicontroller.showPopUp();
+
+                break;
+
+            case BlockType.DECLARE_STATIC_FLOAT:
+
+                declare_var = Instantiate(declare_static_float);
+
+                addElement(Instantiate(blankLine), index, offset, scope);
+                addElement(declare_var, index + 1, offset, scope);
+                addElement(Instantiate(blankLine), index + 2, offset, scope);
+
+                uicontroller.showPopUp();
+
+                break;
+
+            case BlockType.DECLARE_STATIC_INT_ARRAY:
+
+                declare_var = Instantiate(declare_static_int_array);
 
                 addElement(Instantiate(blankLine), index, offset, scope);
                 addElement(declare_var, index + 1, offset, scope);
@@ -288,6 +391,7 @@ public class BlocksGenerator : MonoBehaviour
                 addElement(Instantiate(blankLine), index + 2, offset, scope);
 
                 break;
+
             default:
                 Debug.LogError("Block type not defined!");
                 break;
@@ -355,24 +459,31 @@ public class BlocksGenerator : MonoBehaviour
 
         GameObject go = new GameObject();
 
-        switch (vtype)
+        if (btype == BlockType.FUNCTION_RETURN_CALL)
         {
-            case ValueType.INT:
-                if (btype == BlockType.INT_ARRAY_VAR)
-                {
-                    go = Instantiate(array_block_template_int);
-                }
-                else
-                {
-                    go = Instantiate(variable_block_template_int);
-                }
-                break;
-            case ValueType.STRING:
-                go = Instantiate(variable_block_template_string);
-                break;
-            case ValueType.FLOAT:
-                go = Instantiate(variable_block_template_float);
-                break;
+            go = Instantiate(function_return_call_in);
+        }
+        else
+        {
+            switch (vtype)
+            {
+                case ValueType.INT:
+                    if (btype == BlockType.INT_ARRAY_VAR)
+                    {
+                        go = Instantiate(array_block_template_int);
+                    }
+                    else
+                    {
+                        go = Instantiate(variable_block_template_int);
+                    }
+                    break;
+                case ValueType.STRING:
+                    go = Instantiate(variable_block_template_string);
+                    break;
+                case ValueType.FLOAT:
+                    go = Instantiate(variable_block_template_float);
+                    break;
+            }
         }
 
         GameObject block = gap.gameObject;
@@ -382,7 +493,10 @@ public class BlocksGenerator : MonoBehaviour
             block = block.transform.parent.gameObject;
         }
         go.GetComponent<Block>().scope = block.GetComponent<Block>().scope;
-        go.GetComponentInChildren<Text>().text = name;
+
+        if(btype != BlockType.FUNCTION_RETURN_CALL)
+            go.GetComponentInChildren<Text>().text = name;
+
         go.transform.SetParent(gap.transform);
         go.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
 
@@ -411,6 +525,9 @@ public class BlocksGenerator : MonoBehaviour
                 break;
             case BlockType.DIV:
                 go = Instantiate(division);
+                break;
+            case BlockType.RANDOM:
+                go = Instantiate(random);
                 break;
         }
         
@@ -462,15 +579,19 @@ public class BlocksGenerator : MonoBehaviour
             case BlockType.FOR:
                 cpc.addIntVar(new Variable<int>(text, 0, new_scope + 1, b));
                 break;
+            case BlockType.DECLARE_STATIC_INT:
             case BlockType.DECLARE_INT:
                 cpc.addIntVar(new Variable<int>(text, 0, new_scope, b));
                 break;
+            case BlockType.DECLARE_STATIC_STRING:
             case BlockType.DECLARE_STRING:
                 cpc.addStringVar(new Variable<string>(text, "", new_scope, b));
                 break;
+            case BlockType.DECLARE_STATIC_FLOAT:
             case BlockType.DECLARE_FLOAT:
                 cpc.addFloatVar(new Variable<float>(text, 0.0f, new_scope, b));
                 break;
+            case BlockType.DECLARE_STATIC_INT_ARRAY:
             case BlockType.DECLARE_INT_ARRAY:
                 cpc.addIntArray(new Array<int>(text, 0, new_scope, b));
                 break;

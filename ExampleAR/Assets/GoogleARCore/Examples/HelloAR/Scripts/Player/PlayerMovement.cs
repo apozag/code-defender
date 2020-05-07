@@ -32,7 +32,16 @@ public class PlayerMovement : MonoBehaviour
 
     //posiciones en distintos niveles
     static Dictionary<string, Vector3> levelPositions = new Dictionary<string, Vector3>() {
+        {"16", new Vector3(0.05f, 0.05f, -0.25f)},
+        {"25", new Vector3(0.05f, 0.05f, -0.25f)},
+        {"26", new Vector3(0.35f, 0.05f, -0.35f)},
+        {"27", new Vector3(0.05f, 0.05f, -0.15f)},
+        {"28", new Vector3(0.05f, 0.05f, -0.35f)},
+        {"210", new Vector3(0.05f, 0.05f, -0.45f)},
         {"51", new Vector3(0.35f, 0.05f, 0.05f)},
+        {"56", new Vector3(0.15f, 0.05f, -0.25f)},
+        {"58", new Vector3(-0.35f, 0.05f,-0.35f)},
+        {"59", new Vector3(-0.15f, 0.05f,-0.25f)},
         {"61", new Vector3(0.45f, 0.05f, -0.45f)}
     };
 

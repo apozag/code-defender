@@ -19,13 +19,17 @@ public class Worm : MonoBehaviour
 
     [SerializeField] bool active = true;
 
-    TextMeshPro counter;
+    ElementsManager elemManager;
 
-    bool replicated = false;
+    TextMeshPro counter;
 
     int currentTurns = 0;
 
-    bool original = true;
+    public bool original = true;
+
+    bool dead = false;
+
+    bool doomed = false;
 
     // Start is called before the first frame update
     void Start()
@@ -33,11 +37,18 @@ public class Worm : MonoBehaviour
 
         counter = bubble.GetComponentInChildren<TextMeshPro>();
 
+        elemManager = FindObjectOfType<ElementsManager>();
+
         counter.SetText(turns.ToString());
 
         if (!active)
         {
             GetComponentInChildren<Renderer>().material = transparentMaterial;
+            bubble.SetActive(false);
+        }
+        else
+        {
+            replicate();
         }
     }
 
@@ -54,19 +65,16 @@ public class Worm : MonoBehaviour
         {
             if (active)
             {
-                if (!replicated)
-                {
-                    replicate();
-                }
+                bubble.SetActive(false);
             }
-            else
+            if(!active)
             {
                 activate();
             }
             currentTurns = 0;
         }
 
-        if(active && !replicated)
+        if(active)
         {
             updateCounter();
         }
@@ -79,16 +87,30 @@ public class Worm : MonoBehaviour
 
     void activate()
     {
-        GetComponentInChildren<Renderer>().material = opaqueMaterial;
-       
-        active = true;
-        bubble.SetActive(true);
+        if (doomed)
+        {
+            die();
+        }
+        else
+        {
+            GetComponentInChildren<Renderer>().material = opaqueMaterial;
+
+            active = true;
+            bubble.SetActive(true);
+            replicate();
+        }
+    }
+
+
+    public bool isDead()
+    {
+        return dead;
     }
 
     void replicate()
     {
-        left = Instantiate(this);
-        right = Instantiate(this);
+        left = Instantiate(this, transform.parent);
+        right = Instantiate(this, transform.parent);
 
         left.turns = turns;
         right.turns = turns;
@@ -104,50 +126,69 @@ public class Worm : MonoBehaviour
 
         if (horizontal)
         {
-            left.transform.Translate(transform.right * -0.1f);
-            right.transform.Translate(transform.right * 0.1f);
+            left.transform.Translate(new Vector3(-0.1f, 0, 0), Space.Self);
+            right.transform.Translate(new Vector3(0.1f, 0, 0), Space.Self);
         }
         else
         {
-           left.transform.Translate(transform.forward * -0.1f);
-           right.transform.Translate(transform.forward * 0.1f);
+            left.transform.Translate(new Vector3(0, 0, -0.1f), Space.Self);
+            right.transform.Translate(new Vector3(0, 0, 0.1f), Space.Self);
         }
 
-        bubble.SetActive(false);
+        elemManager.addWorm(left);
+        elemManager.addWorm(right);
 
-        replicated = true;
+    }
+
+    public void reset()
+    {
+        gameObject.SetActive(true);
+        activate();
+        dead = false;
+        currentTurns = 0;
+        updateCounter();
     }
 
     private void OnTriggerEnter(Collider other) 
     {
-        if(active && other.gameObject.tag == "Player")
+        if(other.gameObject.tag == "Player")
         {
-            if (left != null && !left.active)
+            if (active)
             {
-                Destroy(left.gameObject);
-            }
-            if (right != null && !right.active)
-            {
-                Destroy(right.gameObject);
-            }
-
-            if (original)
-            {
-                gameObject.SetActive(false);
+                die();
             }
             else
             {
-                Destroy(this.gameObject);
+                doomed = true;
             }
+            
         }
         
     }
 
-    private void OnTriggerStay(Collider other)
+    private void die()
     {
-        if(other.GetComponent<Worm>() != null)
+        if (left != null && !left.active)
         {
-            Destroy(gameObject);
+            elemManager.worms.Remove(left);
+            Destroy(left.gameObject);
+        }
+        if (right != null && !right.active)
+        {
+            elemManager.worms.Remove(right);
+            Destroy(right.gameObject);
+        }
+
+        if (original)
+        {
+            dead = true;
+            gameObject.SetActive(false);
+        }
+        else
+        {
+            elemManager.worms.Remove(this);
+            Destroy(this.gameObject);
         }
     }
+
 }

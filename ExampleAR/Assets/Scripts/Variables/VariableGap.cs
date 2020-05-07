@@ -48,12 +48,19 @@ public class VariableGap : MonoBehaviour
                     case BlockType.SUBS:
                     case BlockType.MULT:
                     case BlockType.DIV:
+                    case BlockType.RANDOM:
                         success = cpc.tryInsertOperation(candidate.getBlockType(), this);
+                        break;
+                    case BlockType.FUNCTION_RETURN_CALL:
+                        success = cpc.tryInsertFunction(this);
                         break;
                     default:
                         success = cpc.tryInsertVariable(candidate.getBlockType(), candidate.GetComponentInChildren<Text>().text, this);
                         break;
                 }
+                Color c = image.color;
+                c.a = 1.0f;
+                image.color = c;
                 if (success)
                 {
                     image.enabled = false;

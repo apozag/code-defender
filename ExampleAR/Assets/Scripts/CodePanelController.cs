@@ -85,12 +85,17 @@ public class CodePanelController : MonoBehaviour
     static Dictionary<BlockType, int> hierarchyLevels = new Dictionary<BlockType, int>() {
         {BlockType.CLASS, 0 },
         {BlockType.FUNCTION, 1 },
+        {BlockType.FUNCTION_ARG, 1 },
+        {BlockType.FUNCTION_RETURN, 1 },
+        {BlockType.FUNCTION_ARG_CALL, 2 },
+        {BlockType.FUNCTION_RETURN_CALL, 2 },
         {BlockType.MAIN_FUNCTION, 1 },
         {BlockType.FUNCTION_CALL, 2 },
         {BlockType.STEP, 2 },
         {BlockType.TURN_LEFT, 2 },
         {BlockType.TURN_RIGHT, 2 },
         {BlockType.SAY, 2 },
+        {BlockType.STEP_NUM, 2 },
         {BlockType.WHILE, 2 },
         {BlockType.FOR, 2 },
         {BlockType.DO_WHILE, 2 },
@@ -101,7 +106,8 @@ public class CodePanelController : MonoBehaviour
         {BlockType.DECLARE_INT, 3 },
         {BlockType.DECLARE_STRING,3 },
         {BlockType.DECLARE_FLOAT, 3 },
-        {BlockType.DECLARE_INT_ARRAY, 3 }
+        {BlockType.DECLARE_INT_ARRAY, 3 },
+        {BlockType.RETURN, 2 }
     };
 
     public float offset = 50.0f;
@@ -112,11 +118,14 @@ public class CodePanelController : MonoBehaviour
     //Cutre pero no se me ocurre otra manera
     bool hasMainMethod = false;
     bool hasAuxMethod = false;
+    //bool hasAuxMethodArg = false;
     //Solo hay una clase
     bool hasClass = false;
 
     // Para asegurarnos de que no se pone el mismo bloque a la vez en dos espacios en blanco
     bool insertLock = false;
+
+    string lang;
 
 
     //Variables
@@ -142,12 +151,16 @@ public class CodePanelController : MonoBehaviour
         string topic = PlayerPrefs.GetString("TOPIC");
         string level = PlayerPrefs.GetString("LEVEL");
 
+        lang = PlayerPrefs.GetString("LANGUAGE");
+
         foreach (Variable<string> var in VariablesLoadHelper.getStringVariables(topic + level))
             addStringVar(var);
         foreach (Variable<int> var in VariablesLoadHelper.getIntVariables(topic + level))
             addIntVar(var);
         foreach (Variable<float> var in VariablesLoadHelper.getFloatVariables(topic + level))
             addFloatVar(var);
+        foreach (Array<int> arr in VariablesLoadHelper.getIntArrays(topic + level))
+            addIntArray(arr);
 
         bg = GetComponent<BlocksGenerator>();
         pc = FindObjectOfType<PaletteController>();
@@ -178,12 +191,12 @@ public class CodePanelController : MonoBehaviour
             //Nos aseguramos de que no ponemos dos funciones iguales
             if (type == BlockType.MAIN_FUNCTION && hasMainMethod)
             {
-                ToastMessage.showToastOnUiThread("¡Sólo puede haber una función main!");
+                ToastMessage.showToastOnUiThread(Localization.getString("TST_MULTIPLE_MAIN", lang));
                 return false;
             }
             else if (type == BlockType.FUNCTION && hasAuxMethod)
             {
-                ToastMessage.showToastOnUiThread("¡No puede haber dos funciones con el mismo nombre!");
+                ToastMessage.showToastOnUiThread(Localization.getString("TST_MULTIPLE_FUNCTION", lang));
                 return false;
             }
 
@@ -210,7 +223,7 @@ public class CodePanelController : MonoBehaviour
                                     ((upper != null && upper.type != BlockType.IF && upper.type != BlockType.ELSE_IF) ||
                                     upper.isHead()))
                             {
-                                ToastMessage.showToastOnUiThread("Un 'else if' debe ir bajo un 'if' u otro 'else if'.");
+                                ToastMessage.showToastOnUiThread(Localization.getString("TST_ELSEIF_UNDER", lang));
                                 return false;
                             }
                             //Si es un else, debe ir bajo un if o un else if (su bloque de cierre)
@@ -218,7 +231,7 @@ public class CodePanelController : MonoBehaviour
                                     ((upper != null && upper.type != BlockType.IF && upper.type != BlockType.ELSE_IF) ||
                                     upper.isHead()))
                             {
-                                ToastMessage.showToastOnUiThread("Un 'else' debe ir debajo de un 'else if' o un 'if'.");
+                                ToastMessage.showToastOnUiThread(Localization.getString("TST_ELSE_UNDER", lang));
                                 return false;
                             }
 
@@ -227,7 +240,7 @@ public class CodePanelController : MonoBehaviour
                             {
                                 if (hasMainMethod)
                                 {
-                                    ToastMessage.showToastOnUiThread("¡Sólo puede haber una función main!");
+                                    ToastMessage.showToastOnUiThread(Localization.getString("TST_MULTIPLE_MAIN", lang));
                                     return false;
                                 }
                                 else
@@ -235,16 +248,37 @@ public class CodePanelController : MonoBehaviour
                                     hasMainMethod = true;
                                 }
                             }
-                            else if (type == BlockType.FUNCTION)
+                            else if (type == BlockType.FUNCTION || type == BlockType.FUNCTION_ARG || type == BlockType.FUNCTION_RETURN )
                             {
                                 if (hasAuxMethod)
                                 {
-                                    ToastMessage.showToastOnUiThread("¡No puede haber dos métodos iguales en la misma clase!");
+                                    ToastMessage.showToastOnUiThread(Localization.getString("TST_MULTIPLE_FUNCTION", lang));
                                     return false;
                                 }
                                 else
                                 {
                                     hasAuxMethod = true;
+                                }
+                            }
+                           
+                            //Variables globales static
+                            if (hierarchyLevels[type] == 3 && b.type == BlockType.CLASS)
+                            {
+                                switch (type)
+                                {
+                                    case BlockType.DECLARE_INT:
+                                        type = BlockType.DECLARE_STATIC_INT;
+                                        break;
+                                    case BlockType.DECLARE_STRING:
+                                        type = BlockType.DECLARE_STATIC_STRING;
+                                        break;
+                                    case BlockType.DECLARE_FLOAT:
+                                        type = BlockType.DECLARE_STATIC_FLOAT;
+                                        break;
+                                    case BlockType.DECLARE_INT_ARRAY:
+                                        type = BlockType.DECLARE_STATIC_INT_ARRAY;
+                                        break;
+
                                 }
                             }
 
@@ -264,7 +298,7 @@ public class CodePanelController : MonoBehaviour
                 {
                     if (hasClass)
                     {
-                        ToastMessage.showToastOnUiThread("¡No puede haber dos clases iguales!");
+                        ToastMessage.showToastOnUiThread(Localization.getString("TST_MULTIPLE_CLASS", lang));
                         return false;
                     }
                     else
@@ -280,7 +314,7 @@ public class CodePanelController : MonoBehaviour
             if (found)
                 bg.insertBlock(index, type, newOffset, newScope);
             else
-                ToastMessage.showToastOnUiThread("No puedes colocar este bloque aqui.");
+                ToastMessage.showToastOnUiThread(Localization.getString("TST_NOT_BELONG", lang));
 
         }
 
@@ -323,8 +357,6 @@ public class CodePanelController : MonoBehaviour
 
             bool finish = false;
 
-            BlockType end = selectedBlock.type;
-
             int count = vlg.transform.childCount;
             if (selectedBlock.hasEndBlock)
             {
@@ -357,7 +389,7 @@ public class CodePanelController : MonoBehaviour
                                 }
                                 else
                                 {
-                                    if (b.type == end)
+                                    if (b.type == selectedBlock.type)
                                         finish = true;
                                 }
                             }
@@ -378,7 +410,7 @@ public class CodePanelController : MonoBehaviour
                 {
                     hasMainMethod = false;
                 }
-                else if (selectedBlock.type == BlockType.FUNCTION)
+                else if (selectedBlock.type == BlockType.FUNCTION || selectedBlock.type == BlockType.FUNCTION_ARG || selectedBlock.type == BlockType.FUNCTION_RETURN)
                 {
                     hasAuxMethod = false;
                 }
@@ -392,7 +424,7 @@ public class CodePanelController : MonoBehaviour
                 {
                     deleteVariable(selectedBlock.transform.GetChild(0).GetChild(1).GetChild(0).GetChild(0).GetComponent<Text>().text);
                 }
-
+                                    
             }
             else
             {
@@ -415,7 +447,7 @@ public class CodePanelController : MonoBehaviour
 
                         b = b.transform.parent.gameObject;
                     }
-                    ToastMessage.showToastOnUiThread("¡Ups! Has encontrado un bug.");
+                    ToastMessage.showToastOnUiThread("Internal error: please report this error to adripoza23@gmail.com");
                     return;
                 }
 
@@ -436,7 +468,7 @@ public class CodePanelController : MonoBehaviour
                 Destroy(vlg.transform.GetChild(selectedBlock.transform.GetSiblingIndex() - 1).gameObject);
         }
         else
-            ToastMessage.showToastOnUiThread("Para eliminar un bloque, púlsalo para seleccionarlo antes.");
+            ToastMessage.showToastOnUiThread(Localization.getString("TST_SELECT_TO_DELETE", lang));
     }
 
     public bool tryInsertVariable(BlockType type, string name, VariableGap gap)
@@ -482,21 +514,21 @@ public class CodePanelController : MonoBehaviour
                         case BlockType.INT_VAR:
                             if (valType != ValueType.INT)
                             {
-                                ToastMessage.showToastOnUiThread("No puedes asignar una variable a otra de distinto tipo.");
+                                ToastMessage.showToastOnUiThread(Localization.getString("TST_DIFFERENT_TYPE_ASSIGN", lang));
                                 return false;
                             }
                             break;
                         case BlockType.STRING_VAR:
                             if (valType != ValueType.STRING)
                             {
-                                ToastMessage.showToastOnUiThread("No puedes asignar una variable a otra de distinto tipo.");
+                                ToastMessage.showToastOnUiThread(Localization.getString("TST_DIFFERENT_TYPE_ASSIGN", lang));
                                 return false;
                             }
                             break;
                         case BlockType.FLOAT_VAR:
                             if (valType != ValueType.FLOAT)
                             {
-                                ToastMessage.showToastOnUiThread("No puedes asignar una variable a otra de distinto tipo.");
+                                ToastMessage.showToastOnUiThread(Localization.getString("TST_DIFFERENT_TYPE_ASSIGN", lang));
                                 return false;
                             }
                             break;
@@ -545,9 +577,12 @@ public class CodePanelController : MonoBehaviour
             Block parent = vlg.transform.GetChild(getParentLine(linedec)).GetComponent<Block>();
 
             //Comprobamos que se ha declarado antes de usarse
-            if (siblingIndex > linedec &&
+            if ((siblingIndex > linedec &&
                 scopeblock >= scopevar &&
                 (linedec < 1 || isInSameScope(parent.id, siblingIndex, parent.type)))
+                ||
+                //Excepcion: si se declara en un for, se puede usar en la misma linea
+                siblingIndex == linedec && outerBlock.GetComponent<Block>().type == BlockType.FOR)
             {
 
                 bg.insertVariable(gap, type, name, valType);
@@ -555,7 +590,7 @@ public class CodePanelController : MonoBehaviour
 
             }
 
-            ToastMessage.showToastOnUiThread("¡La variable " + name + " no está definida en éste ámbito!");
+            ToastMessage.showToastOnUiThread(Localization.getString("TST_VAR_NOT_DEFINED_1", lang) + name + Localization.getString("TST_VAR_NOT_DEFINED_2", lang));
 
         }
         return false;
@@ -576,6 +611,16 @@ public class CodePanelController : MonoBehaviour
 
             insertLock = true;
 
+            return true;
+        }
+        return false;
+    }
+
+    public bool tryInsertFunction(VariableGap gap)
+    {
+        if (!insertLock)
+        {
+            bg.insertVariable(gap, BlockType.FUNCTION_RETURN_CALL, "return", ValueType.INT);
             return true;
         }
         return false;
@@ -632,6 +677,7 @@ public class CodePanelController : MonoBehaviour
     public void setIntArraySize(string name, int size)
     {
         int_arrays[name].size = size;
+        int_arrays[name].values.Clear();
         for (int i = 0; i < size; i++)
         {
             int_arrays[name].values.Add(0);
@@ -752,7 +798,7 @@ public class CodePanelController : MonoBehaviour
 
         }
         pc.refresh();
-        ToastMessage.showToastOnUiThread("Eliminada la variable " + name + ".");
+        ToastMessage.showToastOnUiThread(Localization.getString("TST_VAR_NOT_DEFINED_1", lang) + name + Localization.getString("VAR_DELETED", lang));
     }
 
     public void refreshHorizontalLayouts(GameObject obj)
@@ -785,13 +831,27 @@ public class CodePanelController : MonoBehaviour
     {
         int index = lineDeclared;
         Block obj;
+        int stack = 0;
 
         while (index > 0)
         {
-            obj = vlg.transform.GetChild(--index).GetComponent<Block>();
-            if (obj != null && obj.isHead() && obj.hasEndBlock)
+            obj = vlg.transform.GetChild(index--).GetComponent<Block>();
+            if (obj != null)
             {
-                return obj.transform.GetSiblingIndex();
+                if (obj.isHead())
+                {
+                    if (obj.hasEndBlock)
+                    {
+                        if (stack <= 0)
+                            return obj.transform.GetSiblingIndex();
+                        else
+                            stack--;
+                    }
+                }
+                else
+                {
+                    stack++;
+                }
             }
         }
         return 0;

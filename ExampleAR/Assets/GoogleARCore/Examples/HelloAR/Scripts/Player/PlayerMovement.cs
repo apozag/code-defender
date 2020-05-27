@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using TMPro;
 using System.Collections.Generic;
 
 public enum Turn
@@ -6,57 +7,61 @@ public enum Turn
     RIGHT,
     LEFT
 }
-
-public enum Direction
+enum State
 {
-    NORTH,
-    EAST,
-    SOUTH,
-    WEST
+    WALKING,
+    TALKING
 }
 
 public class PlayerMovement : MonoBehaviour
 {
     GameObject floor;
+    GameObject bubble;
 
-    Direction dir;
+    ElementsManager elemManager;
 
     Vector3 v = new Vector3(0, 0, 0);
 
     Vector3 moved = new Vector3(0, 0, 0);
 
-    float stepSize = 0.1f;
+    readonly float stepSize = 0.1f;
+    readonly float speed = 1.5f;
 
-    float speed = 1.5f;
-
-    float initHeight;
+    float talkTime = 1.5f;
+    float currentTime = 0.0f;
 
     //posiciones en distintos niveles
     static Dictionary<string, Vector3> levelPositions = new Dictionary<string, Vector3>() {
-        {"51", new Vector3(0.355f, 0.05f, 0.05f)},
-        {"61", new Vector3(0.45f, 0.05f, -0.45f)}
+        {"16", new Vector3(0.05f, 0.05f, -0.25f)},
+        {"25", new Vector3(0.05f, 0.05f, -0.25f)},
+        {"26", new Vector3(0.35f, 0.05f, -0.35f)},
+        {"27", new Vector3(0.05f, 0.05f, -0.15f)},
+        {"28", new Vector3(0.05f, 0.05f, -0.35f)},
+        {"210", new Vector3(0.05f, 0.05f, -0.45f)},
+        {"51", new Vector3(0.35f, 0.05f,  0.05f)},
+        {"56", new Vector3(0.15f, 0.05f, -0.25f)},
+        {"58", new Vector3(-0.35f, 0.05f,-0.35f)},
+        {"59", new Vector3(-0.15f, 0.05f,-0.25f)},
+        {"61", new Vector3(0.45f, 0.05f, -0.45f)},
+        {"68", new Vector3(0.05f, 0.05f, -0.25f)},
+        {"69", new Vector3(0.05f, 0.05f, -0.25f)},
     };
 
-    //TODO:: quitar esto
     Vector3 initPos;
     Quaternion initRot;
-    Transform initTransform;
 
     //State
-    //bool isJumping = false;
+    State state;
     bool isRunning = false;
-
-    bool isReady = true;
 
     // Start is called before the first frame update
     void Start()
     {
         floor = GameObject.FindGameObjectWithTag("Floor");
+        bubble = GetComponentInChildren<BubbleRotation>().gameObject;
+        bubble.SetActive(false);
 
-        dir = Direction.NORTH;
-        //stepSize = floor.GetComponent<MeshRenderer>().bounds.size.x / 10;
-
-        //transform.parent.position = floor.transform.position;
+        elemManager = FindObjectOfType<ElementsManager>();
 
         string topicLevel = PlayerPrefs.GetString("TOPIC") + PlayerPrefs.GetString("LEVEL");
 
@@ -65,9 +70,7 @@ public class PlayerMovement : MonoBehaviour
             transform.localPosition = levelPositions[topicLevel];
         }
 
-        transform.forward = floor.transform.forward;
-
-        initHeight = transform.position.y;
+        transform.forward.Set(floor.transform.forward.x, floor.transform.forward.y, floor.transform.forward.z);
 
         initPos = new Vector3(transform.localPosition.x, transform.localPosition.y, transform.localPosition.z);
         initRot = new Quaternion(transform.localRotation.x, transform.localRotation.y, transform.localRotation.z, transform.localRotation.w);
@@ -77,20 +80,41 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //step
         if (isRunning)
         {
-            if (moved.magnitude < v.magnitude)
+            switch (state)
             {
-                Vector3 dist = v * Time.deltaTime * speed;
-                moved += dist;
-                transform.position = transform.position + dist;
+                case State.WALKING:
+                    if (moved.magnitude < v.magnitude)
+                    {
+                        Vector3 dist = v * Time.deltaTime * speed;
+                        moved += dist;
+                        transform.position = transform.position + dist;
+                    }
+                    else
+                    {
+                        isRunning = false;
+                    }
+                    break;
+                case State.TALKING:
+                    if(currentTime >= talkTime)
+                    {
+                        bubble.SetActive(false);
+                        currentTime = 0.0f;
+                        isRunning = false;
+                    }
+                    else
+                    {
+                        currentTime += Time.deltaTime;
+                    }
+                    break;
             }
-            else
+
+            if (!isRunning)
             {
-                isRunning = false;
-                isReady = true;
+                elemManager.updateTurn();
             }
+            
         }
     }
 
@@ -98,9 +122,8 @@ public class PlayerMovement : MonoBehaviour
     {
         v = transform.forward * steps * stepSize;
         moved = new Vector3(0, 0, 0);
-
+        state = State.WALKING;
         isRunning = true;
-        isReady = false;
     }
 
     public void turn(Turn t)
@@ -108,41 +131,33 @@ public class PlayerMovement : MonoBehaviour
         switch (t)
         {
             case Turn.RIGHT:
-
                 transform.Rotate(new Vector3(0, 90, 0));
-                dir += 1;
-
                 break;
             case Turn.LEFT:
                 transform.Rotate(new Vector3(0, -90, 0));
-                dir -= 1;
                 break;
         }
-
-        if (dir > Direction.WEST)
-            dir = Direction.NORTH;
-        else if (dir < Direction.NORTH)
-            dir = Direction.WEST;
     }
 
-    public void jump()
+    public void say(string message)
     {
-        v = transform.forward * stepSize;
-        moved = new Vector3(0, 0, 0);
-
-        //isJumping = true;
-        isReady = false;
+        bubble.SetActive(true);
+        bubble.GetComponentInChildren<TextMeshPro>().SetText(message);
+        state = State.TALKING;
+        isRunning = true;
     }
 
     public bool ready()
     {
-        return isReady;
+        return !isRunning;
     }
 
     public void reset()
     {
+        isRunning = false;
         transform.localPosition = initPos;
         transform.localRotation = initRot;
+        bubble.SetActive(false);
     }
 
 }

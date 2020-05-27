@@ -24,7 +24,7 @@ public class ToastMessage : MonoBehaviour
             context = currentActivity.Call<AndroidJavaObject>("getApplicationContext");
         }
         toastString = str;
-        //currentActivity.Call("runOnUiThread", new AndroidJavaRunnable(showToast));
+        currentActivity.Call("runOnUiThread", new AndroidJavaRunnable(showToast));
     }
 
     static void showToast()

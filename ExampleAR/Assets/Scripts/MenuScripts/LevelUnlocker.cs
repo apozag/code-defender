@@ -15,19 +15,19 @@ public class LevelUnlocker : MonoBehaviour
         string topicString = PlayerPrefs.GetString("TOPIC");
         int topicInt = int.Parse(topicString);
 
-        //for (int i = 0; i < transform.childCount; i++)
-        //{
-        //    if (i >= NumLevels.numLevels[topicString])
-        //        transform.GetChild(i).gameObject.SetActive(false);
-        //    else if (topicInt == nextTopic && i + 1 > nextLevel)
-        //    {
-        //        Color c = transform.GetChild(i).GetComponent<Image>().color;
-        //        c.a = 0.5f;
-        //        transform.GetChild(i).GetComponent<Image>().color = c;
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            if (i >= NumLevels.numLevels[topicString])
+                transform.GetChild(i).gameObject.SetActive(false);
+            else if (topicInt == nextTopic && i + 1 > nextLevel)
+            {
+                Color c = transform.GetChild(i).GetComponent<Image>().color;
+                c.a = 0.5f;
+                transform.GetChild(i).GetComponent<Image>().color = c;
 
-        //        transform.GetChild(i).GetComponent<Button>().interactable = false;
-        //    }
-        //}
+                transform.GetChild(i).GetComponent<Button>().interactable = false;
+            }
+        }
     }
 
     // Update is called once per frame

@@ -38,11 +38,13 @@ public class PlayerMovement : MonoBehaviour
         {"27", new Vector3(0.05f, 0.05f, -0.15f)},
         {"28", new Vector3(0.05f, 0.05f, -0.35f)},
         {"210", new Vector3(0.05f, 0.05f, -0.45f)},
-        {"51", new Vector3(0.35f, 0.05f, 0.05f)},
+        {"51", new Vector3(0.35f, 0.05f,  0.05f)},
         {"56", new Vector3(0.15f, 0.05f, -0.25f)},
         {"58", new Vector3(-0.35f, 0.05f,-0.35f)},
         {"59", new Vector3(-0.15f, 0.05f,-0.25f)},
-        {"61", new Vector3(0.45f, 0.05f, -0.45f)}
+        {"61", new Vector3(0.45f, 0.05f, -0.45f)},
+        {"68", new Vector3(0.05f, 0.05f, -0.25f)},
+        {"69", new Vector3(0.05f, 0.05f, -0.25f)},
     };
 
     Vector3 initPos;
@@ -152,6 +154,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void reset()
     {
+        isRunning = false;
         transform.localPosition = initPos;
         transform.localRotation = initRot;
         bubble.SetActive(false);

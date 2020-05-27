@@ -12,7 +12,10 @@ public class CDRandom
        {"310", new List<int>(){ (int)Random.Range(-10, 0.999f) } },
        {"48", new List<int>(){ 5, 6, 4, 7, 3, 8, 2, 9, 1, 0 } },
        {"49", new List<int>(){ 3, 4, 1, 9 } },
-       {"410", new List<int>(){ 5, 6, 1, 6, 2 } }
+       {"410", new List<int>(){ 5, 6, 1, 6, 2 } },
+       {"68", new List<int>(){  3, 2, 1, 5, 4, 2, 1, 0, 9, 5 } },
+       {"69", new List<int>(){  5, 8, 7, 6, 4, 7, 8, 9, 5, 4} },
+       {"610", new List<int>(){ 3, 2, 5, 4, 3, 6, 7, 3, 1, 9} },
    };
 
     static Dictionary<string, int> indexes = new Dictionary<string, int>();

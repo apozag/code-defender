@@ -43,6 +43,7 @@ public class VariableChecker : MonoBehaviour
         {"46", new List<int>(){1, 2, 3, 4, 5, 6, 7, 8, 9, 10} },
         {"47", new List<int>(){2, 4, 6, 8, 10, 12, 14, 16, 18, 20} },
         {"48", new List<int>(){ 5, 6, 4, 7, 3, 8, 2, 9, 1, 0 } },
+        {"610", new List<int>(){  1, 2, 3, 3, 3, 4, 5, 6, 7, 9 } }
     };
 
     static Dictionary<string, int> levelIntArraySizes = new Dictionary<string, int>()
@@ -107,13 +108,13 @@ public class VariableChecker : MonoBehaviour
                         {
                             if (!levelStringValues.ContainsKey(topicLevel))
                                 return true;
-                            else if (var.value == levelStringValues[topicLevel])
+                            else if (var.value.Equals(levelStringValues[topicLevel]))
                             {
                                 if (!levelStringNames.ContainsKey(topicLevel))
                                     return true;
                                 else
                                 {
-                                    if (levelStringNames[topicLevel] == var.name)
+                                    if (levelStringNames[topicLevel].Equals(var.name))
                                         return true;
                                 }
                             }
@@ -124,7 +125,7 @@ public class VariableChecker : MonoBehaviour
                         {
                             if (!levelFloatValues.ContainsKey(topicLevel))
                                 return true;
-                            else if (var.value == levelFloatValues[topicLevel])
+                            else if (var.value - levelFloatValues[topicLevel] < 0.1f && var.value - levelFloatValues[topicLevel] > -0.1f) 
                             {
                                 if (!levelFloatNames.ContainsKey(topicLevel))
                                     return true;

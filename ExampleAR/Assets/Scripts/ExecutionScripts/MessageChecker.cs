@@ -10,14 +10,16 @@ public class MessageChecker : MonoBehaviour
     static Dictionary<string, List<string>> levelMessages = new Dictionary<string, List<string>>()
     {
         {"14", new List<string>() },
-        {"15", new List<string>(){"paso", "paso", "paso", "paso" } },
+        {"15", new List<string>(){"MSG_1_5", "MSG_1_5", "MSG_1_5", "MSG_1_5" } },
         {"24", new List<string>(){"\"57.74334\""} },
         {"29", new List<string>(){"\"JavaJavaJava\""} },
         {"210", new List<string>(){"\"El resultado es: 7\""} },
-        {"35", new List<string>(){"say this", "and this"} },
+        {"35", new List<string>(){"\"say this\"", "\"and this\""} },
         {"38", new List<string>(){"MSG_3_8_1"} },
         {"49", new List<string>(){"\"9\"", "\"1\"" , "\"4\"" , "\"3\"" } },
-        {"55", new List<string>(){"\"Parameter: 3\"" } }
+        {"55", new List<string>(){"\"Parameter: 3\"" } },
+        {"66", new List<string>(){"\"55\"" } },
+        {"67", new List<string>(){"\"720\"" } },
 
     };
 

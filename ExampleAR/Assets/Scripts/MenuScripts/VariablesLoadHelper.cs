@@ -9,6 +9,9 @@ public static class VariablesLoadHelper
             new Variable<int>("cm", 456, 1, null),
             new Variable<int>("cm_per_step", 76, 1, null)
         } },
+         {"26", new List<Variable<int>>(){
+            new Variable<int>("total_steps", 21, 1, null)
+        } },
         {"27", new List<Variable<int>>(){
             new Variable<int>("value_1", 3, 1, null),
             new Variable<int>("value_2", 9, 1, null)
@@ -65,6 +68,9 @@ public static class VariablesLoadHelper
             new Variable<int>("i", 1, 2, null),
             new Variable<int>("j", 0, 3, null)
         } },
+        {"48", new List<Variable<int>>(){
+            new Variable<int>("i", 0, 2, null)
+        } },
         {"49", new List<Variable<int>>(){
             new Variable<int>("i", 0, 2, null)
         } },
@@ -91,7 +97,19 @@ public static class VariablesLoadHelper
         {"64", new List<Variable<int>>()
         {
             new Variable<int>("param", 0, 1, null)
-        } }
+        } },
+        {"68", new List<Variable<int>>()
+        {
+            new Variable<int>("i", 0, 0, null)
+        } },
+        {"69", new List<Variable<int>>()
+        {
+            new Variable<int>("i", 0, 0, null)
+        } },
+        {"610", new List<Variable<int>>()
+        {
+            new Variable<int>("i", 0, 0, null)
+        } },
     };
     static Dictionary<string, List<Variable<string>>> stringVariables = new Dictionary<string, List<Variable<string>>>()
     {
@@ -157,7 +175,19 @@ public static class VariablesLoadHelper
         {"410", new List<Array<int>>()
         {
             new Array<int>("numbers", 5, 1, null),
-        } }
+        } },
+        {"68", new List<Array<int>>()
+        {
+            new Array<int>("values", 6, 0, null),
+        } },
+        {"69", new List<Array<int>>()
+        {
+            new Array<int>("values", 10, 0, null),
+        } },
+        {"610", new List<Array<int>>()
+        {
+            new Array<int>("values", 10, 0, null),
+        } },
     };
 
 

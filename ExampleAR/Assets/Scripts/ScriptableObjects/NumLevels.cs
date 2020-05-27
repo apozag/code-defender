@@ -5,13 +5,13 @@ using UnityEngine;
 public class NumLevels
 {
     public static Dictionary<string, int> numLevels = new Dictionary<string, int>() {
-        {"1", 6},
-        {"2", 6},
-        {"3", 6},
-        {"4", 6},
-        {"5", 6},
-        {"6", 6},
-        {"7", 6}
+        {"1", 10},
+        {"2", 10},
+        {"3", 10},
+        {"4", 10},
+        {"5", 10},
+        {"6", 10},
+        {"7", 10}
     };
 
 }

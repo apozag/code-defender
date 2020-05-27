@@ -183,7 +183,6 @@ public class UIController : MonoBehaviour
     public void loose()
     {
         FindObjectOfType<PlayerMovement>().reset();
-        FindObjectOfType<GoalChecker>().resetElements();
         if(messageChecker != null)
             messageChecker.reset();
         ToastMessage.showToastOnUiThread("Vuelve a intentarlo.");

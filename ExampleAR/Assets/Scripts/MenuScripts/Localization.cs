@@ -202,12 +202,12 @@ public class Localization
             } },
              {"MON_2", new Dictionary<string, string>()
             {
-                { "ENG", "And not junt any antivirus... A talking one! How cool is that?"},
+                { "ENG", "And not just any antivirus... A talking one! How cool is that?"},
                 { "ESP", "Y no cualquier antivirus... ¡Uno que habla! ¿Que te parece?"}
             } },
               {"MON_3", new Dictionary<string, string>()
             {
-                { "ENG", "We´ll have time to konow each other better. Don´t get me wrong, but there´s an emergency I have te take care of with your help."},
+                { "ENG", "We´ll have time to know each other better. Don´t get me wrong, but there´s an emergency I have to take care of with your help."},
                 { "ESP", "Ya tendremos tiempo de conocernos más a fondo. No te lo tomes a mal, pero hay una emergencia que tengo que resolver cuanto antes con tu ayuda."}
             } },
                {"MON_4", new Dictionary<string, string>()
@@ -217,7 +217,7 @@ public class Localization
             } },
             {"MON_5", new Dictionary<string, string>()
             {
-                { "ENG", "I know I am the antivirus and it´s my job... but... it turns out that my developers didn´t quite finished me entirely."},
+                { "ENG", "I know I am the antivirus and it´s my job... but... it turns out that my developers didn´t quite finish me entirely."},
                 { "ESP", "Sé que yo soy el antivirus y es mi trabajo... pero... resulta que mis desarrolladores me han dejado a medio acabar."}
             } },
             {"MON_6", new Dictionary<string, string>()
@@ -232,7 +232,7 @@ public class Localization
             } },
             {"MON_8", new Dictionary<string, string>()
             {
-                { "ENG", "In order for you seewhats going on inside your phone, I will turn on the camera and display my surroundings with AUGMENTED REALITY."},
+                { "ENG", "In order for you see what's going on inside your phone, I will turn on the camera and display my surroundings with AUGMENTED REALITY."},
                 { "ESP", "Para que puedas ver lo que pasa dentro de tu móvil, encenderé la cámara y proyectaré en REALIDAD AUMENTADA mis alrededores."}
             } },
             { "MON_9", new Dictionary<string, string>()
@@ -259,14 +259,32 @@ public class Localization
             } },
              {"TUT_1_1_2", new Dictionary<string, string>()
             {
-                { "ENG", "Drag the block to a blank space" },
-                { "ESP", "Arrastra el bloque hasta un hueco en blanco" }
+                { "ENG", "Drag the block to a blank space (Tap to continue)" },
+                { "ESP", "Arrastra el bloque hasta un hueco en blanco (Toca para continuar)" }
 
             } },
-             {"TUT_1_1_3", new Dictionary<string, string>()
+            { "TUT_1_1_3", new Dictionary<string, string>()
+            {
+                { "ENG", "You can delete a block pressing this button (Tap to continue)" },
+                { "ESP", "Puedes eliminar un bloque pulsando éste botón (Toca para continuar)" }
+
+            } },
+             {"TUT_1_1_4", new Dictionary<string, string>()
             {
                 { "ENG", "Press to execute your code" },
                 { "ESP", "Pulsa para ejecutar el código" }
+
+            } },
+             {"TUT_1_2_0", new Dictionary<string, string>()
+            {
+                { "ENG", "Are you stuck or don't remember what you had to do? Click here to see the level info again." },
+                { "ESP", "¿Te has quedado atascado o no recuerdas qué hay que hacer? Pulsa aquí para volver a ver la información del nivel." }
+
+            } },
+             {"TUT_1_2_1", new Dictionary<string, string>()
+            {
+                { "ENG", "If the table disapeared or you want to change it's position, click here" },
+                { "ESP", "Si el escenario ha desaparecido o quieres cambiarlo de sitio, pulsa aquí." }
 
             } },
             {"CONTINUE", new Dictionary<string, string>()
@@ -382,7 +400,7 @@ public class Localization
                {"TST_STRING_COMPARE_WITH", new Dictionary<string, string>()
             {
                 {"ENG", "Strings cannot be compared with "},
-                {"ESP", "No se puede compara string con "}
+                {"ESP", "No se puede comparar string con "}
             } },
             {"TST_STRING_NOT_SUB", new Dictionary<string, string>()
             {
@@ -402,7 +420,7 @@ public class Localization
             {"TST_STRING_QUOTE", new Dictionary<string, string>()
             {
                 {"ENG", "String values must be in quotation marks."},
-                {"ESP", "un valore string debe ir entre comillas."}
+                {"ESP", "un valor string debe ir entre comillas."}
             } },
              {"TST_MULTIPLE_MAIN", new Dictionary<string, string>()
             {
@@ -413,6 +431,11 @@ public class Localization
             {
                 {"ENG", "There can't be two functions with the same name!"},
                 {"ESP", "¡No puede haber dos funciones con el mismo nombre!"}
+            } },
+             {"TST_NO_FUNCTION", new Dictionary<string, string>()
+            {
+                {"ENG", "You must create the function before calling it."},
+                {"ESP", "Debes crear la función para poder llamarla."}
             } },
             {"TST_MULTIPLE_CLASS", new Dictionary<string, string>()
             {
@@ -624,7 +647,7 @@ public class Localization
             } },
             { "INF_1_6_E_2", new Dictionary<string, string>()
             {
-                { "ENG", "Each worm will create two copies of itsel in 4 turns."},
+                { "ENG", "Each worm will create two copies of itself in 4 turns."},
                 { "ESP", "Cada gusano creará dos copias más de si mismo al pasar 4 turnos."}
             } },
             { "INF_1_6_T_3", new Dictionary<string, string>()
@@ -689,8 +712,8 @@ public class Localization
             } },
             { "INF_2_1_E_0", new Dictionary<string, string>()
             {
-                { "ENG", "Create a varaiable and execute to check."},
-                { "ESP", "Crea una variable y ejecuta par comprobar."}
+                { "ENG", "Create a variable and execute to check."},
+                { "ESP", "Crea una variable y ejecuta para comprobar."}
             } },
              { "INF_2_1_T_1", new Dictionary<string, string>()
             {
@@ -699,8 +722,8 @@ public class Localization
             } },
             { "INF_2_1_E_1", new Dictionary<string, string>()
             {
-                { "ENG", "It´s represented by a namee and holds a value which can be used lated."},
-                { "ESP", "se representa con un nombre y guarda un valor que se puede usar más tarde."}
+                { "ENG", "It´s represented by a name and holds a value which can be used later."},
+                { "ESP", "Se representa con un nombre y guarda un valor que se puede usar más tarde."}
             } },
             { "INF_2_1_T_2", new Dictionary<string, string>()
             {
@@ -710,7 +733,7 @@ public class Localization
             { "INF_2_1_E_2", new Dictionary<string, string>()
             {
                 { "ENG", "There are several types depending on what they contain. The ones we will be using are:"},
-                { "ESP", "Pueden ser de varios tipos dependiendo de lo que contenga. Loa que vamos a utilizar nosotros son:"}
+                { "ESP", "Pueden ser de varios tipos dependiendo de lo que contenga. Los que vamos a utilizar nosotros son:"}
             } },
             { "INF_2_1_T_3", new Dictionary<string, string>()
             {
@@ -739,7 +762,7 @@ public class Localization
             } },
             { "INF_2_1_E_5", new Dictionary<string, string>()
             {
-                { "ENG", "Assigns a new value to the variable you place in the left gap."},
+                { "ENG", "Assigns a new value to the variable you put in the left gap."},
                 { "ESP", "Asigna un nuevo valor a la variable que coloques a la izquierda."}
             } },
 
@@ -750,8 +773,8 @@ public class Localization
             } },
             { "INF_2_2_E_0", new Dictionary<string, string>()
             {
-                { "ENG", "Assign the variable str1 to str2."},
-                { "ESP", "Asigna la variable str1 a str2."}
+                { "ENG", "Assign the variable word_1 to word_2."},
+                { "ESP", "Asigna la variable word_1 a word_2."}
             } },
             { "INF_2_2_T_1", new Dictionary<string, string>()
             {
@@ -770,8 +793,8 @@ public class Localization
             } },
             { "INF_2_2_E_2", new Dictionary<string, string>()
             {
-                { "ENG", "Variables can be assigned to one another while they are the same type (int, string, float...)"},
-                { "ESP", "Se puede asignar el valor de una variable a otra siempre que  sean del mismo tipo. (int, string, float...)"}
+                { "ENG", "Variables can be assigned to one another if they are the same type (int, string, float...)"},
+                { "ESP", "Se puede asignar el valor de una variable a otra siempre que sean del mismo tipo. (int, string, float...)"}
             } },
             { "INF_2_2_T_3", new Dictionary<string, string>()
             {
@@ -780,8 +803,8 @@ public class Localization
             } },
             { "INF_2_2_E_3", new Dictionary<string, string>()
             {
-                { "ENG", "creates a float variables (number with decimals)"},
-                { "ESP", "Crea una variable de tipo float  (número con decimales)"}
+                { "ENG", "Creates a float variable (number with decimals)"},
+                { "ESP", "Crea una variable de tipo float (número con decimales)"}
             } },
             { "INF_2_2_T_4", new Dictionary<string, string>()
             {
@@ -790,8 +813,8 @@ public class Localization
             } },
             { "INF_2_2_E_4", new Dictionary<string, string>()
             {
-                { "ENG", "creates a float variables (number with decimals)"},
-                { "ESP", "Crea una variable de tipo string (texto).\n¡Su valor debe ir siempre netre comillas!"}
+                { "ENG", "Creates a string variable (text).\nIt's value must be in quotation marks!"},
+                { "ESP", "Crea una variable de tipo string (texto).\n¡Su valor debe ir siempre entre comillas!"}
             } },
 
             { "INF_2_3_T_0", new Dictionary<string, string>()
@@ -802,7 +825,7 @@ public class Localization
             { "INF_2_3_E_0", new Dictionary<string, string>()
             {
                 { "ENG", "Calculate the sum of num1 and num2."},
-                { "ESP", "calcula la suma de num1 y num2."}
+                { "ESP", "Calcula la suma de num1 y num2."}
             } },
             { "INF_2_3_T_1", new Dictionary<string, string>()
             {
@@ -821,7 +844,7 @@ public class Localization
             } },
             { "INF_2_3_E_2", new Dictionary<string, string>()
             {
-                { "ENG", "Only certain variable types can be operated with each other. You can experiment more with this in the traning mode."},
+                { "ENG", "Only certain variable types can be operated with each other. You can experiment more with this in the training mode."},
                 { "ESP", "Sólo algunos tipos de variables se pueden operar entre sí. Puedes experimentar más con esto en el modo entrenamiento."}
             } },
             { "INF_2_3_T_3", new Dictionary<string, string>()
@@ -926,7 +949,7 @@ public class Localization
             { "INF_2_7_E_1", new Dictionary<string, string>()
             {
                 { "ENG", "As you will see it's not available in your palette, but it will be part of some levels."},
-                { "ESP", "Como podrás observar no está disponible en tu paleta, pero fomará parte de algunos niveles."}
+                { "ESP", "Como podrás observar no está disponible en tu paleta, pero formará parte de algunos niveles."}
             } },
 
              { "INF_2_8_T_0", new Dictionary<string, string>()
@@ -988,7 +1011,7 @@ public class Localization
             } },
             { "INF_2_10_E_2", new Dictionary<string, string>()
             {
-                { "ENG", "For example: \"El resultado es: 5\"\nRemember that Strings an be added with some data types."},
+                { "ENG", "For example: \"El resultado es: 5\"\nRemember that Strings can be added with some data types."},
                 { "ESP", "Por ejemplo: \"El resultado es: 5\"\nRecuerda que los String se pueden sumar con algunos tipos de datos."}
             } },
 
@@ -1060,7 +1083,7 @@ public class Localization
             } },
             { "INF_3_2_E_1", new Dictionary<string, string>()
             {
-                { "ENG", "It can be placed under un \"if\" or another \"else if\". If theupper conditions aren't true, this one gets checked."},
+                { "ENG", "It can be placed under un \"if\" or another \"else if\". If the upper conditions aren't true, this one gets checked."},
                 { "ESP", "Se puede colocar debajo de un \"if\" u otro \"else if\". Si la condición de arriba no se cumple, se comprueba ésta."}
             } },
 
@@ -1092,7 +1115,7 @@ public class Localization
             } },
             { "INF_3_3_E_1", new Dictionary<string, string>()
             {
-                { "ENG", "The logic AND (&&) is true ONLY IF both of the conditions on each side are true."},
+                { "ENG", "The logic AND (&&) is true ONLY IF both of the conditions at each side are true."},
                 { "ESP", "El AND lógico (&&) es verdadero SOLO SI las dos condiciones a ambos lados son verdaderas."}
             } },
             { "INF_3_3_T_2", new Dictionary<string, string>()
@@ -1197,8 +1220,8 @@ public class Localization
             } },
             { "INF_3_7_E_2", new Dictionary<string, string>()
             {
-                { "ENG", "Remember that both numbers are included in the range, meaning they can come out as well."},
-                { "ESP", "Recuerda que ambos números están incluidos en el rango, es decir, que pueden salir."}
+                { "ENG", "Both numbers are included in the range, meaning they can come out as well."},
+                { "ESP", "Ambos números están incluidos en el rango, es decir, que pueden salir."}
             } },
              { "INF_3_7_T_3", new Dictionary<string, string>()
             {
@@ -1219,7 +1242,7 @@ public class Localization
             { "INF_3_8_E_0", new Dictionary<string, string>()
             {
                 { "ENG", "Make Bytey say \"higher\" or \"lower\" depending on the variable \"number\" being higher or lower than \"average\"."},
-                { "ESP", "Haz que Bytey diga \"mayor\" o \"menor\" según la variable \"number\" sea mayor o menor que la varible \"average\"."}
+                { "ESP", "Haz que Bytey diga \"mayor\" o \"menor\" según la variable \"number\" sea mayor o menor que la variable \"average\"."}
             } },
             { "INF_3_8_T_1", new Dictionary<string, string>()
             {
@@ -1352,8 +1375,8 @@ public class Localization
             } },
              { "INF_4_2_E_5", new Dictionary<string, string>()
             {
-                { "ENG", "the third thing is the increment. This means our variable is added 1 every time the loop repeats."},
-                { "ESP", "Lo tercero es el incremento, es decir, indica que con cada vez que se repita el bucle, a la variable se le suma 1."}
+                { "ENG", "The third thing is the increment. This means our variable is added 1 every time the loop repeats."},
+                { "ESP", "Lo tercero es el incremento, es decir, indica que cada vez que se repita el bucle, a la variable se le suma 1."}
             } },
               { "INF_4_2_T_6", new Dictionary<string, string>()
             {
@@ -1383,7 +1406,7 @@ public class Localization
             } },
              { "INF_4_3_E_1", new Dictionary<string, string>()
             {
-                { "ENG", "Loops can be put inside other loops.\nAmazing right? Thats what we call nested loops."},
+                { "ENG", "Loops can be put inside other loops.\nAmazing right? That's what called nested loops."},
                 { "ESP", "Los bucles se pueden meter unos dentro de otros.\n¿Increíble verdad? A ésto se le llama bucles anidados."}
             } },
              { "INF_4_3_T_2", new Dictionary<string, string>()
@@ -1435,7 +1458,7 @@ public class Localization
              { "INF_4_4_E_2", new Dictionary<string, string>()
             {
                 { "ENG", "The main difference is that the condition is at the end."},
-                { "ESP", "La principal diferencia es qiue la condición está al final."}
+                { "ESP", "La principal diferencia es que la condición está al final."}
             } },
               { "INF_4_4_T_3", new Dictionary<string, string>()
             {
@@ -1476,7 +1499,7 @@ public class Localization
              { "INF_4_5_E_2", new Dictionary<string, string>()
             {
                 { "ENG", "Arrays can contain any kind of data but we´ll only use int type."},
-                { "ESP", "Se pueden hacer arrays de cualquier tipo de dato  pero nosotros utilizaremos de tipo int."}
+                { "ESP", "Se pueden hacer arrays de cualquier tipo de dato pero nosotros utilizaremos de tipo int."}
             } },
              { "INF_4_5_T_3", new Dictionary<string, string>()
             {
@@ -1485,8 +1508,8 @@ public class Localization
             } },
              { "INF_4_5_E_3", new Dictionary<string, string>()
             {
-                { "ENG", "Creates an array of int. Apart from the name, we also have to indicate the size (the amount of numbers it will store)"},
-                { "ESP", "Crea un array de int. Aparte del nombre hay que indicar el tamaño (la cantidad de numeros que guarda)"}
+                { "ENG", "Creates an array of int. Apart from the name, we also have to indicate the size."},
+                { "ESP", "Crea un array de int. Aparte del nombre hay que indicar el tamaño."}
             } },
               { "INF_4_5_T_4", new Dictionary<string, string>()
             {
@@ -1496,7 +1519,7 @@ public class Localization
              { "INF_4_5_E_4", new Dictionary<string, string>()
             {
                 { "ENG", "You can find it in the Variables category."},
-                { "ESP", "Puedes encontrarlo en la categoríoa de Variables."}
+                { "ESP", "Puedes encontrarlo en la categoría de Variables."}
             } },
 
              { "INF_4_6_T_0", new Dictionary<string, string>()
@@ -1591,7 +1614,7 @@ public class Localization
             { "INF_4_10_E_1", new Dictionary<string, string>()
             {
                 { "ENG", "There might be several numbers lower than 3!"},
-                { "ESP", "¡Puede que haya varios números que 3!"}
+                { "ESP", "¡Puede que haya varios números menores que 3!"}
             } },
 
              { "INF_5_1_T_0", new Dictionary<string, string>()
@@ -1611,7 +1634,7 @@ public class Localization
             } },
              { "INF_5_1_E_1", new Dictionary<string, string>()
             {
-                { "ENG", "Until now, we unly had one function: thye \"main\" function. It gets executed automatically when the program starts running."},
+                { "ENG", "Until now, we unly had one function: the \"main\" function. It gets executed automatically when the program starts running."},
                 { "ESP", "Hasta ahora sólo teníamos una función: la función \"main\". Se ejecuta autmáticamente cuando comienza el programa."}
             } },
               { "INF_5_1_T_2", new Dictionary<string, string>()
@@ -1622,7 +1645,7 @@ public class Localization
              { "INF_5_1_E_2", new Dictionary<string, string>()
             {
                 { "ENG", "But we can create more functions containing different code. Always inside a class."},
-                { "ESP", "Pero podemos crear más funciones con distinto código dentro. Siempre dentro de alguna clase."}
+                { "ESP", "Pero podemos crear más funciones con distinto código. Siempre dentro de alguna clase."}
             } },
               { "INF_5_1_T_3", new Dictionary<string, string>()
             {
@@ -1632,7 +1655,7 @@ public class Localization
              { "INF_5_1_E_3", new Dictionary<string, string>()
             {
                 { "ENG", "To execute it, we have to call them from the main function with a \"function call\" block"},
-                { "ESP", "Para ejecutarlas tenemos que llamarlas desde la función \"main\" con un bloque de lamada a función."}
+                { "ESP", "Para ejecutarlas tenemos que llamarlas desde la función \"main\" con un bloque de llamada a función."}
             } },
               { "INF_5_1_T_4", new Dictionary<string, string>()
             {
@@ -1652,7 +1675,7 @@ public class Localization
              { "INF_5_1_E_5", new Dictionary<string, string>()
             {
                 { "ENG", "It calls the function called \"aux\". This will make he code inside it execute."},
-                { "ESP", "Llama a la función llamada \"aux\". Esto hará que se ejecute todo el código que tenga dentro.\nPuedes encontrarlo en Básicos"}
+                { "ESP", "Llama a la función llamada \"aux\". Esto hará que se ejecute todo el código que tenga dentro."}
             } },
 
               { "INF_5_2_T_0", new Dictionary<string, string>()
@@ -1860,7 +1883,7 @@ public class Localization
             { "INF_5_8_E_0", new Dictionary<string, string>()
             {
                 { "ENG", "Use a function with parameters to eliminate the enemies."},
-                { "ESP", "Usa una función on parámetros para eliminar a los enemigos."}
+                { "ESP", "Usa una función con parámetros para eliminar a los enemigos."}
             } },        
             { "INF_5_8_T_1", new Dictionary<string, string>()
             {
@@ -1881,7 +1904,7 @@ public class Localization
             { "INF_5_9_E_0", new Dictionary<string, string>()
             {
                 { "ENG", "Use a function with parameters to eliminate the enemies and get to the yellow platform."},
-                { "ESP", "Usa una función on parámetros para eliminar a los enemigos y llegar a la casilla amarila."}
+                { "ESP", "Usa una función con parámetros para eliminar a los enemigos y llegar a la casilla amarila."}
             } },
 
              { "INF_5_10_T_0", new Dictionary<string, string>()
@@ -1892,12 +1915,12 @@ public class Localization
             { "INF_5_10_E_0", new Dictionary<string, string>()
             {
                 { "ENG", "Use a function with parameters to eliminate the enemies and get to the yellow platform."},
-                { "ESP", "Usa una función on parámetros para eliminar a los enemigos y llegar a la casilla amarila."}
+                { "ESP", "Usa una función con parámetros para eliminar a los enemigos y llegar a la casilla amarilla."}
             } },
 
               { "INF_6_1_T_0", new Dictionary<string, string>()
             {
-                { "ENG", "recursion: level 1"},
+                { "ENG", "Recursion: level 1"},
                 { "ESP", "Recursividad: nivel 1"}
             } },
              { "INF_6_1_E_0", new Dictionary<string, string>()
@@ -1923,7 +1946,7 @@ public class Localization
              { "INF_6_1_E_2", new Dictionary<string, string>()
             {
                 { "ENG", "It works kind of like a loop which we have to control with \"if\", \"else if\" or \"else\"."},
-                { "ESP", "De esta manera, entramos en una especie de bucle que tenemos que controlar con \"if\", \"else if\" o \"else \"."}
+                { "ESP", "De esta manera, entramos en una especie de bucle que tenemos que controlar con \"if\", \"else if\" o \"else\"."}
             } },
              { "INF_6_1_T_3", new Dictionary<string, string>()
             {
@@ -1932,7 +1955,7 @@ public class Localization
             } },
              { "INF_6_1_E_3", new Dictionary<string, string>()
             {
-                { "ENG", "use the variable \"i\" to count and control how many times the functions is executes."},
+                { "ENG", "Use the variable \"i\" to count and control how many times the functions is executed."},
                 { "ESP", "Usa la variable \"i\" para contar y controlar las veces que se ejecuta la función."}
             } },
 
@@ -2025,7 +2048,7 @@ public class Localization
             } },
             { "INF_6_4_E_1", new Dictionary<string, string>()
             {
-                { "ESP", "Ahora vamos a controlar las veces que llamamos a la función a través del parámetro"},
+                { "ESP", "Ahora vamos a controlar las veces que llamamos a la función a través del parámetro."},
                 { "ENG", "Now we're going to control how many times we call the function through the parameter."}
             } },
              { "INF_6_4_T_2", new Dictionary<string, string>()
@@ -2035,7 +2058,7 @@ public class Localization
             } },
             { "INF_6_4_E_2", new Dictionary<string, string>()
             {
-                { "ENG", "Insead of using a global variable."},
+                { "ENG", "Instead of using a global variable."},
                 { "ESP", "En lugar de usar una variable global."}
             } },
 
@@ -2129,24 +2152,164 @@ public class Localization
                 { "ENG", "Create a function returning any value.\nMake Bytey say this value"},
                 { "ESP", "Crea una función que devuelva cualquier valor.\nHaz que Bytey diga este valor"}
             } },
-            { "INF_6_6_T_8", new Dictionary<string, string>()
+
+            { "INF_6_6_T_0", new Dictionary<string, string>()
             {
-                { "ENG", "Objective"},
-                { "ESP", "Objetivo"}
+                { "ENG", "Recursion: level 6"},
+                { "ESP", "Recursividad: nivel 6"}
             } },
-            { "INF_6_6_E_8", new Dictionary<string, string>()
+            { "INF_6_6_E_0", new Dictionary<string, string>()
             {
-                { "ENG", "Make Bytey say the sum of the numbers from 1 to 10 using recursion."},
-                { "ESP", "Haz que Bytey diga a suma de los números del 1 al 10 usando la recursividad."}
+                { "ENG", "Make Bytey say the sum of all the numbers from 1 to 10 using recursion."},
+                { "ESP", "Haz que Bytey diga la suma de todos los números del 1 al 10 usando la recursividad."}
+            } },
+            { "INF_6_6_T_1", new Dictionary<string, string>()
+            {
+                { "ENG", "By the way!"},
+                { "ESP", "¡Por cierto!"}
+            } },
+            { "INF_6_6_E_1", new Dictionary<string, string>()
+            {
+                { "ENG", "Note that you can call the function recursively in the RETURN block gap."},
+                { "ESP", "Ten en cuenta que puedes llamar a la función de forma recursiva dentro del hueco del bloque RETURN."}
+            } },
+             { "INF_6_6_T_2", new Dictionary<string, string>()
+            {
+                { "ENG", "By the way!"},
+                { "ESP", "¡Por cierto!"}
+            } },
+            { "INF_6_6_E_2", new Dictionary<string, string>()
+            {
+                { "ENG", "Oh! and you can put multiple RETURN blocks, but it only makes sense in different branches (IF, ELSE...)"},
+                { "ESP", "Ah! y puedes poner varios bloques de RETURN pero sólo tiene sentido en distintas ramas (IF, ELSE...)"}
             } },
 
-             { "MSG_3_8_6", new Dictionary<string, string>()
+            { "INF_6_7_T_0", new Dictionary<string, string>()
+            {
+                { "ENG", "Recursion: level 6"},
+                { "ESP", "Recursividad: nivel 6"}
+            } },
+            { "INF_6_7_E_0", new Dictionary<string, string>()
+            {
+                { "ENG", "Using similar technique to the one of the previous level, calculate 6 FACTORIAL and make Bytey say it."},
+                { "ESP", "Usando una técnica similar a la del nivel anterior, calcula el FACTORIAL de 6 y haz que BYtey lo diga."}
+            } },
+            { "INF_6_7_T_1", new Dictionary<string, string>()
+            {
+                { "ENG", "Factorial"},
+                { "ESP", "Factorial"}
+            } },
+            { "INF_6_7_E_1", new Dictionary<string, string>()
+            {
+                { "ENG", "The factorial of a number is the PRODUCT of all the numbers between 1 and that number."},
+                { "ESP", "El factorial de un número es el PRODUCTO de todos los números entre 1 y ese número."}
+            } },
+
+             { "INF_6_8_T_0", new Dictionary<string, string>()
+            {
+                { "ENG", "Recursion: level 8"},
+                { "ESP", "Recursividad: nivel 8"}
+            } },
+            { "INF_6_8_E_0", new Dictionary<string, string>()
+            {
+                { "ENG", "Bytey must move one step for each number lower than 4 in the array."},
+                { "ESP", "Bytey debe moverse un paso por cada número menor a 4 que haya en el array."}
+            } },
+            { "INF_6_8_T_1", new Dictionary<string, string>()
+            {
+                { "ENG", "Recursion: level 8"},
+                { "ESP", "Recursividad: nivel 8"}
+            } },
+            { "INF_6_8_E_1", new Dictionary<string, string>()
+            {
+                { "ENG", "Use recursion."},
+                { "ESP", "Usa la recursividad."}
+            } },
+            { "INF_6_8_T_2", new Dictionary<string, string>()
+            {
+                { "ENG", "Clue"},
+                { "ESP", "Pista"}
+            } },
+            { "INF_6_8_E_2", new Dictionary<string, string>()
+            {
+                { "ENG", "The parameter will be the index we're looking at. It returns the correspondent sum."},
+                { "ESP", "El parámetro será el índice que vas a mirar. La función devuelve la suma correspondiente."}
+            } },
+
+            { "INF_6_9_T_0", new Dictionary<string, string>()
+            {
+                { "ENG", "Recursion: level 9"},
+                { "ESP", "Recursividad: nivel 9"}
+            } },
+            { "INF_6_9_E_0", new Dictionary<string, string>()
+            {
+                { "ENG", "Bytey must move the number of steps equal to the lowest value of the array."},
+                { "ESP", "Bytey debe moverse un número de pasos igual a el valor más pequeño del array."}
+            } },
+            { "INF_6_9_T_1", new Dictionary<string, string>()
+            {
+                { "ENG", "Recursion: level 9"},
+                { "ESP", "Recursividad: nivel 9"}
+            } },
+            { "INF_6_9_E_1", new Dictionary<string, string>()
+            {
+                { "ENG", "Use recursion."},
+                { "ESP", "Usa la recursividad."}
+            } },
+            { "INF_6_9_T_2", new Dictionary<string, string>()
+            {
+                { "ENG", "Clue"},
+                { "ESP", "Pista"}
+            } },
+            { "INF_6_9_E_2", new Dictionary<string, string>()
+            {
+                { "ENG", "Recieves an index as a parameter. Returns the lowest value."},
+                { "ESP", "Recibe como parámetro el índice que va a mirar. Devuelve el número menor."}
+            } },
+
+
+             { "INF_6_10_T_0", new Dictionary<string, string>()
+            {
+                { "ENG", "Recursion: level 10"},
+                { "ESP", "Recursividad: nivel 10"}
+            } },
+            { "INF_6_10_E_0", new Dictionary<string, string>()
+            {
+                { "ENG", "Sort the array from least to greatest using recursion."},
+                { "ESP", "Ordena el array de menor a mayor usando la recursividad."}
+            } },
+            { "INF_6_10_T_1", new Dictionary<string, string>()
+            {
+                { "ENG", "Recursion: level 10"},
+                { "ESP", "Recursividad: nivel 10"}
+            } },
+            { "INF_6_10_E_1", new Dictionary<string, string>()
+            {
+                { "ENG", "This time we don't need to return anything, so we'll use the function only with parameters"},
+                { "ESP", "En este caso no es necesario devolver nada, asique usamos la función sólo con parámetros."}
+            } },
+            { "INF_6_10_T_2", new Dictionary<string, string>()
+            {
+                { "ENG", "Clue"},
+                { "ESP", "Pista"}
+            } },
+            { "INF_6_10_E_2", new Dictionary<string, string>()
+            {
+                { "ENG", "Is smoke coming out of your ears? You can find lots of examples of this in the internet."},
+                { "ESP", "¿Ya te empieza a salir humo de las orejas? En internet puedes encontrar muchos ejemplos de esto."}
+            } },
+
+
+             { "MSG_3_8_1", new Dictionary<string, string>()
             {
                 { "ENG", "\"higher\""},
                 { "ESP", "\"mayor\""}
             } },
-           
-
+              { "MSG_1_5", new Dictionary<string, string>()
+            {
+                { "ENG", "\"step\""},
+                { "ESP", "\"paso\""}
+            } },
         };
     }
 

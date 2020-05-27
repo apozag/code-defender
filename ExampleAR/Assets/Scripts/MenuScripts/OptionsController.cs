@@ -66,6 +66,7 @@ public class OptionsController : MonoBehaviour
     public void restart()
     {
         popup.SetActive(false);
+        PlayerPrefs.SetInt("FIRST", 1);
         PlayerPrefs.SetInt("NEXTTOPIC", 1);
         PlayerPrefs.SetInt("NEXTLEVEL", 1);
     }

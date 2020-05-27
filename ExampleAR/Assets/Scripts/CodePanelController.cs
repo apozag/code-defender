@@ -260,7 +260,13 @@ public class CodePanelController : MonoBehaviour
                                     hasAuxMethod = true;
                                 }
                             }
-                           
+
+                            //No podemos poner el bloque de llamada a función antes de poner la función
+                            if(!hasAuxMethod && (type == BlockType.FUNCTION_CALL || type == BlockType.FUNCTION_ARG_CALL || type == BlockType.FUNCTION_RETURN_CALL))
+                            {
+                                ToastMessage.showToastOnUiThread(Localization.getString("TST_NO_FUNCTION", lang));
+                            }
+
                             //Variables globales static
                             if (hierarchyLevels[type] == 3 && b.type == BlockType.CLASS)
                             {
@@ -398,6 +404,18 @@ public class CodePanelController : MonoBehaviour
 
                     if (found)
                     {
+                        if(b != null && 
+                            (b.type == BlockType.DECLARE_INT || 
+                            b.type == BlockType.DECLARE_STRING || 
+                            b.type == BlockType.DECLARE_FLOAT || 
+                            b.type == BlockType.DECLARE_INT_ARRAY||
+                            b.type == BlockType.DECLARE_STATIC_INT|| 
+                            b.type == BlockType.DECLARE_STATIC_STRING ||
+                            b.type == BlockType.DECLARE_STATIC_FLOAT ||
+                            b.type == BlockType.DECLARE_STATIC_INT_ARRAY))
+                        {
+                            deleteVariable(b.transform.GetChild(0).GetChild(1).GetChild(0).GetChild(0).GetComponent<Text>().text);
+                        }
                         Destroy(vlg.transform.GetChild(i).gameObject);
                         count--;
                     }
@@ -628,6 +646,9 @@ public class CodePanelController : MonoBehaviour
 
     public void addIntVar(Variable<int> var)
     {
+        if (var.outerBlock == null)
+            searchParentBlock(var, ValueType.INT);
+
         int_variables.Add(var.name, var);
         if (pc != null)
             pc.refresh();
@@ -635,6 +656,9 @@ public class CodePanelController : MonoBehaviour
 
     public void addStringVar(Variable<string> var)
     {
+        if(var.outerBlock == null)
+            searchParentBlock(var, ValueType.STRING);
+
         string_variables.Add(var.name, var);
         if (pc != null)
             pc.refresh();
@@ -642,6 +666,9 @@ public class CodePanelController : MonoBehaviour
 
     public void addFloatVar(Variable<float> var)
     {
+        if (var.outerBlock == null)
+            searchParentBlock(var, ValueType.FLOAT);
+
         float_variables.Add(var.name, var);
         if (pc != null)
             pc.refresh();
@@ -681,6 +708,34 @@ public class CodePanelController : MonoBehaviour
         for (int i = 0; i < size; i++)
         {
             int_arrays[name].values.Add(0);
+        }
+    }
+
+    public void searchParentBlock<T>(Variable<T> var, ValueType type)
+    {
+
+        BlockType bType = BlockType.DECLARE_INT;
+        switch (type)
+        {
+            case ValueType.INT:
+                bType = BlockType.DECLARE_INT;
+                break;
+            case ValueType.STRING:
+                bType = BlockType.DECLARE_STRING;
+                break;
+            case ValueType.FLOAT:
+                bType = BlockType.DECLARE_FLOAT;
+                break;
+        }
+        foreach (Transform child in vlg.transform)
+        {
+            Block b = child.GetComponent<Block>();
+            if(b != null && 
+                (b.type == bType && var.name == b.transform.GetChild(0).GetChild(1).GetChild(0).GetChild(0).GetComponent<Text>().text ||
+                ( type == ValueType.INT && b.type == BlockType.FOR && var.name == b.transform.GetChild(0).GetChild(1).GetComponentInChildren<VariableGap>().GetComponentInChildren<Text>().text)))
+            {
+                var.outerBlock = b;
+            }
         }
     }
 
@@ -728,7 +783,7 @@ public class CodePanelController : MonoBehaviour
 
     public ValueType getVariableType(string name)
     {
-        if (int_variables.ContainsKey(name))
+        if (int_variables.ContainsKey(name) || int_arrays.ContainsKey(name))
             return ValueType.INT;
         else if (string_variables.ContainsKey(name))
             return ValueType.STRING;
@@ -787,7 +842,10 @@ public class CodePanelController : MonoBehaviour
         switch (getVariableType(name))
         {
             case ValueType.INT:
-                int_variables.Remove(name);
+                if (int_arrays.ContainsKey(name))
+                    int_arrays.Remove(name);
+                else
+                    int_variables.Remove(name);
                 break;
             case ValueType.STRING:
                 string_variables.Remove(name);
@@ -800,6 +858,7 @@ public class CodePanelController : MonoBehaviour
         pc.refresh();
         ToastMessage.showToastOnUiThread(Localization.getString("TST_VAR_NOT_DEFINED_1", lang) + name + Localization.getString("VAR_DELETED", lang));
     }
+    
 
     public void refreshHorizontalLayouts(GameObject obj)
     {

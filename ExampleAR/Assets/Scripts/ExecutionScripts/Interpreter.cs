@@ -247,10 +247,10 @@ public class Interpreter : MonoBehaviour
                                     arguments.Pop();
                                     if (arguments.Count > 0)
                                         cpc.editIntVar("param", arguments.Peek());
-                                    callCount--;
 
                                     index = callIndices.Pop();
                                     returnValues.Push(evaluateValueInt(current.GetComponentInChildren<VariableGap>()));
+                                    callCount--;
                                     return;
 
                                 case BlockType.FUNCTION_RETURN:
@@ -821,7 +821,11 @@ public class Interpreter : MonoBehaviour
                     string str = cpc.getFloatValue(val.GetComponentInChildren<Text>().text).ToString();
                     if (!str.Contains(",") && !str.Contains("."))
                         str += ".0";
-                    return "\"" + str + "\"";
+                    if (stringify)
+                    {
+                        str = "\"" + str + "\"";
+                    }
+                    return str;
                 case BlockType.SUM:
                     List<VariableGap> gaps = getGaps(val.gameObject);
                     return stringConcatenate(evaluateValueString(gaps[0], true, false), evaluateValueString(gaps[1], false, true));
@@ -986,6 +990,23 @@ public class Interpreter : MonoBehaviour
 
     int executeReturnFunc(int value)
     {
+        if (callCount > 0)
+        {
+            if (!canDoRecursion)
+            {
+                showErrorMessage(Localization.getString("TST_NO_RECURSION", lang));
+                stopExecution();
+            }
+            else
+            {
+                recursionUsed = true;
+            }
+        }
+        if (callCount > 30)
+        {
+            showErrorMessage(Localization.getString("TST_TOO_MANY_CALLS", lang));
+            stopExecution();
+        }
         callCount++;
         callIndices.Push(index);
         searchFunction(BlockType.FUNCTION_RETURN);

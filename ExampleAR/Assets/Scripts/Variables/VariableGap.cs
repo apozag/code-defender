@@ -39,7 +39,7 @@ public class VariableGap : MonoBehaviour
     {
         if (empty && candidate != null)
         {
-            if (!candidate.isBeingDragged())
+            if (!candidate.isBeingDragged() && allowedTypes.Contains((int)candidate.type))
             {
                 bool success = false;
                 switch (candidate.getBlockType())

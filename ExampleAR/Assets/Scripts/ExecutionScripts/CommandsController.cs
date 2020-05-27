@@ -64,7 +64,6 @@ public class CommandsController : MonoBehaviour
             }
             else
             {
-                isExecuting = false;
 
                 string topic = PlayerPrefs.GetString("TOPIC");
                 string level = PlayerPrefs.GetString("LEVEL");
@@ -76,6 +75,8 @@ public class CommandsController : MonoBehaviour
                     else 
                         FindObjectOfType<UIController>().loose();
                 }
+                stop();
+
             }
         }
 
@@ -97,6 +98,7 @@ public class CommandsController : MonoBehaviour
     public void stop()
     {
         commands.Clear();
+        messages.Clear();
         isExecuting = false;
         player.reset();
         gc.resetElements();

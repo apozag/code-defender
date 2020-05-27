@@ -22,9 +22,9 @@ public class BlocksLoader : MonoBehaviour
             pc.addBlock(BlockUnlockHelper.getCategory(b), BlockUnlockHelper.getDraggablePrefab(b));
         }
 
-        pc.int_variable_template = BlockUnlockHelper.getDraggablePrefab(BlockType.INT_VAR);
-        pc.string_variable_template = BlockUnlockHelper.getDraggablePrefab(BlockType.STRING_VAR);
-        pc.float_variable_template = BlockUnlockHelper.getDraggablePrefab(BlockType.FLOAT_VAR);
+        //pc.int_variable_template = BlockUnlockHelper.getDraggablePrefab(BlockType.INT_VAR);
+        //pc.string_variable_template = BlockUnlockHelper.getDraggablePrefab(BlockType.STRING_VAR);
+        //pc.float_variable_template = BlockUnlockHelper.getDraggablePrefab(BlockType.FLOAT_VAR);
 
         pc.setCurrentCategory(0);
 

@@ -51,8 +51,6 @@ public class GoalChecker : MonoBehaviour
                 complete = false;
         }
 
-        resetElements();
-
         return complete;
     }
 

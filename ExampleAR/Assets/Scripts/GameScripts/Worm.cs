@@ -39,6 +39,8 @@ public class Worm : MonoBehaviour
 
         elemManager = FindObjectOfType<ElementsManager>();
 
+        currentTurns = 0;
+
         counter.SetText(turns.ToString());
 
         if (!active)

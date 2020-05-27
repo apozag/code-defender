@@ -22,6 +22,41 @@ public static class BlockUnlockHelper
             BlockType.FUNCTION_CALL,
             BlockType.FUNCTION_ARG,
             BlockType.FUNCTION_ARG_CALL,
+        } },
+        { 66, new BlockType[]
+        {
+            BlockType.FUNCTION,
+            BlockType.FUNCTION_CALL,
+            BlockType.FUNCTION_ARG,
+            BlockType.FUNCTION_ARG_CALL,
+        } },
+        { 67, new BlockType[]
+        {
+            BlockType.FUNCTION,
+            BlockType.FUNCTION_CALL,
+            BlockType.FUNCTION_ARG,
+            BlockType.FUNCTION_ARG_CALL,
+        } },
+        { 68, new BlockType[]
+        {
+            BlockType.FUNCTION,
+            BlockType.FUNCTION_CALL,
+            BlockType.FUNCTION_ARG,
+            BlockType.FUNCTION_ARG_CALL,
+        } },
+        { 69, new BlockType[]
+        {
+            BlockType.FUNCTION,
+            BlockType.FUNCTION_CALL,
+            BlockType.FUNCTION_ARG,
+            BlockType.FUNCTION_ARG_CALL,
+        } },
+        { 610, new BlockType[]
+        {
+            BlockType.FUNCTION,
+            BlockType.FUNCTION_CALL,
+            BlockType.FUNCTION_RETURN,
+            BlockType.FUNCTION_RETURN_CALL,
         } }
     };
 

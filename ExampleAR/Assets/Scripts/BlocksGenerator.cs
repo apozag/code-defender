@@ -169,11 +169,11 @@ public class BlocksGenerator : MonoBehaviour
                 addElement(Instantiate(blankLine), index, offset, scope);
                 addElement(headR, index + 1, offset, scope);
                 addElement(Instantiate(blankLine), index + 2, offset + cpc.offset, scope);
-                addElement(Instantiate(returnBlock), index + 3, offset + cpc.offset, scope);
+                addElement(Instantiate(returnBlock), index + 3, offset + cpc.offset, scope + 1);
                 addElement(Instantiate(blankLine), index + 4, offset + cpc.offset, scope);
-                addElement(Instantiate(function_return_end), index + 5, offset, scope + 1);
+                addElement(Instantiate(function_return_end), index + 5, offset, scope);
                 addElement(Instantiate(blankLine), index + 6, offset, scope);
-                cpc.addIntVar(new Variable<int>("param", 0, 1, headR.GetComponent<Block>()));
+                cpc.addIntVar(new Variable<int>("param", 0, scope + 1, headR.GetComponent<Block>()));
 
                 break;
             case BlockType.RETURN:

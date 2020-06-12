@@ -194,6 +194,21 @@ public class Localization
                 { "ENG", "Branch"},
                 { "ESP", "Ramificación"}
             } },
+            {"3_INFO", new Dictionary<string, string>()
+            {
+                { "ENG", "Read level info."},
+                { "ESP", "Ver info. del nivel"}
+            } },
+            {"3_RESET", new Dictionary<string, string>()
+            {
+                { "ENG", "Reset stage location"},
+                { "ESP", "Reubicar escenario"}
+            } },
+            {"3_QUIT", new Dictionary<string, string>()
+            {
+                { "ENG", "Quit level"},
+                { "ESP", "Salir del nivel"}
+            } },
 
             {"MON_1", new Dictionary<string, string>()
             {
@@ -271,20 +286,20 @@ public class Localization
             } },
              {"TUT_1_1_4", new Dictionary<string, string>()
             {
-                { "ENG", "Press to execute your code" },
-                { "ESP", "Pulsa para ejecutar el código" }
+                { "ENG", "Press to execute your code when you're ready (Tap to continue)" },
+                { "ESP", "Pulsa para ejecutar el código cuando estés listo (Toca para continuar)" }
 
             } },
              {"TUT_1_2_0", new Dictionary<string, string>()
             {
-                { "ENG", "Are you stuck or don't remember what you had to do? Click here to see the level info again." },
-                { "ESP", "¿Te has quedado atascado o no recuerdas qué hay que hacer? Pulsa aquí para volver a ver la información del nivel." }
+                { "ENG", "Are you stuck or don't remember what you had to do? Click here to see the level info again (Tap to coninue)." },
+                { "ESP", "¿Te has quedado atascado o no recuerdas qué hay que hacer? Pulsa aquí para volver a ver la información del nivel (Toca para continuar)." }
 
             } },
              {"TUT_1_2_1", new Dictionary<string, string>()
             {
-                { "ENG", "If the table disapeared or you want to change it's position, click here" },
-                { "ESP", "Si el escenario ha desaparecido o quieres cambiarlo de sitio, pulsa aquí." }
+                { "ENG", "If the table disapeared or you want to change it's position, click here (Tap to continue)" },
+                { "ESP", "Si el escenario ha desaparecido o quieres cambiarlo de sitio, pulsa aquí. (Toca para continuar)" }
 
             } },
             {"CONTINUE", new Dictionary<string, string>()

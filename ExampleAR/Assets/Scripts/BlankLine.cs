@@ -50,10 +50,15 @@ public class BlankLine : MonoBehaviour {
         {
             if (!candidate.isBeingDragged() && allowedTypes.Contains((int)candidate.type))
             {
-                if(cpc.tryInsert(candidate.getBlockType(), transform.GetSiblingIndex()))
+                if (cpc.tryInsert(candidate.getBlockType(), transform.GetSiblingIndex()))
                     Destroy(gameObject);
                 else
+                {
                     candidate = null;
+                    Color c = image.color;
+                    c.a = 1.0f;
+                    image.color = c;
+                }
             }
         }
 	}

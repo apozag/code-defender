@@ -81,12 +81,12 @@ public class Interpreter : MonoBehaviour
     {
         if (cc == null || !cc.gameObject.activeSelf)
         {
-            showErrorMessage(Localization.getString("TST_WAIT_APPEAR", lang));
+            showErrorMessage(Localization.getString("TST_WAIT_APPEAR", lang)); //Espera a que aparezca el escenario
             isExecuting = false;
         }
         else if (cc.isRunning())
         {
-            showErrorMessage(Localization.getString("TST_WAIT_END", lang));
+            showErrorMessage(Localization.getString("TST_WAIT_END", lang)); //Espera a que termine o para la ejecución
             isExecuting = false;
         }
         else
@@ -333,7 +333,6 @@ public class Interpreter : MonoBehaviour
                                                 iterations.Add(rollBackPos.Peek(), 0);
 
                                             //A partir de 30 iteraciones se interpreta como un bucle infinito y paramos la ejecución.
-                                            //Más iteraciones pueden provocar el crasheo de la aplicación.
                                             if (iterations[rollBackPos.Peek()] > 30)
                                             {
                                                 showErrorMessage("¡Has hecho un bucle infinito o con demasiadas iteraciones!");
@@ -368,7 +367,6 @@ public class Interpreter : MonoBehaviour
                                                 iterations.Add(rollBackPos.Peek(), 0);
 
                                             //A partir de 30 iteraciones se interpreta como un bucle infinito y paramos la ejecución.
-                                            //Más iteraciones pueden provocar el crasheo de la aplicación.
                                             if (iterations[rollBackPos.Peek()] > 30)
                                             {
                                                 showErrorMessage(Localization.getString("TST_INFINITE_LOOP", lang));
@@ -389,7 +387,7 @@ public class Interpreter : MonoBehaviour
                                         }
                                         else
                                         {
-                                            showErrorMessage("Internal Error: plese report this error to adripoza23@gmail.com");
+                                            //No debería pasar nunca
                                             stopExecution();
                                         }
                                     }
@@ -474,6 +472,7 @@ public class Interpreter : MonoBehaviour
                                 entryPointFound = true;
                         }
 
+                        //variables locales/globales
                         switch (current.type)
                         {
                             case BlockType.DECLARE_STATIC_INT:
@@ -552,7 +551,7 @@ public class Interpreter : MonoBehaviour
                 }
                 else if (IsDigitsOnly(str) || IsFloatValue(str))
                 {
-                    return evaluateValueInt(gaps[0]) == evaluateValueInt(gaps[1]);
+                    return evaluateValueFloat(gaps[0]) == evaluateValueFloat(gaps[1]);
                 }
                 else
                 {
@@ -569,7 +568,7 @@ public class Interpreter : MonoBehaviour
                 }
                 else if (IsDigitsOnly(str) || IsFloatValue(str))
                 {
-                    return evaluateValueInt(gaps[0]) != evaluateValueInt(gaps[1]);
+                    return evaluateValueFloat(gaps[0]) != evaluateValueFloat(gaps[1]);
                 }
                 else
                 {
@@ -592,7 +591,7 @@ public class Interpreter : MonoBehaviour
                 }
                 else if (IsDigitsOnly(str) || IsFloatValue(str))
                 {
-                    return evaluateValueInt(gaps[0]) > evaluateValueInt(gaps[1]);
+                    return evaluateValueFloat(gaps[0]) > evaluateValueFloat(gaps[1]);
                 }
                 else
                 {
@@ -615,7 +614,7 @@ public class Interpreter : MonoBehaviour
                 }
                 else if (IsDigitsOnly(str) || IsFloatValue(str))
                 {
-                    return evaluateValueInt(gaps[0]) < evaluateValueInt(gaps[1]);
+                    return evaluateValueFloat(gaps[0]) < evaluateValueFloat(gaps[1]);
                 }
                 else
                 {
@@ -637,7 +636,7 @@ public class Interpreter : MonoBehaviour
                 }
                 else if (IsDigitsOnly(str) || IsFloatValue(str))
                 {
-                    return evaluateValueInt(gaps[0]) >= evaluateValueInt(gaps[1]);
+                    return evaluateValueFloat(gaps[0]) >= evaluateValueFloat(gaps[1]);
                 }
                 else
                 {
@@ -657,7 +656,7 @@ public class Interpreter : MonoBehaviour
                 }
                 else if (IsDigitsOnly(str) || IsFloatValue(str))
                 {
-                    return evaluateValueInt(gaps[0]) <= evaluateValueInt(gaps[1]);
+                    return evaluateValueFloat(gaps[0]) <= evaluateValueFloat(gaps[1]);
                 }
                 else
                 {
@@ -677,13 +676,8 @@ public class Interpreter : MonoBehaviour
                 if (condGaps1.Count > 1)
                     return evaluateCondition(condGaps1[0]) || evaluateCondition(condGaps1[1]);
                 else return false;
-            case BlockType.TRUE:
-                return true;
-            case BlockType.FALSE:
-                return false;
             default:
                 //Error: Bloque no reconocido como condición.
-                showErrorMessage("Internal Error: please report this error to adripoza23@gmail.com");
                 stopExecution();
                 return false;
 
@@ -889,7 +883,8 @@ public class Interpreter : MonoBehaviour
                         showErrorMarker(gap.GetComponentInChildren<Image>());
                         stopExecution();
                     }
-                }else if (stringify)
+                }
+                else if (stringify)
                 {
                     str = "\"" + str + "\"";
                 }

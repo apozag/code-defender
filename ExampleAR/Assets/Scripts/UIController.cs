@@ -21,6 +21,7 @@ public class UIController : MonoBehaviour
     public GameObject winPopUp;
     public GameObject infoPanel;
     public GameObject tutorialPanel;
+    public GameObject optionsPanel;
     public Interpreter interpreter;
     bool isScrollUp = true;
     string reusableString = "";
@@ -142,6 +143,15 @@ public class UIController : MonoBehaviour
                 tutorialPanel.SetActive(false);
             }
         }
+    }
+
+    public void showOptionsPanel()
+    {
+        optionsPanel.SetActive(true);
+    }
+    public void hideOptionsPanel()
+    {
+        optionsPanel.SetActive(false);
     }
 
     public void execute()
